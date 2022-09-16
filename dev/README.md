@@ -34,7 +34,12 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-6. Create an ```.env``` file under the ```dev``` directory and type the following into the ```.env``` file:
+6. Once done, exit the virtual environment by typing:
+```
+deactivate
+```
+
+7. Create an ```.env``` file under the ```dev``` directory and type the following into the ```.env``` file:
 ```
 SECRET_KEY = "## Some string value ##"      # Get the string value from the admin of the django server
 ```
@@ -65,9 +70,9 @@ npm install
 npm run build
 ```
 
-6. Once completed, navigate back to ```app``` under ```dev``` directory:
+6. Once completed, navigate back to the ```dev``` directory:
 ```
-cd ../app
+cd ../
 ```
 
 7. Activate the virtual environment:
