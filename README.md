@@ -35,8 +35,9 @@ git checkout dev
 ~
 ├── deliverables        # Lab deliverables
 ├── dev
-│    ├── app            # Django server
-│    ├── client         # React app
+│    ├── accounts       # Accounts app
+│    ├── server         # Django server
+│    ├── client         # Front-end React component files
 │    └── manage.py
 ├── .gitignore
 └── README.md
