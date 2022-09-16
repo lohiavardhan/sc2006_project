@@ -9,26 +9,41 @@ All frontend files and components can be found under [```client```](https://gith
 </p>
 
 ## ⭐ Getting started with Django
-1. Run the following command in the terminal to install Django and its dependencies:
+1. Run the following command to install Python virtual environment.
 ```
-python -m pip install Django
+python -m pip install virtualenv
 ```
 
-2. Navigate to the project directory and into the *dev* folder:
+2. Navigate to the project directory and into the ```dev``` folder:
 ```
 cd <PROJECT_DIR>/dev
 ```
 
-3. Run the server on local machine:
+3. Create a virtual environment in the project directory.
+```
+virtualenv -p python3 venv   
+```
+
+4. Activate the virtual environment:
+```
+venv\Scripts\activate 
+```
+
+5. Run the following command in the terminal to install Django and its dependencies:
+```
+python -m pip install Django
+```
+
+6. Run the server on local machine:
 ```
 python manage.py runserver
 ```
-4. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
+7. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
 ```
 python manage.py runserver <PORT_NUMBER>
 ```
 
-5. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
+8. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
 ```
 ...
 Django version 4.1.1, using settings 'app.settings'
@@ -36,7 +51,38 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
-6. Naviagate to http://127.0.0.1:8000/
+9. Naviagate to http://127.0.0.1:8000/
+
+10. Create a file named ```.env``` in the ```dev``` directory.
+
+11. Naviagate to ```settings.py``` and locate the following line:
+```
+SECRET_KEY = "...# some string #..."
+```
+
+12. Cut the string and move it to the ```.env``` file. In the ```.env``` file, wrtie the following:
+```
+SECRET_KEY = "...# some string #..."    # the secret key string
+```
+
+13. Back to ```settings.py```, replace the ```SECRET_KEY``` line as:
+```
+SECRET_KEY = config("SECRET_KEY")
+```
+14. Install python-decouple in the terminal window:
+```
+pip install python-decouple
+```
+
+15. Import the following in the ```settings.py``` file:
+```
+from python-decouple import config
+```
+
+16. Finally, type the following into the terminal window. This will create a ```requirements.txt``` file which tracks all installed dependencies on the virtual environment.
+```
+pip freeze > requirements.txt
+```
 
 ## ⭐ Getting started with React
 1. Install [```node.js```](https://nodejs.org/en/).
