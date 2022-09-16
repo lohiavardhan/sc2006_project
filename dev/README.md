@@ -29,60 +29,17 @@ virtualenv -p python3 venv
 venv\Scripts\activate 
 ```
 
-5. Run the following command in the terminal to install Django and its dependencies:
+5. Install dependencies from ```requirements.txt```
 ```
-python -m pip install Django
-```
-
-6. Run the server on local machine:
-```
-python manage.py runserver
-```
-7. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
-```
-python manage.py runserver <PORT_NUMBER>
+pip install -r requirements.txt
 ```
 
-8. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
+6. Create an ```.env``` file under the ```dev``` directory and type the following into the ```.env``` file:
 ```
-...
-Django version 4.1.1, using settings 'app.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CTRL-BREAK.
+SECRET_KEY = "## Some string value ##"      # Get the string value from the admin of the django server
 ```
 
-9. Naviagate to http://127.0.0.1:8000/
 
-10. Create a file named ```.env``` in the ```dev``` directory.
-
-11. Naviagate to ```settings.py``` and locate the following line:
-```
-SECRET_KEY = "...# some string #..."
-```
-
-12. Cut the string and move it to the ```.env``` file. In the ```.env``` file, wrtie the following:
-```
-SECRET_KEY = "...# some string #..."    # the secret key string
-```
-
-13. Back to ```settings.py```, replace the ```SECRET_KEY``` line as:
-```
-SECRET_KEY = config("SECRET_KEY")
-```
-14. Install python-decouple in the terminal window:
-```
-pip install python-decouple
-```
-
-15. Import the following in the ```settings.py``` file:
-```
-from python-decouple import config
-```
-
-16. Finally, type the following into the terminal window. This will create a ```requirements.txt``` file which tracks all installed dependencies on the virtual environment.
-```
-pip freeze > requirements.txt
-```
 
 ## ⭐ Getting started with React
 1. Install [```node.js```](https://nodejs.org/en/).
@@ -93,12 +50,47 @@ npm --version
 Node --version
 ```
 
-3. Install React dependencies (to-be-updated):
+3. Naviagate to the ```client``` folder in the ```dev``` directory:
 ```
-npm install react-router-dom
+cd client
 ```
 
-4. To show any changes made within the [```client```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/client) folder (i.e. changes to the React app), run the following command before refreshing the webpage:
+4. Install React dependencies:
+```
+npm install
+```
+
+5. To show any changes made within the [```client```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/client) folder (i.e. changes to the React app), run the following command before refreshing the webpage:
 ```
 npm run build
 ```
+
+6. Once completed, navigate back to ```app``` under ```dev``` directory:
+```
+cd ../app
+```
+
+7. Activate the virtual environment:
+```
+venv\Scripts\activate 
+```
+
+8. Run the server on local machine:
+```
+python manage.py runserver
+```
+9. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
+```
+python manage.py runserver <PORT_NUMBER>
+```
+
+10. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
+```
+...
+Django version 4.1.1, using settings 'app.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+```
+
+11. Naviagate to http://127.0.0.1:8000/
+
