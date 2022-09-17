@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div>  
+    <div>   
+        <div>
+            <h3 style="text-align:center">Create an Account</h3>
+            <form action="/signup" method="POST">
+                
+                {% csrf_token %}
+
+                {% if error%}
+                <div>
+                    {{error}}
+                </div>
+                {% endif %}
+
+
+                <div>
+                    <label>Username: </label>
+                    <input required
+                            type="text" 
+                            name="username"
+                            id="" 
+                            value="{{values.username}}" 
+                            autocomplete="off"/>
+                </div>
+
+                <div>
+                    <label>Email: </label>
+                    <input required 
+                            type="email" 
+                            name="email" 
+                            id=""
+                            value="{{values.email}}" 
+                            autocomplete="off"/>
+                </div>
+
+
+                <div>
+                    <label>Password: </label>
+                    <input required
+                            type="password"
+                            name="password" 
+                            id=""
+                            value="{{values.password}}"
+                            onChange="onChange()" 
+                            autocomplete="off"/> 
+                </div>
+
+                <div>
+                    <label>Confirm Password: </label>
+                    <input required
+                            type="password"
+                            name="confirm_password" 
+                            id=""
+                            onChange="onChange()" 
+                            autocomplete="off"/> 
+                </div>
+
+                <div>
+                    <input 
+                        required
+                        type="checkbox" 
+                        id="" 
+                        autocomplete="off"/>
+                    <label>I agree to the Terms of Use.</label>
+                </div>
+
+                <hr>
+                <button type="submit">Create an account</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onChange() {
+        const password = document.querySelector('input[name=password]');
+        const confirm = document.querySelector('input[name=confirm_password]');
+        if (confirm.value === password.value) {
+            confirm.setCustomValidity('');
+        } else {
+            confirm.setCustomValidity('Passwords do not match');
+        }
+    }
+</script>
+
+{% endblock %}

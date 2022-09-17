@@ -35,11 +35,12 @@ git checkout dev
 ~
 ├── deliverables                  # Lab deliverables
 ├── dev
-│    ├── app                      # Django server
-│    ├── client                   # React app
-│    ├── requirements.txt         # Dependencies for Django
+│    ├── client         # React app
+│    ├── core           # All server applications
+│    ├── media          # Media folder
+│    ├── server         # Django server
 │    ├── README.md
-│    └── manage.py      
+│    └── manage.py
 ├── .gitignore
 └── README.md
 ```

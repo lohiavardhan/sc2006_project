@@ -80,16 +80,21 @@ cd ../
 venv\Scripts\activate 
 ```
 
-8. Run the server on local machine:
+8. Perform initial migration:
+```
+python maange.py migrate
+```
+
+9. Run the server on local machine:
 ```
 python manage.py runserver
 ```
-9. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
+10. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
 ```
 python manage.py runserver <PORT_NUMBER>
 ```
 
-10. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
+11. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
 ```
 ...
 Django version 4.1.1, using settings 'app.settings'
@@ -97,5 +102,5 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
-11. Naviagate to http://127.0.0.1:8000/
+12. Naviagate to http://127.0.0.1:8000/
 
