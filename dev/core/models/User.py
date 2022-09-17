@@ -1,5 +1,5 @@
 from django.db import models
-  
+import json
   
 class User(models.Model):
     username = models.CharField(max_length=50)
@@ -31,3 +31,6 @@ class User(models.Model):
             return User.objects.get(username=username)
         except:
             return False
+
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

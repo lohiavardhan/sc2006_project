@@ -11,12 +11,7 @@ class Item(models.Model):
     rebate = models.FloatField(default=0)
     image = models.ImageField(upload_to='products/')
 
-    @staticmethod
-    def get_item_by_id(ids):
-        return Item.objects.filter(id__in=ids)
-
-    @staticmethod
-    def get_all_items():
-        return Item.objects.all()
+    #WIP
+    
     
     

@@ -5,6 +5,17 @@ from django.views import View
   
 
 class Login(View):
+    @staticmethod
+    def verifyCredentials(user, password):
+        if user:
+            flag = check_password(password, user.password)
+            if flag:
+                return True
+            else:
+                return False
+        else:
+            return False
+            
     def get(self, request):
         return render(request, 'login.html')
   
@@ -21,13 +32,4 @@ class Login(View):
         payload = {'error': error_message}
         return render(request, 'login.html', payload)
 
-    @staticmethod
-    def verifyCredentials(user, password):
-        if user:
-            flag = check_password(password, user.password)
-            if flag:
-                return True
-            else:
-                return False
-        else:
-            return False
+    
