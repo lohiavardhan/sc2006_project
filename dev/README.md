@@ -1,6 +1,6 @@
 # React and Django
 
-All backend files and components can be found under [```app```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/app). <br>
+All backend files and components can be found under [```server```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/app). <br>
 All frontend files and components can be found under [```client```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/client).
 
 <p>
