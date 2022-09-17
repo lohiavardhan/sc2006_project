@@ -35,9 +35,16 @@ git checkout dev
 ~
 ├── deliverables        # Lab deliverables
 ├── dev
+<<<<<<< Updated upstream
 │    ├── accounts       # Accounts app
 │    ├── server         # Django server
 │    ├── client         # Front-end React component files
+=======
+│    ├── client         # React app
+│    ├── core           # All server applications
+│    ├── media          # Media folder
+│    ├── server         # Django server
+>>>>>>> Stashed changes
 │    └── manage.py
 ├── .gitignore
 └── README.md
