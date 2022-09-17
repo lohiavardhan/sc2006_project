@@ -33,12 +33,13 @@ git checkout dev
 ## 📁 File Structure
 ```
 ~
-├── deliverables        # Lab deliverables
+├── deliverables                  # Lab deliverables
 ├── dev
 │    ├── client         # React app
 │    ├── core           # All server applications
 │    ├── media          # Media folder
 │    ├── server         # Django server
+│    ├── README.md
 │    └── manage.py
 ├── .gitignore
 └── README.md
