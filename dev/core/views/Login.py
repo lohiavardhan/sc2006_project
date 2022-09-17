@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import check_password
 from ..models.User import User
 from django.views import View
@@ -11,22 +11,23 @@ class Login(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.get_customer_by_username(username)
-        error_message = None
+        user = User.retrieve_username(username)
+
+        if Login.verifyCredentials(user, password):
+            user.login(request)
+            return redirect('homepage')
+        else:
+            error_message = 'Invalid Username or Password !!'
+        payload = {'error': error_message}
+        return render(request, 'login.html', payload)
+
+    @staticmethod
+    def verifyCredentials(user, password):
         if user:
             flag = check_password(password, user.password)
             if flag:
-                request.session['user'] = User.id
-                return redirect('homepage')
+                return True
             else:
-                error_message = 'Invalid Username or Password !!'
+                return False
         else:
-            error_message = 'Invalid Username or Password!!'
-  
-        payload = {'error': error_message}
-        return render(request, 'login.html', payload)
-  
-  
-def logout(request):
-    request.session.clear()
-    return redirect('login')
+            return False
