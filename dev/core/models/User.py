@@ -10,7 +10,7 @@ class User(models.Model):
         self.save()
 
     def login(self, request):
-        request.session['user'] = User.id
+        request.session['user'] = self.id
 
     def logout(self, request):
         request.session.clear()

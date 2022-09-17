@@ -30,6 +30,8 @@ class Auth(View):
 					    email=request.session['email'],
 						password=request.session['password'])
             newUser.register()
+            request.session.clear()
+            request.session['user'] = newUser.id
             return redirect('homepage')
         else:
             error_message = "Incorrect OTP !!"
