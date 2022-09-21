@@ -1,106 +1,66 @@
-# React and Django
+# FindR
 
-All backend files and components can be found under [```server```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/server). <br>
-All frontend files and components can be found under [```client```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/client).
-
-<p>
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
-</p>
-
-## ⭐ Getting started with Django
-1. Run the following command to install Python virtual environment.
+## Initialization
+#### Install Python virtual environment:
 ```
-python -m pip install virtualenv
+pip install virtualenv
 ```
 
-2. Navigate to the project directory and into the ```dev``` folder:
+#### Verify that Python virtual environment has been installed on local machine:
 ```
-cd <PROJECT_DIR>/dev
-```
-
-3. Create a virtual environment in the project directory.
-```
-virtualenv -p python3 venv   
+virtualenv --version
 ```
 
-4. Activate the virtual environment:
+#### Initialize a virtual environment under the ```dev``` sub-folder:
 ```
-venv\Scripts\activate 
+cd dev
+virtualenv venv
 ```
 
-5. Install dependencies from ```requirements.txt```
+#### Install all dependencies for Django in the virtual environment from ```requirements.txt```:
 ```
+venv/scripts/activate
 pip install -r requirements.txt
 ```
 
-6. Once done, exit the virtual environment by typing:
-```
-deactivate
-```
-
-7. Create an ```.env``` file under the ```dev``` directory and type the following into the ```.env``` file:
-```
-SECRET_KEY = "## Some string value ##"      # Get the string value from the admin of the django server
-```
-
-
-
-## ⭐ Getting started with React
-1. Install [```node.js```](https://nodejs.org/en/).
-
-2. Verify that the installation is successful by typing the following into the terminal window:
-```
-npm --version
-Node --version
-```
-
-3. Naviagate to the ```client``` folder in the ```dev``` directory:
+#### Install all dependencies for React in the virtual environment:
 ```
 cd client
-```
-
-4. Install React dependencies:
-```
 npm install
 ```
 
-5. To show any changes made within the [```client```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/client) folder (i.e. changes to the React app), run the following command before refreshing the webpage:
+#### Include Secret Key file named `.env` under ```dev``` directory. Paste the following line into the file:
 ```
-npm run build
-```
-
-6. Once completed, navigate back to the ```dev``` directory:
-```
-cd ../
+SECRET_KEY = 'django-insecure-### REMAINING TEXTS ARE HIDDEN FOR SECURITY MEASURE ###'
 ```
 
-7. Activate the virtual environment:
+#### Apply existing migrations
 ```
-venv\Scripts\activate 
-```
-
-8. Perform initial migration:
-```
-python maange.py migrate
+python manage.py migrate
 ```
 
-9. Run the server on local machine:
+#### Initialize server:
 ```
 python manage.py runserver
 ```
-10. The server is defaulted to port 8000. If you wish to change the port number, simply add the port number after the command:
-```
-python manage.py runserver <PORT_NUMBER>
-```
 
-11. Once the ```runserver``` command is executed, the following will be shown on the terminal window:
+#### You should be able to see the following message on the terminal window:
 ```
 ...
-Django version 4.1.1, using settings 'app.settings'
+System check identified no issues (0 silenced).
+September 21, 2022 - 20:20:25
+Django version 4.1.1, using settings 'server.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
-12. Naviagate to http://127.0.0.1:8000/
+## Server API Endpoints
+All APIs are built using the [Django REST framework](https://www.django-rest-framework.org).
 
+#### Access API
+Head-over to &lt;**domain**&gt;**/api/**&lt;**API**&gt; to access all APIs: <br>
+| API               	| Function                                              	| Return Object                                                                                                                                                                                             	|
+|-------------------	|-------------------------------------------------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| /api/login        	| Processes POST request for<br>logging a user into app 	| If login successful<br>{<br>   error: "OK"<br>} <br><br>If login fails<br>{<br>   error: &lt;error_message&gt;<br>}                                                                                       	|
+| /api/signup       	| Processes POST request for<br>registering a user      	| If signup successful<br>{<br>   error: "OK"<br>}<br><br>If signup fails<br>{<br>   error: &lt;error_message&gt;<br>}                                                                                      	|
+| /api/authenticate 	| Processes POST request for<br>handling user 2FA       	| If authenticate successful<br>{<br>   userID: &lt;user ID in database&gt;,<br>   user: &lt;username&gt;,<br>   error: "OK"<br>}<br><br>If authenticate fails<br>{<br>   error: &lt;error_message&gt;<br>} 	|
