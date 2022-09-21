@@ -1,27 +1,28 @@
 # FindR
 
 ## ⭐ Getting Started
-1. Navigate to your working directory:
+
+#### Navigate to your working directory:
 ```
 cd <PATH>/<WORK_DiR>
 ```
 
-2. Clone the GitHub Repository:
+#### Clone the GitHub repository:
 ```
 git clone https://github.com/lohiavardhan/sc2006_project.git
 ```
 
-3. Navigate to the project directory:
+#### Navigate to the local repo directory:
 ```
 cd sc2006_project
 ```
 
-4. Checkout on different branches:
-> For *main* branch:
+#### Checkout on different branches:
+* For *main* branch:
 ```
 git checkout main
 ```
-> For *dev* branch:
+* For *dev* branch:
 ```
 git checkout dev
 ```
@@ -33,14 +34,21 @@ git checkout dev
 ## 📁 File Structure
 ```
 ~
-├── deliverables                  # Lab deliverables
+├── deliverables                    # Lab deliverables
 ├── dev
-│    ├── client         # React app
-│    ├── core           # All server applications
-│    ├── media          # Media folder
-│    ├── server         # Django server
+│    ├── client                     # React app
+│    ├── core                       # Server API
+│    ├── requirements.txt           # Project dependencies
+│    ├── server                     # Django server
 │    ├── README.md
 │    └── manage.py
 ├── .gitignore
 └── README.md
 ```
+
+## 🛠️ Frameworks and Tools
+<p>
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+    <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
+    <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" />
+</p>

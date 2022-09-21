@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from .views.Signup import Signup
-from .views.Login import Login
-  
+from .views.LoginView import LoginView
+from .views.SignupView import AddUserView, UserView
+from .views.AuthView import AuthenticateView
+
 urlpatterns = [
-    path('signup', Signup.as_view(), name='signup'),  
-    path('login', Login.as_view(), name='login'),
+    ## Every views will appear here
+    path('viewsignup', UserView.as_view()),
+    path('signup', AddUserView.as_view()),
+    path('authenticate', AuthenticateView.as_view()),
+    path('login', LoginView.as_view()),
 ]
