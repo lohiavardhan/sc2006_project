@@ -24,3 +24,14 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+
+class AccountDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
+class EditAccountDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'name', 'birthday')

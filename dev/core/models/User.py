@@ -26,6 +26,11 @@ class User(models.Model):
     ## Session key for each session;
     ## Use this to authenticate user so they dont have to relogin every refresh;
     last_session = models.CharField(max_length=50)
+   
+    name = models.CharField(max_length=50, null=True)
+
+    birthday = models.DateField(null=True)
+
 
     def __str__(self):
         return self.username
@@ -39,6 +44,14 @@ class User(models.Model):
     ## Saves the instance to update the last_login field
     def login(self, request):
         request.session['user'] = self.id
+        self.save()
+
+    
+    def updateParticulars(self, name, email, username, birthday):
+        self.name = name
+        self.username = username
+        self.birthday = birthday
+        self.email = email
         self.save()
 
     ## Function to retrieve a queryset of a user's friend list.

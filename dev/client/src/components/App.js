@@ -4,6 +4,8 @@ import Home from "./Home";
 import Auth from "./Auth";
 import Signup from "./Signup";
 import Login from "./Login";
+import Account from "./Account";
+import EditAccount from "./EditAccount";
 import {
   BrowserRouter as Router,
   Routes,
@@ -24,6 +26,9 @@ export default class App extends Component {
             <Route path="/signup" element={<Signup />} />
             <Route path="signup/authenticate/:email" element={<Auth />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="accounts/:username" element={<Account />} />
+            <Route path="accounts/:username/edit" element={<EditAccount />} />
           </Routes>
         </Router>
       </>

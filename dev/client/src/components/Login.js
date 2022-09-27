@@ -90,7 +90,7 @@ export default class Login extends Component {
         </>
       );
     } else {
-      return <Navigate to={`/account/${username}`} />;
+      return <Navigate to={`/accounts/${username}`} />;
     }
   }
 }

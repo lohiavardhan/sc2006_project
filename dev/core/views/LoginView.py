@@ -27,7 +27,7 @@ class LoginView(APIView):
             ## If verified
             if not error:
                 ## Retrieve the entry from database
-                user = User.objects.get(username=username)
+                user = User.retrieveInfo(username)
                 ## Update the last session key
                 user.last_session = request.session.session_key
                 ## Login user
