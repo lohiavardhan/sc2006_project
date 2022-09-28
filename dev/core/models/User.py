@@ -43,10 +43,14 @@ class User(models.Model):
     ## Adds a key in the session which contains the user id during login
     ## Saves the instance to update the last_login field
     def login(self, request):
+        self.last_session = request.session.session_key
         request.session['user'] = self.id
         self.save()
 
-    
+    def logout(self):
+        self.last_session = "null"
+        self.save()
+
     def updateParticulars(self, name, email, username, birthday):
         self.name = name
         self.username = username
@@ -66,6 +70,12 @@ class User(models.Model):
 
         except:
             return None
+    
+    def userAuthenticated(self, session_key):
+        if self.last_session == session_key:
+            return True
+        
+        return False
 
     ## Helper function to check if username is taken during registration
     @staticmethod

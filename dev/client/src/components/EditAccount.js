@@ -16,6 +16,11 @@ class EditAccount extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.updateUserData = this.updateUserData.bind(this);
+    this.userAuth = this.userAuth.bind(this);
+  }
+
+  componentDidMount() {
+    this.userAuth();
   }
 
   handleChange(e) {
@@ -52,14 +57,42 @@ class EditAccount extends Component {
         }
       });
   }
+
+  userAuth() {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+      }),
+    };
+    fetch("/api/accounts/authenticate", requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        this.setState({ error: json.error });
+        if (this.state.error != "OK") {
+          this.setState({
+            redirect: true,
+          });
+        }
+      });
+  }
+
   render() {
+    this.userAuth;
     const { redirect } = this.state;
     const { username } = this.state;
+
     if (!redirect) {
       return (
         <>
           <div>
-            <div>{this.state.error != null && <p>{this.state.error}</p>}</div>
+            <div>{this.state.error != "OK" && <p>{this.state.error}</p>}</div>
             <div>
               <form onSubmit={this.updateUserData}>
                 <div>

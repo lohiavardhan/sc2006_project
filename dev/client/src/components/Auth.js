@@ -78,7 +78,7 @@ class Auth extends Component {
         </>
       );
     } else {
-      return <Navigate to={`/account/${user}`} />;
+      return <Navigate to={`/accounts/${user}`} />;
     }
   }
 }

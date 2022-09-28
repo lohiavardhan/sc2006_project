@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 class Account extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Account extends Component {
       redirect: false,
     };
     this.getUserData = this.getUserData.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -45,30 +47,68 @@ class Account extends Component {
             email: json.email,
             birthday: json.birthday,
           });
+        } else {
+          this.setState({
+            redirect: true,
+          });
+        }
+      });
+  }
+
+  logout() {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+      }),
+    };
+
+    fetch("/api/accounts/logout", requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        this.setState({ error: json.error });
+        if (this.state.error == "OK") {
+          this.setState({
+            redirect: true,
+          });
         }
       });
   }
 
   render() {
+    this.getUserData;
     const { name } = this.state;
     const { email } = this.state;
     const { username } = this.state;
     const { birthday } = this.state;
+    const { redirect } = this.state;
 
-    return (
-      <>
-        {this.getUserData}
-        <div>
-          <ul>
-            <li>{name}</li>
-            <li> {username}</li>
-            <li>{email}</li>
-            <li>{birthday}</li>
-          </ul>
-          <a href={`/accounts/${username}/edit`}> Update </a>
-        </div>
-      </>
-    );
+    if (!redirect) {
+      return (
+        <>
+          <div>
+            <ul>
+              <li>{name}</li>
+              <li> {username}</li>
+              <li>{email}</li>
+              <li>{birthday}</li>
+            </ul>
+            <a href={`/accounts/${username}/edit`}> Update </a>
+            <button type="submit" onClick={this.logout}>
+              Logout
+            </button>
+          </div>
+        </>
+      );
+    } else {
+      return <Navigate to={`/login`} />;
+    }
   }
 }
 

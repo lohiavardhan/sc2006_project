@@ -98,6 +98,7 @@ export default class Signup extends Component {
               <hr />
               <button type="submit">Create an account</button>
             </form>
+            <a href={`/login`}> Already have an account? </a>
           </div>
         </>
       );

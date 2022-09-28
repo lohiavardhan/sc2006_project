@@ -51,6 +51,7 @@ export default class Login extends Component {
   render() {
     const { redirect } = this.state;
     const { username } = this.state;
+
     if (!redirect) {
       return (
         <>
@@ -86,6 +87,8 @@ export default class Login extends Component {
               <hr />
               <button type="submit">Login</button>
             </form>
+
+            <a href={`/signup`}> Don't have an account? </a>
           </div>
         </>
       );
