@@ -71,7 +71,6 @@ Use this API to authenticate user on sign up. <br>
 |------------------	|-----------------------------------------------	|
 | OK               	| No error detected.                            	|
 | error_invalidOTP 	| Invalid OTP entered by the user.              	|
-| error_not_auth   	| User is not authorised to access the content. 	|
 
 ## Accounts API
 `api/accounts`
