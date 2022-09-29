@@ -143,6 +143,7 @@ Use this API to check user's auth status. <br>
 |------------------	|-----------------------------------------------	|
 | OK               	| No error detected.                            	|
 | error_not_auth   	| User is not authorised to access the content. 	|
+| error_user_invalid 	| User not found.                               	|
   
 ## Logout API
 `api/accounts/logout`
