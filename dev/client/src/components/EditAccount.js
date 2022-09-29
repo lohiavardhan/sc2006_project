@@ -74,8 +74,7 @@ class EditAccount extends Component {
         return response.json();
       })
       .then((json) => {
-        this.setState({ error: json.error });
-        if (this.state.error != "OK") {
+        if (json.error != "OK") {
           this.setState({
             redirect: true,
           });

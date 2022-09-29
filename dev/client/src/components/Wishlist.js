@@ -24,10 +24,12 @@ class Wishlist extends Component {
       redirect: false,
     };
     this.getUserWishlist = this.getUserWishlist.bind(this);
+    this.userAuth = this.userAuth.bind(this);
   }
 
   componentDidMount() {
     this.getUserWishlist();
+    this.userAuth();
   }
 
   getUserWishlist() {
@@ -56,32 +58,64 @@ class Wishlist extends Component {
       });
   }
 
+  userAuth() {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+      }),
+    };
+    fetch("/api/accounts/authenticate", requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        if (json.error != "OK") {
+          this.setState({
+            redirect: true,
+          });
+        }
+      });
+  }
+
   render() {
-    const { wishlist } = this.state;
-    const { error } = this.state;
+    this.userAuth;
     this.getUserWishlist;
-    return (
-      <div>
-        {error == "OK" &&
-          wishlist.map((item) => (
-            <div>
-              <ul>
-                <li>{item.id}</li>
-                <li>{item.item_name}</li>
-                <li>{item.user}</li>
-                <li>{item.purchasable.toString()}</li>
-                <li>{item.added_at}</li>
-                <li>{item.session_key}</li>
-                <li>{item.platform}</li>
-                <li>
-                  <a href={item.url}>Link</a>
-                </li>
-              </ul>
-            </div>
-          ))}
-        {error != "OK" && <div>{error}</div>}
-      </div>
-    );
+    const { wishlist } = this.state;
+    const { username } = this.state;
+    const { redirect } = this.state;
+    const { error } = this.state;
+
+    if (!redirect) {
+      return (
+        <div>
+          {error == "OK" &&
+            wishlist.map((item) => (
+              <div>
+                <ul>
+                  <li>{item.id}</li>
+                  <li>{item.item_name}</li>
+                  <li>{item.user}</li>
+                  <li>{item.purchasable.toString()}</li>
+                  <li>{item.added_at}</li>
+                  <li>{item.session_key}</li>
+                  <li>{item.platform}</li>
+                  <li>
+                    <a href={item.url}>Link</a>
+                  </li>
+                </ul>
+              </div>
+            ))}
+          {error != "OK" && <div>{error}</div>}
+        </div>
+      );
+    } else {
+      return <Navigate to={`/accounts/${username}`} />;
+    }
   }
 }
 
