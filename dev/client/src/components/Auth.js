@@ -43,6 +43,8 @@ class Auth extends Component {
         this.setState({ error: json.error });
         if (this.state.error == "OK") {
           this.setState({ redirect: true, user: json.user });
+        } else if (this.state.error == "error_invalidOTP") {
+          this.setState({ error: "OTP is incorrect !!" });
         }
       });
   }
@@ -50,7 +52,7 @@ class Auth extends Component {
   render() {
     const { redirect } = this.state;
     const { user } = this.state;
-    console.log(user);
+    const { error } = this.state;
     if (!redirect) {
       return (
         <>
@@ -58,7 +60,7 @@ class Auth extends Component {
             <div>
               <hr />
             </div>
-            {this.state.error != null && <p>{this.state.error}</p>}
+            {error != "OK" && <p>{error}</p>}
             <h3>Input OTP</h3>
             <form onSubmit={this.handleSubmit}>
               <div>

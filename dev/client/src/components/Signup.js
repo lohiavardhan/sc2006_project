@@ -44,6 +44,16 @@ export default class Signup extends Component {
         this.setState({ error: json.error }, () => {
           if (this.state.error == "OK") {
             this.setState({ redirect: true });
+          } else if (this.state.error == "error_user_taken") {
+            this.setState({ error: "Username has been taken !!" });
+          } else if (this.state.error == "error_user_invalid") {
+            this.setState({ error: "Username is invalid !!" });
+          } else if (this.state.error == "error_email_taken") {
+            this.setState({ error: "Email has been registered !!" });
+          } else if (this.state.error == "error_email_invalid") {
+            this.setState({ error: "Email is invalid !!" });
+          } else if (this.state.error == "error_password_invalid") {
+            this.setState({ error: "Password does not meet requirements !!" });
           }
         });
       });
@@ -52,6 +62,7 @@ export default class Signup extends Component {
   render() {
     const { redirect } = this.state;
     const { email } = this.state;
+    const { error } = this.state;
     if (!redirect) {
       return (
         <>
@@ -59,7 +70,7 @@ export default class Signup extends Component {
             <div>
               <hr />
             </div>
-            {this.state.error != null && <p>{this.state.error}</p>}
+            {error != "OK" && <p>{error}</p>}
             <h3>Create an Account</h3>
             <form onSubmit={this.handleSubmit}>
               <div>

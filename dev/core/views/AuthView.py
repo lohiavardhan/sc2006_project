@@ -16,10 +16,11 @@ class AuthenticateView(APIView):
 
             ## User info is retrieved from payload stored in session
             ## Refer to SignupView 
+            
             username = request.session['payload']['username']
             password = request.session['payload']['password']
             email = request.session['payload']['email']
-            
+        
             ## If the user inputted code matches the one sent
             if AuthenticateView.validateCode(code, request):
                 ## Clear payload in session
@@ -39,10 +40,10 @@ class AuthenticateView(APIView):
                 return Response(payload, status=status.HTTP_200_OK)
             
             else:
-                error = "Incorrect OTP entered !!"
+                error = "error_invalidOTP"
                 payload = {"error": error}
                 return Response(payload, status=status.HTTP_200_OK)
-    
+
     @staticmethod
     def validateCode(code, request):
         if code == request.session['payload']['auth']:
@@ -66,11 +67,11 @@ class CheckUserAuthView(APIView):
                     return Response(payload, status=status.HTTP_200_OK)
                 
                 else:
-                    error = "User not authenticated !!"
+                    error = "error_not_auth"
                     payload = {"error": error}
                     return Response(payload, status=status.HTTP_200_OK)
             
             else:
-                error = "No record found !!"
+                error = "error_user_invalid"
                 payload = {"error": error}
                 return Response(payload, status=status.HTTP_200_OK)

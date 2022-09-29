@@ -43,6 +43,8 @@ export default class Login extends Component {
         this.setState({ error: json.error }, () => {
           if (this.state.error == "OK") {
             this.setState({ redirect: true });
+          } else {
+            this.setState({ error: "Invalid Username and/or Password !!" });
           }
         });
       });
@@ -51,6 +53,7 @@ export default class Login extends Component {
   render() {
     const { redirect } = this.state;
     const { username } = this.state;
+    const { error } = this.state;
 
     if (!redirect) {
       return (
@@ -59,7 +62,7 @@ export default class Login extends Component {
             <div>
               <hr />
             </div>
-            {this.state.error != null && <p>{this.state.error}</p>}
+            {error != "OK" && <p>{error}</p>}
             <h3>Login to account</h3>
             <form onSubmit={this.handleSubmit}>
               <div>

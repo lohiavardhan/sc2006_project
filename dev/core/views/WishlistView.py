@@ -23,7 +23,7 @@ class WishlistView(APIView):
                 return Response(payload, status=status.HTTP_200_OK)
             
             else:
-                error = "No item added to wishlist yet !!"
+                error = "error_wishlist_invalid"
                 payload = {"error": error}
                 return Response(payload, status=status.HTTP_200_OK)
         

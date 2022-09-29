@@ -54,6 +54,14 @@ class EditAccount extends Component {
           this.setState({
             redirect: true,
           });
+        } else if (this.state.error == "error_user_taken") {
+          this.setState({
+            error: "Username has been taken !!",
+          });
+        } else if (this.state.error == "error_email_taken") {
+          this.setState({
+            error: "Email has been taken !!",
+          });
         }
       });
   }
@@ -86,12 +94,13 @@ class EditAccount extends Component {
     this.userAuth;
     const { redirect } = this.state;
     const { username } = this.state;
+    const { error } = this.state;
 
     if (!redirect) {
       return (
         <>
           <div>
-            <div>{this.state.error != "OK" && <p>{this.state.error}</p>}</div>
+            <div>{error != "OK" && <p>{error}</p>}</div>
             <div>
               <form onSubmit={this.updateUserData}>
                 <div>

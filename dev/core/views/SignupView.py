@@ -45,19 +45,19 @@ class AddUserView(APIView):
         error = None
 
         if User.takenUsername(username):
-            error = "Username has been taken !!"
+            error = "error_user_taken"
         
         elif len(username) < 5:
-            error = "Username must have a minimum of 5 characters !!"
+            error = "error_user_invalid"
 
         elif len(email) < 5:
-            error = "Invalid email address !!"
+            error = "error_email_invalid"
         
         elif User.takenEmail(email):
-            error = "Email has been registered !!"
+            error = "error_email_taken"
         
         elif not User.validatePassword(password):
-            error = "Password does not satisfy requirements !!"
+            error = "error_password_invalid"
         
         return error
     

@@ -22,12 +22,12 @@ class AccountsView(APIView):
                     return Response(payload, status=status.HTTP_200_OK)
 
                 else:
-                    error = "User not authenticated!"
+                    error = "error_not_auth"
                     payload = {'error': error}
                     return Response(payload, status=status.HTTP_200_OK)
 
             else:
-                error = "No records found !"
+                error = "error_user_invalid"
                 payload = {'error': error}
                 return Response(payload, status=status.HTTP_200_OK)
 
@@ -50,19 +50,19 @@ class EditAccountsView(APIView):
             old_username = user.username
             old_email = user.email
             
-            if (not User.takenUsername(username) or username == old_username) and (not User.takenEmail(email) or user.email == old_email):
+            if (not User.takenUsername(username) or username == old_username) and (not User.takenEmail(email) or email == old_email):
                 user = User.retrieveInfo(old_username)
                 user.updateParticulars(name, email, username, birthday)
                 payload = {'error': "OK"}
                 return Response(payload, status=status.HTTP_200_OK) 
 
-            elif User.takenUsername(username):
-                error = "Username has been taken !!"
+            elif User.takenUsername(username) and username != old_username:
+                error = "error_user_taken"
                 payload = {'error': error}
                 return Response(payload, status=status.HTTP_200_OK)
 
-            elif User.takenEmail(email):
-                error = "Email has been taken !!"
+            elif User.takenEmail(email) and email != old_email:
+                error = "error_email_taken"
                 payload = {'error': error}
                 return Response(payload, status=status.HTTP_200_OK)
 
@@ -85,10 +85,11 @@ class LogoutAccountView(APIView):
                     return Response(payload, status=status.HTTP_200_OK)
 
                 else:
-                    payload = {'error': "User not authenticated!"}
+                    error = "error_not_auth"
+                    payload = {'error': error}
                     return Response(payload, status=status.HTTP_200_OK)
 
             else:
-                error = "No records found !"
+                error = "error_user_invalid"
                 payload = {'error': error}
                 return Response(payload, status=status.HTTP_200_OK)

@@ -54,6 +54,10 @@ class Wishlist extends Component {
           this.setState({
             wishlist: json.payload,
           });
+        } else {
+          this.setState({
+            error: "No wish list item added yet !!",
+          });
         }
       });
   }

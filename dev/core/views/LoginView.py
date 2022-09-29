@@ -41,6 +41,6 @@ class LoginView(APIView):
         user = User.retrieveInfo(username)
 
         if not user or not check_password(password, user.password):
-            error = "Invalid username and/or password !!"
+            error = "error_user"
         
         return error
