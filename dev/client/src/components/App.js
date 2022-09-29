@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import Account from "./Account";
 import EditAccount from "./EditAccount";
+import Wishlist from "./Wishlist";
 import {
   BrowserRouter as Router,
   Routes,
@@ -29,6 +30,7 @@ export default class App extends Component {
             <Route path="/home" element={<Home />} />
             <Route path="accounts/:username" element={<Account />} />
             <Route path="accounts/:username/edit" element={<EditAccount />} />
+            <Route path="accounts/:username/wishlist" element={<Wishlist />} />
           </Routes>
         </Router>
       </>

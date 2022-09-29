@@ -1,9 +1,7 @@
-from tkinter.tix import CheckList
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from ..models.User import User
-from ..models.AuthCode import AuthCode
 from django.contrib.auth.hashers import check_password, make_password
 from ..serializers import AuthCodeSerializer, CheckUserAuthSerializer
 
@@ -23,24 +21,19 @@ class AuthenticateView(APIView):
             email = request.session['payload']['email']
             
             ## If the user inputted code matches the one sent
-            if AuthenticateView.validateCode(code):
+            if AuthenticateView.validateCode(code, request):
                 ## Clear payload in session
                 del request.session['payload']
 
                 ## Create an instance of the user
-                user = User(username=username, password=password, email=email)
+                user = User(username=username, password=password, email=email, last_code=code)
                 ## Register the user
                 user.register()
-
-                ## Create an instance of the authentication code
-                userAuth = AuthCode(user=user, last_code=code)
-                ## Register (this shows that user has been verified)
-                userAuth.register()
 
                 request.session.create()
                 user.login(request)
 
-                payload = {"userID": user.id, "error": "OK", "user": username}
+                payload = {"error": "OK", "user": user.username}
 
                 ## Send payload back to browser
                 return Response(payload, status=status.HTTP_200_OK)
@@ -51,8 +44,8 @@ class AuthenticateView(APIView):
                 return Response(payload, status=status.HTTP_200_OK)
     
     @staticmethod
-    def validateCode(code):
-        if check_password(code, make_password("123456")):
+    def validateCode(code, request):
+        if code == request.session['payload']['auth']:
             return True
         return False
 

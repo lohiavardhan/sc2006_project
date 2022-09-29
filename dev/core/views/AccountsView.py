@@ -22,7 +22,8 @@ class AccountsView(APIView):
                     return Response(payload, status=status.HTTP_200_OK)
 
                 else:
-                    payload = {'error': "User not authenticated!"}
+                    error = "User not authenticated!"
+                    payload = {'error': error}
                     return Response(payload, status=status.HTTP_200_OK)
 
             else:

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 class Account extends Component {
@@ -99,7 +99,10 @@ class Account extends Component {
               <li>{email}</li>
               <li>{birthday}</li>
             </ul>
-            <a href={`/accounts/${username}/edit`}> Update </a>
+            <div>
+              <a href={`/accounts/${username}/edit`}> Update </a>
+            </div>
+            <a href={`/accounts/${username}/wishlist`}> View Wishlist </a>
             <button type="submit" onClick={this.logout}>
               Logout
             </button>

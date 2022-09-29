@@ -26,11 +26,12 @@ class User(models.Model):
     ## Session key for each session;
     ## Use this to authenticate user so they dont have to relogin every refresh;
     last_session = models.CharField(max_length=50)
-   
+
+    last_code = models.CharField(max_length=8)
+    
     name = models.CharField(max_length=50, null=True)
 
     birthday = models.DateField(null=True)
-
 
     def __str__(self):
         return self.username

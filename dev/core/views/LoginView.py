@@ -17,9 +17,6 @@ class LoginView(APIView):
             username = serializer.data.get('username')
             password = serializer.data.get('password')
 
-            ## If there is not yet a session, create one
-            request.session.create()
-
             ## Verify credentials inputted
             error = LoginView.verifyCredentials(username, password)
 
@@ -27,6 +24,8 @@ class LoginView(APIView):
             if not error:
                 ## Retrieve the entry from database
                 user = User.retrieveInfo(username)
+                ## If there is not yet a session, create one
+                request.session.create()
                 ## Login user
                 user.login(request)
                 payload = {"error": "OK"}

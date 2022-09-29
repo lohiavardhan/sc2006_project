@@ -1,15 +1,10 @@
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from ..serializers import UserSerializer, AddUserSerializer
+from ..serializers import AddUserSerializer
 from ..models.User import User
 from django.contrib.auth.hashers import make_password
-
-class UserView(generics.ListAPIView):
-    ## A set of all entries in the database
-    queryset = User.objects.all()
-    ## Serailise the entries into JSON data
-    serializer_class = UserSerializer
+import random
 
 class AddUserView(APIView):
     serializer_class = AddUserSerializer
@@ -35,6 +30,7 @@ class AddUserView(APIView):
                 user = User(username=username, password=password, email=email)
                 ## User session to store data for authentication page
                 request.session['payload'] = AddUserSerializer(user).data
+                request.session['payload']['auth'] = AddUserView.generateCode()
                 ## No error detected
                 payload = {"error": "OK"}
                 ## Send back the browser the payload
@@ -64,4 +60,9 @@ class AddUserView(APIView):
             error = "Password does not satisfy requirements !!"
         
         return error
-        
+    
+    @staticmethod
+    def generateCode():
+        code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
+        print(code)
+        return code
