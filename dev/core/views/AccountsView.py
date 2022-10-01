@@ -2,56 +2,61 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from ..models.User import User
-from ..serializers import AccountDetailsSerializer, EditAccountDetailsSerializer, LogoutAccountSerializer
+from ..serializers import EditAccountDetailsSerializer
 
 class AccountsView(APIView):
-    serializer_class = AccountDetailsSerializer
-
-    def post(self, request, format=None):
-        ## Serialize the requested data into JSON objects
-        serializer = self.serializer_class(data=request.data)
-
-        if serializer.is_valid():
-            ## Assign the received responses to their respective variables
-            username = serializer.data.get('username')
-            user = User.retrieveInfo(username)
-
-            if user:
-                if user.userAuthenticated(request.session.session_key):
-                    payload = {'error': "OK", 'username': username, 'email': user.email, 'name': user.name, 'birthday': user.birthday}
-                    return Response(payload, status=status.HTTP_200_OK)
-
-                else:
-                    error = "error_not_auth"
-                    payload = {'error': error}
-                    return Response(payload, status=status.HTTP_200_OK)
-
+    def get(self, request):
+        try:
+            assert request.session['user'] >= 0
+            user = User.retrieveInfo(request.session['user'])
+            if request.query_params.get('username') == user.username:
+                error = "OK"
+                payload = {"error": error, "username": user.username, "email": user.email, "name": user.name, "birthday": user.birthday}
+                return Response(payload)
             else:
-                error = "error_user_invalid"
-                payload = {'error': error}
-                return Response(payload, status=status.HTTP_200_OK)
+                error = "error_not_auth"
+                payload = {"error": error}
+                return Response(payload)
+
+        except:
+            error = "error_not_auth"
+            payload = {"error": error}
+            return Response(payload)
 
 
 class EditAccountsView(APIView):
     serializer_class = EditAccountDetailsSerializer
+    def get(self, request):
+        try:
+            assert request.session['user'] >= 0
+            user = User.retrieveInfo(request.session['user'])
+            if request.query_params.get('username') == user.username:
+                payload = {"error": "OK"}
+                return Response(payload)
+            else:
+                error = "error_not_auth"
+                payload = {"error": error}
+                return Response(payload)
+                
+        except:
+            error = "error_not_auth"
+            payload = {"error": error}
+            return Response(payload)
 
-    def post(self, request, format=None):
-        ## Serialize the requested data into JSON objects
+    def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            ## Assign the received responses to their respective variables
             username = serializer.data.get('username')
             email = serializer.data.get('email')
             name = serializer.data.get('name')
             birthday = serializer.data.get('birthday')
 
-            user = User.objects.get(id=request.session['user'])
+            user = User.retrieveInfo(request.session['user'])
             old_username = user.username
             old_email = user.email
             
             if (not User.takenUsername(username) or username == old_username) and (not User.takenEmail(email) or email == old_email):
-                user = User.retrieveInfo(old_username)
                 user.updateParticulars(name, email, username, birthday)
                 payload = {'error': "OK"}
                 return Response(payload, status=status.HTTP_200_OK) 
@@ -68,28 +73,15 @@ class EditAccountsView(APIView):
 
 
 class LogoutAccountView(APIView):
-    serializer_class = LogoutAccountSerializer
+    def post(self, request):
 
-    def post(self, request, format=None):
-        ## Serialize the requested data into JSON objects
-        serializer = self.serializer_class(data=request.data)
+        try:
+            user = User.retrieveInfo(request.session['user'])
+            user.logout(request)
+            payload = {'error': "OK"}
+            return Response(payload)
 
-        if serializer.is_valid():
-            username = serializer.data.get('username')
-            user = User.retrieveInfo(username)
-
-            if user:
-                if user.userAuthenticated(request.session.session_key):
-                    user.logout()
-                    payload = {'error': "OK"}
-                    return Response(payload, status=status.HTTP_200_OK)
-
-                else:
-                    error = "error_not_auth"
-                    payload = {'error': error}
-                    return Response(payload, status=status.HTTP_200_OK)
-
-            else:
-                error = "error_user_invalid"
-                payload = {'error': error}
-                return Response(payload, status=status.HTTP_200_OK)
+        except:
+            error = "error_not_auth"
+            payload = {'error': error}
+            return Response(payload)

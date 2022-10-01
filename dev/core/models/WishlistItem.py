@@ -1,4 +1,5 @@
 from django.db import models
+from .User import User
 
 class WishlistItem(models.Model):
     ## name of the wishlist item 
@@ -27,5 +28,6 @@ class WishlistItem(models.Model):
         return False
 
     @staticmethod
-    def retrieveWishlist(username):
-        return WishlistItem.objects.all().filter(user=username)
+    def retrieveWishlist(id):
+        user = User.retrieveInfo(id)
+        return WishlistItem.objects.all().filter(user=user.username)

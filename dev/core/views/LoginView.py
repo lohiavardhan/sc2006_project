@@ -7,38 +7,41 @@ from ..serializers import LoginSerializer
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
+    def get(self, request):
+        try:
+            assert request.session['user'] >= 0
+            error = "error_user_has_login"
+            username = User.retrieveInfo(request.session['user']).username
+            payload = {"error": error, "username": username}
+            return Response(payload)
 
-    def post(self, request, format=None):
-        ## Serialize the requested data into JSON objects
+        except:
+            payload = {"error": "OK"}
+            return Response(payload)
+
+    def post(self, request):
         serializer = self.serializer_class(data=request.data)
-
-        ## Check if the received JSON responses matches the field headers
         if serializer.is_valid():
             username = serializer.data.get('username')
             password = serializer.data.get('password')
 
-            ## Verify credentials inputted
             error = LoginView.verifyCredentials(username, password)
 
-            ## If verified
             if not error:
-                ## Retrieve the entry from database
-                user = User.retrieveInfo(username)
-                ## If there is not yet a session, create one
+                user = User.queryByUsername(username)
                 request.session.create()
-                ## Login user
                 user.login(request)
                 payload = {"error": "OK"}
-                return Response(payload, status=status.HTTP_200_OK)
+                return Response(payload)
 
             else:
                 payload = {"error": error}
-                return Response(payload, status=status.HTTP_200_OK)
+                return Response(payload)
 
     @staticmethod
     def verifyCredentials(username, password):
         error = None
-        user = User.retrieveInfo(username)
+        user = User.queryByUsername(username)
 
         if not user or not check_password(password, user.password):
             error = "error_user"
