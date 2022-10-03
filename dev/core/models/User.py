@@ -1,31 +1,15 @@
+from urllib import request
 from django.db import models
 from .Friend import Friend
 
 class User(models.Model):
-    ## Username of the user;
-    ## Maximum length is 50 characters;
     username = models.CharField(max_length=50)
-
-    ## Email of the user;
-    ## Maximum length is 50 characters;
     email = models.CharField(max_length=50)
-
-    ## Hashed password of the user;
-    ## Maximum length is 100 characters (due to hashing);
-    ## Hashing will be done using Django's own hasher and hash checker
     password = models.CharField(max_length=100)
-
-    ## Datetime value of when the account is first created;
-    ## auto_now_add only updates this field the first time model is created;
     created_at = models.DateTimeField(auto_now_add=True)
-
-    ## Datetime value of when the last login occured;
-    ## auto_now updates this field whenever instance.save() is called.
-    last_login = models.DateTimeField(auto_now=True)
-
-    ## Session key for each session;
-    ## Use this to authenticate user so they dont have to relogin every refresh;
-    last_session = models.CharField(max_length=50)
+    last_session = models.CharField(max_length=50)   
+    name = models.CharField(max_length=50, null=True)
+    birthday = models.DateField(null=True)
 
     def __str__(self):
         return self.username
@@ -38,7 +22,20 @@ class User(models.Model):
     ## Adds a key in the session which contains the user id during login
     ## Saves the instance to update the last_login field
     def login(self, request):
+        self.last_session = request.session.session_key
         request.session['user'] = self.id
+        self.save()
+
+    def logout(self, request):
+        self.last_session = "null"
+        request.session.clear()
+        self.save()
+
+    def updateParticulars(self, name, email, username, birthday):
+        self.name = name
+        self.username = username
+        self.birthday = birthday
+        self.email = email
         self.save()
 
     ## Function to retrieve a queryset of a user's friend list.
@@ -53,6 +50,12 @@ class User(models.Model):
 
         except:
             return None
+    
+    def userAuthenticated(self, session_key):
+        if self.last_session == session_key:
+            return True
+        
+        return False
 
     ## Helper function to check if username is taken during registration
     @staticmethod
@@ -104,8 +107,22 @@ class User(models.Model):
     ## Retrieve an entry from the database based on username
     ## If not found, return False
     @staticmethod
-    def retrieveInfo(username):
+    def retrieveInfo(id):
+        try:
+            return User.objects.get(id=id)
+        except:
+            return False
+
+    @staticmethod
+    def queryByUsername(username):
         try:
             return User.objects.get(username=username)
+        except:
+            return False
+    
+    @staticmethod
+    def queryByEmail(email):
+        try:
+            return User.objects.get(email=email)
         except:
             return False

@@ -1,0 +1,77 @@
+.navbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 1.5em;
+    height: 8vh;
+}
+
+.navbar-logo {
+    margin-right: auto;
+    font-size: 35px;
+}
+
+.navbar-content {
+    width: 50vw;
+    margin-right: auto;
+}
+
+.navbar-content-links {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.navbar-content-links li {
+    padding: 0% 5% 0% 5%;
+}
+
+.navbar-link {
+    width: 20vw;
+}
+
+.navbar-content-links a {
+    text-decoration: none;
+    font-size: 23px;
+    margin-right: 3em;
+    background-color: transparent;
+    color: black;
+}
+
+.navbar-content-links a:hover {
+    border-bottom: 4px solid #42a598;
+    color: #42a598;
+    transition: all 0.2s ease-out;
+}
+
+.navbar-link-links {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.navbar-link-links li {
+    padding: 0% 5% 0% 5%;
+}
+
+.navbar-link-links a.login {
+    font-size: 18px;
+    margin-right: 3em;
+    text-decoration: none;
+    border-radius: 30px;
+    background-color: transparent;
+    color: black;
+    border: 1px solid #42a598;
+    padding: 15% 25% 15% 25%;
+}
+
+.navbar-link-links a.signup {
+    font-size: 18px;
+    margin-right: 3em;
+    text-decoration: none;
+    border-radius: 30px;
+    background-color: #42a598;
+    color: white;
+    border: 1px solid #42a598;
+    padding: 15% 25% 15% 25%;
+}

@@ -11,6 +11,11 @@ pip install virtualenv
 virtualenv --version
 ```
 
+#### Install [node.js](https://nodejs.org/en/download/). Use the following command line to ensure it is properly installed:
+```
+npm --version
+```
+
 #### Initialize a virtual environment under the ```dev``` sub-folder:
 ```
 cd dev
@@ -53,14 +58,3 @@ Django version 4.1.1, using settings 'server.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
-
-## Server API Endpoints
-All APIs are built using the [Django REST framework](https://www.django-rest-framework.org).
-
-#### Access API
-Head-over to &lt;**domain**&gt;**/api/**&lt;**API**&gt; to access all APIs: <br>
-| API               	| Function                                              	| Return Object                                                                                                                                                                                             	|
-|-------------------	|-------------------------------------------------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| /api/login        	| Processes POST request for<br>logging a user into app 	| If login successful<br>{<br>   error: "OK"<br>} <br><br>If login fails<br>{<br>   error: &lt;error_message&gt;<br>}                                                                                       	|
-| /api/signup       	| Processes POST request for<br>registering a user      	| If signup successful<br>{<br>   error: "OK"<br>}<br><br>If signup fails<br>{<br>   error: &lt;error_message&gt;<br>}                                                                                      	|
-| /api/authenticate 	| Processes POST request for<br>handling user 2FA       	| If authenticate successful<br>{<br>   userID: &lt;user ID in database&gt;,<br>   user: &lt;username&gt;,<br>   error: "OK"<br>}<br><br>If authenticate fails<br>{<br>   error: &lt;error_message&gt;<br>} 	|

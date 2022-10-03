@@ -6,4 +6,8 @@ urlpatterns = [
     path('signup', index),
     path('signup/authenticate/<str:email>', index),
     path('login', index),
+    path('accounts/<str:username>', index),
+    path('accounts/<str:username>/edit', index),
+    path('accounts/<str:username>/wishlist', index),
+    path('home', index),
 ]
