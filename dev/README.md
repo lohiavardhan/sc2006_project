@@ -11,6 +11,11 @@ pip install virtualenv
 virtualenv --version
 ```
 
+#### Install [node.js](https://nodejs.org/en/download/). Use the following command line to ensure it is properly installed:
+```
+npm --version
+```
+
 #### Initialize a virtual environment under the ```dev``` sub-folder:
 ```
 cd dev
