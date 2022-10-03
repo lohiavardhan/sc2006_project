@@ -141,7 +141,7 @@ export default class Signup extends Component {
                 return <Navigate to={`authenticate/${email}`} />;
             }
         } else {
-            return <Navigate to={`/account/${username}`} />;
+            return <Navigate to={`/accounts/${username}`} />;
         }
     }
 }

@@ -7,6 +7,7 @@ import Login from "./Login";
 import Account from "./Account";
 import EditAccount from "./EditAccount";
 import Wishlist from "./Wishlist";
+import Navbar from "./Navbar";
 import {
     BrowserRouter as Router,
     Routes,
@@ -22,6 +23,7 @@ export default class App extends Component {
     render() {
         return (
             <>
+                <Navbar />
                 <Router>
                     <Routes>
                         <Route path="/signup" element={<Signup />} />
