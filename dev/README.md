@@ -41,6 +41,7 @@ SECRET_KEY = 'django-insecure-### REMAINING TEXTS ARE HIDDEN FOR SECURITY MEASUR
 
 #### Apply existing migrations
 ```
+cd ..
 python manage.py migrate
 ```
 
