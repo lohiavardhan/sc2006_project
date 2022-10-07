@@ -28,12 +28,6 @@ venv/scripts/activate
 pip install -r requirements.txt
 ```
 
-#### Install all dependencies for React in the virtual environment:
-```
-cd client
-npm install
-```
-
 #### Include Secret Key file named `.env` under ```dev``` directory. Paste the following line into the file:
 ```
 SECRET_KEY = 'django-insecure-### REMAINING TEXTS ARE HIDDEN FOR SECURITY MEASURE ###'
