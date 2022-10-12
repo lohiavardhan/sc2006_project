@@ -16,3 +16,8 @@ class EditAccountDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'name', 'birthday')
+
+class AddFriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']

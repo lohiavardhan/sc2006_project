@@ -1,6 +1,5 @@
 from urllib import request
 from django.db import models
-from .Friend import Friend
 
 class User(models.Model):
     username = models.CharField(max_length=50)
@@ -38,18 +37,6 @@ class User(models.Model):
         self.email = email
         self.save()
 
-    ## Function to retrieve a queryset of a user's friend list.
-    ## The queryset will retrieve the id of friends
-    ## If user has no friend, then return None
-    def getUserFriendList(self):
-        user = User.objects.get(username= self.username)
-
-        try:
-            queryset = Friend.objects.filter(userID=user.id)
-            return queryset
-
-        except:
-            return None
     
     def userAuthenticated(self, session_key):
         if self.last_session == session_key:
