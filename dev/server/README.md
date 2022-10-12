@@ -1,24 +1,34 @@
-# Relevant Commands
+# Relevant Commands for Django
 
-### python manage.py runserver [port-number]
-This command initiates a localhost server on 127.0.0.1 with default port 8000. You may change the port number following the syntax above.
-> e.g. <br>
-> ```python manage.py runserver 1000``` will run the server at port 1000.
+Django's commands are mostly handled by `manage.py`.
 
-### python manage.py migrate
-This command applies detected changes to the project. Migrate frequently to ensure the project is working as intended.
+### Run Server
 
-* Whenever a new model class is added, head over to the app's ```admin.py``` file and type the following:
+```console
+python manage.py runserver <port-number>
 ```
-from <appname>.models.<modelname> import <modelname>
+This command initiates a localhost server on 127.0.0.1 with default port 8000.
 
-admin.site.register(<modelname>)
+| arg                 	| Description                                                                                     	|
+|---------------------	|-------------------------------------------------------------------------------------------------	|
+| &lt;port-number&gt; 	| Specifies the port number to run the localhost server on.<br>Defaults to 8000 if not specified. 	|
+
+
+### Migrate Database Changes
+
+```console
+python manage.py migrate
 ```
 
-* Run ```python manage.py migrate``` to make sure Django knows that this model class exists.
+This command applies staged changes to the project. Migrate frequently to ensure the project is working as intended.
 
-### python manage.py startapp [app-name]
-This command creates a Django app in the current directory. An example of a Django app in our project is [```core```](https://github.com/lohiavardhan/sc2006_project/tree/dev/dev/core)
+*Note: You should use this in conjunction with [**Stage Database Changes**](https://github.com/lohiavardhan/sc2006_project/edit/dev/dev/server/README.md#stage-database-changes) to ensure that the changes are properly reflected.*
 
-### python manage.py dbshell
-This command allows access to the SQLite database pre-installed with Django.
+
+### Stage Database Changes
+
+```console
+python manage.py makemigrations
+```
+
+This command detects changes to the models and create a migration history. To use before [**Migrate Database Changes**](https://github.com/lohiavardhan/sc2006_project/edit/dev/dev/server/README.md#migrate-database-changes).
