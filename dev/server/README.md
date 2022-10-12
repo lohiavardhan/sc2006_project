@@ -22,7 +22,7 @@ python manage.py migrate
 
 This command applies staged changes to the project. Migrate frequently to ensure the project is working as intended.
 
-*Note: You should use this in conjunction with [**Stage Database Changes**](https://github.com/lohiavardhan/sc2006_project/edit/dev/dev/server/README.md#stage-database-changes) to ensure that the changes are properly reflected.*
+*Note: You should use this in conjunction with [**Stage Database Changes**](#migrate-database-changes) to ensure that the changes are properly reflected.*
 
 
 ### Stage Database Changes
@@ -31,4 +31,4 @@ This command applies staged changes to the project. Migrate frequently to ensure
 python manage.py makemigrations
 ```
 
-This command detects changes to the models and create a migration history. To use before [**Migrate Database Changes**](https://github.com/lohiavardhan/sc2006_project/edit/dev/dev/server/README.md#migrate-database-changes).
+This command detects changes to the models and create a migration history. To use before [**Migrate Database Changes**](#migrate-database-changes).
