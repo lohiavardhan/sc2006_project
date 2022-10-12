@@ -23,8 +23,15 @@ virtualenv venv
 ```
 
 #### Install all dependencies for Django in the virtual environment from ```requirements.txt```:
+For **Windows**:
 ```
 venv/scripts/activate
+pip install -r requirements.txt
+```
+
+For **MacOS/Linux**:
+```
+source venv/lib/activate
 pip install -r requirements.txt
 ```
 
@@ -36,6 +43,7 @@ SECRET_KEY = 'django-insecure-### REMAINING TEXTS ARE HIDDEN FOR SECURITY MEASUR
 #### Apply existing migrations
 ```
 cd ..
+python manage.py migrate --run-syncdb
 python manage.py migrate
 ```
 
@@ -52,4 +60,23 @@ September 21, 2022 - 20:20:25
 Django version 4.1.1, using settings 'server.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
+```
+
+## Starting the development server
+#### Initialize the virtual environment
+For **Windows**:
+```
+cd dev
+venv/scripts/activate
+```
+
+For **MacOS/Linux**:
+```
+cd dev
+source venv/lib/activate
+```
+
+#### Run the server at localhost
+```
+python manage.py runserver
 ```
