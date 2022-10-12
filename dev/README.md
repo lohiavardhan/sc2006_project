@@ -1,58 +1,58 @@
 # FindR
 
 ## Initialization
-#### Install Python virtual environment:
+* Install Python virtual environment:
 ```
 pip install virtualenv
 ```
 
-#### Verify that Python virtual environment has been installed on local machine:
+* Verify that Python virtual environment has been installed on local machine:
 ```
 virtualenv --version
 ```
 
-#### Install [node.js](https://nodejs.org/en/download/). Use the following command line to ensure it is properly installed:
+* Install [node.js](https://nodejs.org/en/download/). Use the following command line to ensure it is properly installed:
 ```
 npm --version
 ```
 
-#### Initialize a virtual environment under the ```dev``` sub-folder:
+* Initialize a virtual environment under the ```dev``` sub-folder:
 ```
 cd dev
 virtualenv venv
 ```
 
-#### Install all dependencies for Django in the virtual environment from ```requirements.txt```:
-For **Windows**:
+* Install all dependencies for Django in the virtual environment from ```requirements.txt```:
+    * For **Windows**:
 ```
 venv/scripts/activate
 pip install -r requirements.txt
 ```
 
-For **MacOS/Linux**:
+    * For **MacOS/Linux**:
 ```
 source venv/lib/activate
 pip install -r requirements.txt
 ```
 
-#### Include Secret Key file named `.env` under ```dev``` directory. Paste the following line into the file:
+* Include Secret Key file named `.env` under ```dev``` directory. Paste the following line into the file:
 ```
 SECRET_KEY = 'django-insecure-### REMAINING TEXTS ARE HIDDEN FOR SECURITY MEASURE ###'
 ```
 
-#### Apply existing migrations
+* Apply existing migrations
 ```
 cd ..
 python manage.py migrate --run-syncdb
 python manage.py migrate
 ```
 
-#### Initialize server:
+* Initialize server:
 ```
 python manage.py runserver
 ```
 
-#### You should be able to see the following message on the terminal window:
+* You should be able to see the following message on the terminal window:
 ```
 ...
 System check identified no issues (0 silenced).
@@ -63,7 +63,7 @@ Quit the server with CTRL-BREAK.
 ```
 
 ## Starting the development server
-#### Initialize the virtual environment
+* Initialize the virtual environment
 For **Windows**:
 ```
 cd dev
