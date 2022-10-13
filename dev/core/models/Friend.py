@@ -19,16 +19,16 @@ class Friend(models.Model):
     def retrieveFriendList(userID):
         querySet = Friend.objects.filter(userID=userID)
 
-        friendList = {}
+        friendList = []
 
-        index = 0
         for i in querySet.values():
             friend = User.retrieveInfo(i['friendID'])
-            friendList[str(index)] = {}
-            friendList[str(index)]['username'] = friend.username
-            friendList[str(index)]['name'] = friend.name
-            friendList[str(index)]['birthday'] = friend.birthday
-            index += 1
+            _friend = {}
+            _friend['username'] = friend.username
+            _friend['name'] = friend.name
+            _friend['birthday'] = friend.birthday
+            
+            friendList.append(_friend)
         
         return friendList
     
