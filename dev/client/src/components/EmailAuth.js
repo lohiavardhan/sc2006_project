@@ -61,7 +61,7 @@ class EmailAuth extends Component {
         if (this.state.error == "OK") {
           this.setState({ redirect: true, user: json.user });
         } else if (this.state.error == "error_invalidOTP") {
-          this.setState({ error: "OTP is incorrect !!" });
+          this.setState({ error: "OTP is incorrect!!" });
         }
       });
   }

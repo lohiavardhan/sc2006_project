@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  height: 63.3rem;
+  height: 60rem;
 }
 
 .otp-panel {
@@ -142,8 +142,8 @@
 .login-content-forgetpass {
   display: block;
   margin-left: auto;
-  margin-top: 2.7rem;
-  margin-bottom: 4.6rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   color: var(--color-text-important);
 }
 
@@ -155,4 +155,39 @@
 .signup-error,
 .otp-error {
   text-align: center;
+  font-weight: bold;
+  animation: 3s shake infinite ease-in;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0px, -1px);
+  }
+  5% {
+    transform: translate(0px, -6px);
+  }
+  10% {
+    transform: translate(-0px, -11px);
+  }
+  15% {
+    transform: translate(0px, -6px);
+  }
+  20% {
+    transform: translate(0px, -1px);
+  }
+  25% {
+    transform: translate(-0px, -6px);
+  }
+  30% {
+    transform: translate(-0px, -11px);
+  }
+  35% {
+    transform: translate(0px, -6px);
+  }
+  40% {
+    transform: translate(-0px, -1px);
+  }
+  100% {
+    transform: translate(0px, -1px);
+  }
 }

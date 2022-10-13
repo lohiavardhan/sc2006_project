@@ -62,15 +62,15 @@ export default class Signup extends Component {
           if (this.state.error == "OK") {
             this.setState({ redirect: true });
           } else if (this.state.error == "error_user_taken") {
-            this.setState({ error: "Username has been taken !!" });
+            this.setState({ error: "Username has been taken!!" });
           } else if (this.state.error == "error_user_invalid") {
-            this.setState({ error: "Username is invalid !!" });
+            this.setState({ error: "Username is invalid!!" });
           } else if (this.state.error == "error_email_taken") {
             this.setState({
-              error: "Email has been registered !!",
+              error: "Email has been registered!!",
             });
           } else if (this.state.error == "error_email_invalid") {
-            this.setState({ error: "Email is invalid !!" });
+            this.setState({ error: "Email is invalid!!" });
           } else if (this.state.error == "error_password_invalid") {
             this.setState({
               error: "Password does not meet requirements !!",
