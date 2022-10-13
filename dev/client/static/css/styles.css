@@ -1,0 +1,78 @@
+/* *, 
+*::after, 
+*::before {
+		margin: 0;
+		padding: 0;
+		box-sizing: inherit;
+} */
+
+:root {
+  /* Vairables */
+  --white: #fff;
+  --grey-1: #f8f8f8;
+  --grey-2: #c1c1c1;
+  --grey-3: #989898;
+  --black: #2a2a2a;
+
+  --color-primary: rgb(66, 165, 152);
+
+  --color-btn-primary: rgb(66, 165, 152);
+  --color-btn-negative: #a5424b;
+
+  --color-panel-light: var(--white);
+  --color-panel-dark: var(--grey-1);
+  --color-panel-darkest: var(--grey-2);
+
+  --color-bg-dark: (var(--grey-2));
+  --color-bg-light: (var(--white));
+
+  --color-text-lightest: var(--white);
+  --color-text-darkert: var(--grey-3);
+  --color-text-darkest: var(--black);
+  --color-text-important: var(--color-primary);
+}
+
+/* Set root font-size */
+html {
+  font-size: 62.5%; /* Default browser font-size is 16px, hence 62.5% is 10px */
+}
+
+/* Using rem in elements */
+body {
+  background-color: var(--color-bg-light);
+  font-size: 2.4rem; /* 2.4rem = 24px */
+  margin: 0px;
+}
+a,
+li {
+  box-sizing: border-box;
+  font-size: 2.4rem;
+}
+
+button,
+.btn {
+  color: var(--color-text-lightest);
+  border: none;
+  font-size: 2.4rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-positive {
+  background-color: var(--color-btn-primary);
+}
+
+.btn-negative {
+  background-color: var(--color-btn-negative);
+}
+.line {
+  height: 0.2rem;
+  background: #dbdcdd;
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 1400px) {
+  html {
+    font-size: 50%;
+  }
+}
