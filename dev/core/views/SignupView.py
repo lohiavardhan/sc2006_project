@@ -4,7 +4,9 @@ from rest_framework.response import Response
 from ..serializers import SignupSerializer
 from ..models.User import User
 from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
 import random
+from django.conf import settings
 
 class SignUpView(APIView):
     serializer_class = SignupSerializer
@@ -34,7 +36,9 @@ class SignUpView(APIView):
                 password = make_password(password)
                 user = User(username=username, password=password, email=email)
                 request.session['payload'] = SignupSerializer(user).data
-                request.session['payload']['auth'] = SignUpView.generateCode()
+                request.session['payload']['auth'] = SignUpView.generateCode(email)
+                
+
                 payload = {"error": "OK"}
                 return Response(payload)
 
@@ -64,8 +68,15 @@ class SignUpView(APIView):
         return error
 
     @staticmethod
-    def generateCode():
+    def generateCode(email):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
+        send_mail(
+        'FindR OTP',
+        'Here is the OTP:'+code,
+        'noreplyfindrotp@gmail.com', 
+        [email], 
+        fail_silently=False,
+    )
         print(code)
         return code
     
