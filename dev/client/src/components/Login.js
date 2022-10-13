@@ -1,4 +1,4 @@
-import "../../static/css/Login.css";
+import "../../static/css/LoginSignup.css";
 
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
@@ -94,7 +94,7 @@ export default class Login extends Component {
                         required
                         type="text"
                         name="username"
-                        placeholder="username"
+                        placeholder="Username"
                         onChange={this.handleChange}
                       />
                     </div>
@@ -111,7 +111,7 @@ export default class Login extends Component {
                         type="password"
                         name="password"
                         id="password"
-                        placeholder="password"
+                        placeholder="Password"
                         onChange={this.handleChange}
                       />
                     </div>

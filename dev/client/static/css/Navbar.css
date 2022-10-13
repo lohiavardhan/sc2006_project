@@ -52,10 +52,11 @@
 
 .navbar-links-login {
   background-color: transparent;
-  border: 4px solid #42a598;
+  border: 3px solid #42a598;
 }
 .navbar-links-login a {
   color: black;
+  font-weight: bold;
 }
 
 .navbar-links-signup {
@@ -63,6 +64,7 @@
 }
 .navbar-links-signup a {
   color: white;
+  font-weight: bold;
 }
 
 /*

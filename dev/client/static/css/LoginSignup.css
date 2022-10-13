@@ -1,3 +1,5 @@
+/*Although it is named login, this css file is for both login & signup*/
+
 .login-container {
   height: 88vh;
 }
@@ -5,7 +7,6 @@
 .login-background {
   background-color: #c1c1c1;
   padding: 3.4rem;
-  height: inherit;
   box-sizing: border-box;
 }
 .login-panel {
@@ -31,6 +32,7 @@
   color: var(--color-text-important);
   margin: 0 0 2rem 0;
   font-size: 3.6rem;
+  font-weight: bold;
 }
 
 .login-content-btn,
@@ -76,7 +78,7 @@
   height: inherit;
 }
 .login-content-credential-input:focus {
-  outline: 3px solid var(--color-primary);
+  outline: 2px solid var(--color-primary);
 }
 
 .login-content-signup {
