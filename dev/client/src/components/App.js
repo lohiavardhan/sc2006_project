@@ -8,6 +8,7 @@ import Account from "./Account";
 import EditAccount from "./EditAccount";
 import Wishlist from "./Wishlist";
 import Navbar from "./Navbar";
+import ForgetPass from "./ForgetPass";
 import "../../static/css/styles.css";
 import {
   BrowserRouter as Router,
@@ -30,6 +31,7 @@ export default class App extends Component {
             <Route path="/signup" element={<Signup />} />
             <Route path="signup/authenticate/:email" element={<EmailAuth />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login/forgetpassword" element={<ForgetPass />} />
             <Route path="/home" element={<Home />} />
             <Route path="accounts/:username" element={<Account />} />
             <Route path="accounts/:username/edit" element={<EditAccount />} />
