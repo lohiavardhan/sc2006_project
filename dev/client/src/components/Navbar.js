@@ -2,37 +2,28 @@ import React from "react";
 import "../../static/css/Navbar.css";
 
 function Navbar() {
-    return (
-        <>
-            <div className="navbar-container">
-                <div className="navbar-logo">FindR</div>
-                <div className="navbar-content">
-                    <ul className="navbar-content-links">
-                        <li>
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/">About us</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="navbar-link">
-                    <ul className="navbar-link-links">
-                        <li>
-                            <a className="login" href="/">
-                                Login
-                            </a>
-                        </li>
-                        <li>
-                            <a className="signup" href="/">
-                                Signup
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="navbar-container">
+        <a href="/home" className="navbar-logo">
+          findr
+        </a>
+        <ul className="navbar-links">
+          <li className="navbar-links-help">
+            <a href="/help" className="navbar-links-help-icon">
+              <img src="./assets/icons/Help.png" alt="Help" />
+            </a>
+          </li>
+          <li className="navbar-links-login">
+            <a href="/login">Login</a>
+          </li>
+          <li className="navbar-links-signup">
+            <a href="/signup">Sign up</a>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
 }
 
 export default Navbar;
