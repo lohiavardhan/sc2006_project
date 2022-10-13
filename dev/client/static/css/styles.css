@@ -27,7 +27,7 @@
   --color-bg-light: (var(--white));
 
   --color-text-lightest: var(--white);
-  --color-text-darkert: var(--grey-3);
+  --color-text-darker: var(--grey-3);
   --color-text-darkest: var(--black);
   --color-text-important: var(--color-primary);
 }

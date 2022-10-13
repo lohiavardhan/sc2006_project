@@ -78,7 +78,7 @@ export default class Login extends Component {
         <>
           <div className="login-container">
             <div className="login-background">
-              {error != "OK" && <p>{error}</p>}
+              {error != "OK" && <p className="login-error">{error}</p>}
               <div className="login-panel">
                 <div className="login-content">
                   <h3 className="login-content-title">Login</h3>
