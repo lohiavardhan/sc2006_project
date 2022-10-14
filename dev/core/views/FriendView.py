@@ -85,12 +85,50 @@ class AddFriendView(APIView):
                 error = "error_is_friend"
 
                 payload = {"error": error}
-                return Response(payload)
+            
+            elif Friend.hasPendingRequest(userID, newFriend.id):
+                error = "error_pending_request"
+
+                payload = {"error": error}
             
             else:
-                friendConnection = Friend(userID=userID, friendID=newFriend.id)
-                friendConnection.addFriend()
+                Friend.addFriend(userID=userID, friendID=newFriend.id)
 
                 payload = {"error": "OK"}
-                return Response(payload)
             
+            return Response(payload)
+            
+
+class AcceptFriendView(APIView):
+    serializer_class = AddFriendSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            newFriendUsername = serializer.data.get('username')
+            userID = request.session['user']
+            newFriend = User.queryByUsername(newFriendUsername)
+
+            Friend.acceptFriendRequest(userID, newFriend.id)
+
+            payload = {"error": "OK"}
+            return Response(payload)
+
+class RejectFriendView(APIView):
+    serializer_class = AddFriendSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            rejectedFriendUsername = serializer.data.get('username')
+            userID = request.session['user']
+            rejectedFriend = User.queryByUsername(rejectedFriendUsername)
+
+            if Friend.rejectFriendRequest(userID, rejectedFriend.id):
+                payload = {"error": "OK"}
+                return Response(payload)
+
+            else:
+                error = "error_connection_invalid"
+                payload = {"error": error}
+                return Response(payload)

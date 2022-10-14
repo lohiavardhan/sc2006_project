@@ -55,7 +55,6 @@ class Wishlist extends Component {
         const { redirect } = this.state;
         const { error } = this.state;
         const { isAuth } = this.state;
-
         if (isAuth) {
             return (
                 <div>
@@ -63,7 +62,7 @@ class Wishlist extends Component {
                     <hr />
                     {error == "OK" &&
                         wishlist.map((item) => (
-                            <div>
+                            <div key={item.id}>
                                 <ul>
                                     <li>{item.id}</li>
                                     <li>{item.item_name}</li>

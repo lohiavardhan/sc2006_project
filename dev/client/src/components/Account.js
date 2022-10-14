@@ -87,6 +87,10 @@ class Account extends Component {
                             {" "}
                             View Wishlist{" "}
                         </a>
+                        <a href={`/accounts/${username}/friends/view`}>
+                            {" "}
+                            View Friends{" "}
+                        </a>
                         <button type="submit" onClick={this.logout}>
                             Logout
                         </button>

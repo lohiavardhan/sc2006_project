@@ -1,3 +1,4 @@
+from urllib import request
 from django.db import models
 from .User import User
 
@@ -15,18 +16,28 @@ class Friend(models.Model):
     ## ID of a user's friend
     friendID = models.IntegerField(null=False)
 
+    ## check if friend request is accepted
+    request = models.BooleanField(null=False)
+
     @staticmethod
     def retrieveFriendList(userID):
         querySet = Friend.objects.filter(userID=userID)
 
         friendList = []
 
+        count = 0
         for i in querySet.values():
             friend = User.retrieveInfo(i['friendID'])
             _friend = {}
+            if i['request']:
+                _friend['accepted'] = True
+            else:
+                _friend['accepted'] = False
+            _friend['id'] = count
             _friend['username'] = friend.username
             _friend['name'] = friend.name
             _friend['birthday'] = friend.birthday
+            count += 1
             
             friendList.append(_friend)
         
@@ -35,12 +46,40 @@ class Friend(models.Model):
     @staticmethod
     def isFriend(userID, friendID):
         try:
-            connection = Friend.objects.get(userID=userID, friendID=friendID)
+            connection = Friend.objects.get(userID=userID, friendID=friendID, request=True)
             return connection
         except:
             return False
+    
+    def hasPendingRequest(userID, friendID):
+        try:
+            Friend.objects.get(userID=userID, friendID=friendID, request=False)
+            return True
 
-    def addFriend(self, userID, friendID):
-        self.save()
-        friendEntry = self(userID=friendID, friendID=userID)
+        except:
+            return False
+
+    @staticmethod
+    def addFriend(userID, friendID):
+        userEntry = Friend(userID=userID, friendID=friendID, request=False)
+        userEntry.save()
+        friendEntry = Friend(userID=friendID, friendID=userID, request=False)
         friendEntry.save()
+
+    @staticmethod
+    def acceptFriendRequest(userID, friendID):
+        userEntry = Friend.objects.get(userID=userID, friendID=friendID)
+        userEntry.request = True
+        userEntry.save()
+        friendEntry = Friend.objects.get(userID=friendID, friendID=userID)
+        friendEntry.request = True
+        friendEntry.save()
+
+    @staticmethod
+    def rejectFriendRequest(userID, friendID):
+        try:
+            Friend.objects.get(userID=userID, friendID=friendID).delete()
+            Friend.objects.get(userID=friendID, friendID=userID).delete()
+            return True
+        except:
+            return False
