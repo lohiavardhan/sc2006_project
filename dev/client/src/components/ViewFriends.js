@@ -20,11 +20,24 @@ class ViewFriends extends Component {
             ],
             error: null,
             redirect: false,
+            searchName: "",
+            retrievedSearch: false,
+            retrievedIsSelf: false,
+            retrievedIsFriend: false,
+            requestPending: false,
+            retrievedUser: {
+                name: "",
+                birthday: "",
+                username: "",
+            },
+
             isAuth: true,
         };
 
         this.handleAccept = this.handleAccept.bind(this);
         this.handleReject = this.handleReject.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.searchFriend = this.searchFriend.bind(this);
     }
 
     componentDidMount() {
@@ -48,6 +61,11 @@ class ViewFriends extends Component {
             });
     }
 
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    }
+
     handleAccept(e) {
         const { name } = e.target;
         console.log(name);
@@ -62,15 +80,9 @@ class ViewFriends extends Component {
             }),
         };
 
-        fetch("/api/v1/friends/accept", requestOptions)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                if (json.error == "OK") {
-                    this.setState({ redirect: true });
-                }
-            });
+        fetch("/api/v1/friends/accept", requestOptions).then((response) => {
+            return response.json();
+        });
 
         document.getElementById(`${name}+accept`).style.display = "none";
         document.getElementById(`${name}+reject`).style.display = "none";
@@ -91,19 +103,68 @@ class ViewFriends extends Component {
             }),
         };
 
-        fetch("/api/v1/friends/reject", requestOptions)
+        fetch("/api/v1/friends/reject", requestOptions).then((response) => {
+            return response.json();
+        });
+
+        document.getElementById(`${name}+accept`).style.display = "none";
+        document.getElementById(`${name}+reject`).style.display = "none";
+        document.getElementById(`${name}+rejected-text`).style.display = "flex";
+    }
+
+    searchFriend(e) {
+        const { searchName } = this.state;
+        e.preventDefault();
+
+        fetch("/api/v1/friends/search?username=" + searchName)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
                 if (json.error == "OK") {
-                    this.setState({ redirect: true });
+                    this.setState({
+                        retrievedSearch: true,
+                        retrievedUser: json.friend,
+                    });
+                } else if (json.error == "error_is_friend") {
+                    this.setState({
+                        retrievedIsFriend: true,
+                        retrievedUser: json.friend,
+                    });
+                } else if (json.error == "error_is_self") {
+                    this.setState({
+                        retrievedIsSelf: true,
+                        retrievedUser: json.friend,
+                    });
+                } else if (json.error == "error_pending_request") {
+                    this.setState({
+                        requestPending: true,
+                        retrievedUser: json.friend,
+                    });
                 }
             });
+    }
+
+    addFriend(e) {
+        e.preventDefault();
+        const { name } = e.target;
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+                username: name,
+            }),
+        };
+
+        fetch("/api/v1/friends/add", requestOptions).then((response) => {
+            return response.json();
+        });
 
         document.getElementById(`${name}+accept`).style.display = "none";
-        document.getElementById(`${name}+reject`).style.display = "none";
-        document.getElementById(`${name}+rejected-text`).style.display = "flex";
+        document.getElementById(`${name}+accepted-text`).style.display = "flex";
     }
 
     render() {
@@ -112,12 +173,76 @@ class ViewFriends extends Component {
         const { redirect } = this.state;
         const { error } = this.state;
         const { isAuth } = this.state;
-        console.log(redirect);
+        const { retrievedSearch } = this.state;
+        const { retrievedUser } = this.state;
+        const { retrievedIsSelf } = this.state;
+        const { retrievedIsFriend } = this.state;
+        const { requestPending } = this.state;
+
         if (isAuth) {
             return (
                 <div>
                     <h1> {username}'s friendlist </h1>
                     <hr />
+                    <form onSubmit={this.searchFriend}>
+                        <input
+                            required
+                            type="text"
+                            name="searchName"
+                            placeholder="Username"
+                            onChange={this.handleChange}
+                        />
+                        <button className="btn-positive">Search</button>
+                    </form>
+
+                    {retrievedSearch &&
+                        !retrievedIsSelf &&
+                        !retrievedIsFriend &&
+                        !requestPending && (
+                            <div>
+                                <li>{retrievedUser.name}</li>
+                                <li>{retrievedUser.username}</li>
+                                <li>{retrievedUser.birthday}</li>
+
+                                <div>
+                                    <button
+                                        id={`${retrievedUser.username}+accept`}
+                                        className="btn-positive"
+                                        name={retrievedUser.username}
+                                        onClick={this.addFriend}
+                                    >
+                                        Add Friend
+                                    </button>
+                                    <div
+                                        id={`${retrievedUser.username}+accepted-text`}
+                                        style={{ display: "none" }}
+                                    >
+                                        Friend Request Sent
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                    {retrievedIsSelf && !retrievedIsFriend && (
+                        <div>
+                            Don't be a fool. You are already your best friend!
+                        </div>
+                    )}
+
+                    {retrievedIsFriend && !retrievedIsSelf && (
+                        <div>User is already a friend!</div>
+                    )}
+
+                    {requestPending && (
+                        <div>
+                            <li>{retrievedUser.name}</li>
+                            <li>{retrievedUser.username}</li>
+                            <li>{retrievedUser.birthday}</li>
+
+                            <div>Friend Request Sent</div>
+                        </div>
+                    )}
+
                     {error == "OK" &&
                         friendlist.map((friends) => (
                             <div key={friends.id}>
@@ -125,7 +250,6 @@ class ViewFriends extends Component {
                                     <li>{friends.name}</li>
                                     <li>{friends.username}</li>
                                     <li>{friends.birthday}</li>
-                                    <li> Yoyo</li>
                                     {!friends.accepted && (
                                         <div>
                                             <button

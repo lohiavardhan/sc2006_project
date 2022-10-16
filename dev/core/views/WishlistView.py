@@ -12,9 +12,8 @@ class WishlistView(APIView):
             user = User.retrieveInfo(request.session['user'])
             if request.query_params.get('username') == user.username:
                 wishlist = WishlistItem.retrieveWishlist(request.session['user'])
-
                 if wishlist:
-                    payload = {"error": "OK", "payload": wishlist.values()}
+                    payload = {"error": "OK", "payload": wishlist}
                     return Response(payload)
                 
                 else:

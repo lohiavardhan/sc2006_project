@@ -44,6 +44,16 @@ class User(models.Model):
         
         return False
 
+    
+    def serializeUser(self):
+        serialized = {}
+        serialized['name'] = self.name
+        serialized['username'] = self.username
+        serialized['birthday'] = self.birthday
+        serialized['email'] = self.email
+
+        return serialized
+
     ## Helper function to check if username is taken during registration
     @staticmethod
     def takenUsername(username):

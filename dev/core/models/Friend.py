@@ -53,7 +53,7 @@ class Friend(models.Model):
     
     def hasPendingRequest(userID, friendID):
         try:
-            Friend.objects.get(userID=userID, friendID=friendID, request=False)
+            Friend.objects.get(userID=friendID, friendID=userID, request=False)
             return True
 
         except:
@@ -61,8 +61,6 @@ class Friend(models.Model):
 
     @staticmethod
     def addFriend(userID, friendID):
-        userEntry = Friend(userID=userID, friendID=friendID, request=False)
-        userEntry.save()
         friendEntry = Friend(userID=friendID, friendID=userID, request=False)
         friendEntry.save()
 
@@ -71,15 +69,13 @@ class Friend(models.Model):
         userEntry = Friend.objects.get(userID=userID, friendID=friendID)
         userEntry.request = True
         userEntry.save()
-        friendEntry = Friend.objects.get(userID=friendID, friendID=userID)
-        friendEntry.request = True
+        friendEntry = Friend(userID=friendID, friendID=userID, request=True)
         friendEntry.save()
 
     @staticmethod
     def rejectFriendRequest(userID, friendID):
         try:
             Friend.objects.get(userID=userID, friendID=friendID).delete()
-            Friend.objects.get(userID=friendID, friendID=userID).delete()
             return True
         except:
             return False

@@ -11,13 +11,17 @@ class Wishlist extends Component {
             wishlist: [
                 {
                     id: "",
-                    item_name: "",
-                    user: "",
-                    purchasable: false,
                     added_at: "",
                     session_key: "",
-                    platform: "",
-                    url: "",
+                    item: {
+                        item_name: "",
+                        purchasable: false,
+                        platform: "",
+                        url: "",
+                        description: "",
+                        deliveryFee: 0.0,
+                        rating: 0.0,
+                    },
                 },
             ],
             error: null,
@@ -65,14 +69,13 @@ class Wishlist extends Component {
                             <div key={item.id}>
                                 <ul>
                                     <li>{item.id}</li>
-                                    <li>{item.item_name}</li>
-                                    <li>{item.user}</li>
-                                    <li>{item.purchasable.toString()}</li>
                                     <li>{item.added_at}</li>
                                     <li>{item.session_key}</li>
-                                    <li>{item.platform}</li>
+                                    <li>{item.item.item_name}</li>
+                                    <li>{item.item.purchasable.toString()}</li>
+                                    <li>{item.item.platform}</li>
                                     <li>
-                                        <a href={item.url}>Link</a>
+                                        <a href={item.item.url}>Link</a>
                                     </li>
                                 </ul>
                             </div>

@@ -52,7 +52,12 @@ class SearchFriendView(APIView):
 
                 payload = {"error": error, "friend": person}
                 return Response(payload)
-            
+
+            elif Friend.hasPendingRequest(userID, friend.id):
+                error = "error_pending_request"
+                payload = {"error": error, "friend": person}
+                return Response(payload)
+
             else:
                 error = "OK"
 
@@ -74,28 +79,8 @@ class AddFriendView(APIView):
             newFriendUsername = serializer.data.get('username')
             userID = request.session['user']
             newFriend = User.queryByUsername(newFriendUsername)
-
-            if newFriend.id == userID:
-                error = "error_is_self"
-                payload = {"error": error}
-
-                return Response(payload)
-
-            if Friend.isFriend(userID, newFriend.id):
-                error = "error_is_friend"
-
-                payload = {"error": error}
-            
-            elif Friend.hasPendingRequest(userID, newFriend.id):
-                error = "error_pending_request"
-
-                payload = {"error": error}
-            
-            else:
-                Friend.addFriend(userID=userID, friendID=newFriend.id)
-
-                payload = {"error": "OK"}
-            
+            Friend.addFriend(userID=userID, friendID=newFriend.id)
+            payload = {"error": "OK"}
             return Response(payload)
             
 
