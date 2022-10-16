@@ -10,7 +10,7 @@ export default class Signup extends Component {
             email: "",
             username: "",
             password: "",
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: false,
         };
@@ -24,7 +24,7 @@ export default class Signup extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_user_has_login") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: true,
                         username: json.username,
@@ -40,7 +40,6 @@ export default class Signup extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         const requestOptions = {
             method: "POST",
             headers: {
@@ -59,32 +58,19 @@ export default class Signup extends Component {
                 return response.json();
             })
             .then((json) => {
-                this.setState({ error: json.error }, () => {
-                    if (this.state.error == "OK") {
-                        this.setState({ redirect: true });
-                    } else if (this.state.error == "error_user_taken") {
-                        this.setState({ error: "Username has been taken!!" });
-                    } else if (this.state.error == "error_user_invalid") {
-                        this.setState({ error: "Username is invalid!!" });
-                    } else if (this.state.error == "error_email_taken") {
-                        this.setState({
-                            error: "Email has been registered!!",
-                        });
-                    } else if (this.state.error == "error_email_invalid") {
-                        this.setState({ error: "Email is invalid!!" });
-                    } else if (this.state.error == "error_password_invalid") {
-                        this.setState({
-                            error: "Password does not meet requirements !!",
-                        });
-                    }
-                });
+                console.log(json.error_message);
+                if (json.error == "status_OK") {
+                    this.setState({ redirect: true });
+                } else {
+                    this.setState({ error_message: json.error_message });
+                }
             });
     }
 
     render() {
         const { redirect } = this.state;
         const { email } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { username } = this.state;
         const { isAuth } = this.state;
 
@@ -95,8 +81,10 @@ export default class Signup extends Component {
                         <Navbar key={isAuth} />
                         <div className="login-container">
                             <div className="login-background">
-                                {error != "OK" && (
-                                    <p className="signup-error">{error}</p>
+                                {error_message != "NULL" && (
+                                    <p className="signup-error">
+                                        {error_message}
+                                    </p>
                                 )}
                                 <div className="login-panel">
                                     <div className="login-content">
@@ -171,7 +159,6 @@ export default class Signup extends Component {
                                                 Login
                                             </a>
                                         </div>
-                                        {/* <a href={`/login`}> Already have an account? </a> */}
                                     </div>
                                 </div>
                             </div>

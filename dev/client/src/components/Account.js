@@ -12,7 +12,7 @@ class Account extends Component {
             email: "",
             name: "",
             birthday: "",
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: true,
         };
@@ -25,7 +25,7 @@ class Account extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "OK") {
+                if (json.error == "status_OK") {
                     this.setState({
                         username: json.username,
                         email: json.email,
@@ -49,18 +49,11 @@ class Account extends Component {
             },
         };
 
-        fetch("/api/v1/accounts/logout", requestOptions)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                this.setState({ error: json.error });
-                if (this.state.error == "OK") {
-                    this.setState({
-                        redirect: true,
-                    });
-                }
+        fetch("/api/v1/accounts/logout", requestOptions).then(() => {
+            this.setState({
+                redirect: true,
             });
+        });
     }
 
     render() {
@@ -100,7 +93,7 @@ class Account extends Component {
                 </>
             );
         } else {
-            return <Navigate to={`/login`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

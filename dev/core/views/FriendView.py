@@ -5,26 +5,37 @@ from rest_framework.response import Response
 from ..models.Friend import Friend
 from ..models.User import User
 from ..serializers import AddFriendSerializer
+from .handlers.authentication import checkUserAuthenticationStatus
 
 class FriendView(APIView):
     def get(self, request):
-        try:
-            assert request.session['user'] >= 0
+        if checkUserAuthenticationStatus(request):
             userID = request.session['user']
             user = User.retrieveInfo(userID)
             if request.query_params.get('username') == user.username:
-                error = "OK"
+                error = "status_OK"
+                error_message = "NULL"
                 friendList = Friend.retrieveFriendList(userID)
-                payload = {"error": error, "username": user.username, "friends": friendList}
+                if len(friendList) == 0:
+                    error = "status_invalid_query"
+                    error_message = "User has not added any friends yet."
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "username": user.username, 
+                            "friends": friendList}
                 return Response(payload)
             else:
-                error = "error_not_auth"
-                payload = {"error": error}
+                error = "status_invalid_access"
+                error_message = "User is not authorized to access this content."
+                payload = { "error": error,
+                            "error_message": error_message}
                 return Response(payload)
 
-        except:
-            error = "error_not_auth"
-            payload = {"error": error}
+        else:
+            error = "status_invalid_access"
+            error_message = "User is not authenticated."
+            payload = { "error": error,
+                        "error_message": error_message}
             return Response(payload)
 
 
@@ -42,33 +53,42 @@ class SearchFriendView(APIView):
             person['username'] = friend.username
 
             if friend.id == userID:
-                error = "error_is_self"
-                payload = {"error": error, "friend": person}
+                error = "status_invalid_query"
+                error_message = "User searched is user itself."
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "friend": person}
 
-                return Response(payload)
-
-            if Friend.isFriend(userID, friend.id):
-                error = "error_is_friend"
-
-                payload = {"error": error, "friend": person}
-                return Response(payload)
+            elif Friend.isFriend(userID, friend.id):
+                error = "status_invalid_query"
+                error_message = "User searched is already a friend."
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "friend": person}
 
             elif Friend.hasPendingRequest(userID, friend.id):
-                error = "error_pending_request"
-                payload = {"error": error, "friend": person}
-                return Response(payload)
-
+                error = "status_invalid_query"
+                error_message = "User searched has a pending friend request."
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "friend": person}
             else:
-                error = "OK"
+                error = "status_OK"
+                error_message = "NULL"
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "friend": person}
 
-                payload = {"error": error, "friend": person}
-                return Response(payload)
+            return Response(payload)
         
         except:
-            error = "error_user_invalid"
-            payload = {"error": error}
-            return Response(payload)
+            error = "status_invalid_query"
+            error_message = "User searched is not found."
+            payload = { "error": error, 
+                        "error_message": error_message,
+                        "friend": person}
 
+            return Response(payload)
 
 class AddFriendView(APIView):
     serializer_class = AddFriendSerializer
@@ -80,7 +100,8 @@ class AddFriendView(APIView):
             userID = request.session['user']
             newFriend = User.queryByUsername(newFriendUsername)
             Friend.addFriend(userID=userID, friendID=newFriend.id)
-            payload = {"error": "OK"}
+            payload = { "error": "OK",
+                        "error_message": "NULL"}
             return Response(payload)
             
 
@@ -96,7 +117,8 @@ class AcceptFriendView(APIView):
 
             Friend.acceptFriendRequest(userID, newFriend.id)
 
-            payload = {"error": "OK"}
+            payload = { "error": "OK",
+                        "error_message": "NULL"}
             return Response(payload)
 
 class RejectFriendView(APIView):
@@ -110,10 +132,13 @@ class RejectFriendView(APIView):
             rejectedFriend = User.queryByUsername(rejectedFriendUsername)
 
             if Friend.rejectFriendRequest(userID, rejectedFriend.id):
-                payload = {"error": "OK"}
-                return Response(payload)
+                payload = { "error": "OK",
+                            "error_message": "NULL"}
 
             else:
-                error = "error_connection_invalid"
-                payload = {"error": error}
-                return Response(payload)
+                error = "status_invalid_request"
+                error_message = "No friend request found."
+                payload = { "error": error,
+                            "error_message": error_message}
+
+            return Response(payload)

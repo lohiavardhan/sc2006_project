@@ -1,5 +1,4 @@
 import "../../static/css/LoginSignup.css";
-
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
@@ -11,9 +10,9 @@ class EmailAuth extends Component {
         let { email } = this.props.params;
         this.state = {
             email: email,
-            user: "",
+            username: "",
             OTP: "",
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: true,
         };
@@ -22,12 +21,13 @@ class EmailAuth extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/v1/accounts/signup/authenticate?email=" + this.state.email)
+        const { email } = this.state;
+        fetch("/api/v1/accounts/signup/authenticate?email=" + email)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_not_auth") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: false,
                     });
@@ -58,19 +58,17 @@ class EmailAuth extends Component {
                 return response.json();
             })
             .then((json) => {
-                this.setState({ error: json.error });
-                if (this.state.error == "OK") {
-                    this.setState({ redirect: true, user: json.user });
-                } else if (this.state.error == "error_invalidOTP") {
-                    this.setState({ error: "OTP is incorrect!!" });
+                if (json.error == "status_OK") {
+                    this.setState({ redirect: true, username: json.username });
+                } else {
+                    this.setState({ error_message: json.error_message });
                 }
             });
     }
 
     render() {
         const { redirect } = this.state;
-        const { user } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
 
         if (isAuth) {
@@ -80,8 +78,8 @@ class EmailAuth extends Component {
                         <Navbar key={isAuth} />
                         <div className="otp-container">
                             <div className="otp-background">
-                                {error != "OK" && (
-                                    <p className="otp-error">{error}</p>
+                                {error_message != "NULL" && (
+                                    <p className="otp-error">{error_message}</p>
                                 )}
                                 <div className="otp-panel">
                                     <div className="otp-content">
@@ -118,7 +116,7 @@ class EmailAuth extends Component {
                     </>
                 );
             } else {
-                return <Navigate to={`/accounts/${user}`} />;
+                return <Navigate to={`/home`} />;
             }
         } else {
             return <Navigate to={`/login`} />;

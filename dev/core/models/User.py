@@ -1,5 +1,5 @@
-from urllib import request
 from django.db import models
+from django.contrib.auth.hashers import check_password
 
 class User(models.Model):
     username = models.CharField(max_length=50)
@@ -21,12 +21,13 @@ class User(models.Model):
     ## Adds a key in the session which contains the user id during login
     ## Saves the instance to update the last_login field
     def login(self, request):
+        request.session.create()
         self.last_session = request.session.session_key
         request.session['user'] = self.id
         self.save()
 
     def logout(self, request):
-        self.last_session = "null"
+        self.last_session = "NULL"
         request.session.clear()
         self.save()
 
@@ -41,7 +42,6 @@ class User(models.Model):
     def userAuthenticated(self, session_key):
         if self.last_session == session_key:
             return True
-        
         return False
 
     
@@ -76,26 +76,20 @@ class User(models.Model):
     @staticmethod
     def validatePassword(password):
         l, u, p, d = 0, 0, 0, 0
-
         if (len(password) >= 8):
             for i in password:
-        
                 # counting lowercase alphabets
                 if (i.islower()):
-                    l += 1           
-        
+                    l += 1                 
                 # counting uppercase alphabets
-                if (i.isupper()):
-                    u += 1           
-        
+                if (i.isupper()):                    
+                    u += 1                   
                 # counting digits
                 if (i.isdigit()):
-                    d += 1           
-        
+                    d += 1                   
                 # counting the mentioned special characters
                 if(i == '@' or i == '$' or i == '_'):
                     p += 1   
-
         if (l >= 1 and u >= 1 and p >= 1 and d >= 1 and l + p + u + d == len(password)):
             return True
         else:
@@ -123,3 +117,42 @@ class User(models.Model):
             return User.objects.get(email=email)
         except:
             return False
+
+    @staticmethod
+    def verifyCredentials(username, password):
+        error = "status_OK"
+        error_message = "NULL"
+        user = User.queryByUsername(username)
+
+        if not user or not check_password(password, user.password):
+            error = "status_invalid_credentials"
+            error_message = "Ivalid username and/or password."
+        
+        return (error, error_message)
+
+    @staticmethod
+    def validateUser(username, email, password):
+        error = "status_OK"
+        error_message = "NULL"
+
+        if User.takenUsername(username):
+            error = "status_invalid_credentials"
+            error_message = "Username has been taken."
+        
+        elif len(username) < 5:
+            error = "status_invalid_credentials"
+            error_message = "Username is invalid."
+
+        elif len(email) < 5:
+            error = "status_invalid_credentials"
+            error_message = "Email address is invalid."
+        
+        elif User.takenEmail(email):
+            error = "status_invalid_credentials"
+            error_message = "Email address has been registered."
+        
+        elif not User.validatePassword(password):
+            error = "status_invalid_credentials"
+            error_message = "Password does not meet requirements."
+        
+        return (error, error_message)

@@ -1,5 +1,4 @@
 import "../../static/css/LoginSignup.css";
-
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
@@ -10,8 +9,8 @@ export default class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            error: null,
             redirect: false,
+            error_message: "NULL",
             isAuth: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -24,7 +23,7 @@ export default class Login extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_user_has_login") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: true,
                         username: json.username,
@@ -40,7 +39,6 @@ export default class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         const requestOptions = {
             method: "POST",
             headers: {
@@ -58,11 +56,11 @@ export default class Login extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "OK") {
+                if (json.error == "status_OK") {
                     this.setState({ redirect: true });
                 } else {
                     this.setState({
-                        error: "Invalid Username and/or Password !!",
+                        error_message: json.error_message,
                     });
                 }
             });
@@ -70,9 +68,9 @@ export default class Login extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { username } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
+        const { username } = this.state;
 
         if (!redirect && !isAuth) {
             return (
@@ -80,8 +78,8 @@ export default class Login extends Component {
                     <Navbar key={isAuth} />
                     <div className="login-container">
                         <div className="login-background">
-                            {error != "OK" && (
-                                <p className="login-error">{error}</p>
+                            {error_message != "NULL" && (
+                                <p className="login-error">{error_message}</p>
                             )}
                             <div className="login-panel">
                                 <div className="login-content">
@@ -154,7 +152,7 @@ export default class Login extends Component {
                 </>
             );
         } else {
-            return <Navigate to={`/home`} />;
+            return <Navigate to={`/accounts/${username}`} />;
         }
     }
 }

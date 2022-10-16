@@ -25,7 +25,7 @@ class Wishlist extends Component {
                     },
                 },
             ],
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: true,
         };
@@ -37,18 +37,18 @@ class Wishlist extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_not_auth") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: false,
                     });
-                } else if (json.error == "error_wishlist_invalid") {
+                } else if (json.error == "status_invalid_query") {
                     this.setState({
-                        error: "No wish list item added yet !!",
+                        error_message: json.error_message,
                     });
                 } else {
                     this.setState({
+                        username: json.username,
                         wishlist: json.payload,
-                        error: "OK",
                     });
                 }
             });
@@ -58,7 +58,7 @@ class Wishlist extends Component {
         const { wishlist } = this.state;
         const { username } = this.state;
         const { redirect } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
         if (isAuth) {
             return (
@@ -67,7 +67,7 @@ class Wishlist extends Component {
                     <div>
                         <h1> {username}'s wishlist </h1>
                         <hr />
-                        {error == "OK" &&
+                        {error_message == "NULL" &&
                             wishlist.map((item) => (
                                 <div key={item.id}>
                                     <ul>
@@ -85,12 +85,12 @@ class Wishlist extends Component {
                                     </ul>
                                 </div>
                             ))}
-                        {error != "OK" && <div>{error}</div>}
+                        {error_message != "NULL" && <div>{error_message}</div>}
                     </div>
                 </>
             );
         } else {
-            return <Navigate to={`/login`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

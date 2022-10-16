@@ -19,7 +19,7 @@ class Navbar extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_user_has_login") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: true,
                         username: json.username,
@@ -31,7 +31,6 @@ class Navbar extends Component {
     render() {
         const { isAuth } = this.state;
         const { username } = this.state;
-
         return (
             <>
                 <div className="navbar-container">

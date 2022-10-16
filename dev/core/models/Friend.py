@@ -22,9 +22,7 @@ class Friend(models.Model):
     @staticmethod
     def retrieveFriendList(userID):
         querySet = Friend.objects.filter(userID=userID)
-
         friendList = []
-
         count = 0
         for i in querySet.values():
             friend = User.retrieveInfo(i['friendID'])
@@ -33,14 +31,30 @@ class Friend(models.Model):
                 _friend['accepted'] = True
             else:
                 _friend['accepted'] = False
+            _friend['requested'] = False
             _friend['id'] = count
             _friend['username'] = friend.username
             _friend['name'] = friend.name
             _friend['birthday'] = friend.birthday
-            count += 1
-            
+            count += 1   
             friendList.append(_friend)
-        
+
+        querySet = Friend.objects.filter(friendID=userID, request=False)
+        count = 0
+        for i in querySet.values():
+            friend = User.retrieveInfo(i['userID'])
+            _friend = {}
+            _friend['accepted'] = False
+            _friend['requested'] = True
+            _friend['id'] = count
+            _friend['username'] = friend.username
+            _friend['name'] = friend.name
+            _friend['birthday'] = friend.birthday
+            count += 1   
+            friendList.append(_friend)
+    
+        friendList = sorted(friendList, key=lambda d: d['requested']) 
+        friendList = sorted(friendList, key=lambda d: d['accepted']) 
         return friendList
     
     @staticmethod
@@ -53,7 +67,7 @@ class Friend(models.Model):
     
     def hasPendingRequest(userID, friendID):
         try:
-            Friend.objects.get(userID=friendID, friendID=userID, request=False)
+            Friend.objects.get(userID=userID, friendID=friendID, request=False)
             return True
 
         except:

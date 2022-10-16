@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models.User import User
-from .models.WishlistItem import WishlistItem
+from .models.Item import Item, WishlistItem
 
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:

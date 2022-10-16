@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
+import { Navigate } from "react-router-dom";
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            isAuth: false,
+            isAuth: true,
+            error_message: "",
             retrievedSearch: false,
             keyword: "",
             items: {
@@ -18,6 +20,7 @@ export default class Home extends Component {
                 url: "",
                 deliveryFee: 0.0,
                 rating: 0.0,
+                addedToWishlist: false,
             },
         };
 
@@ -26,14 +29,14 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/v1/accounts/login")
+        fetch("/api/v1/main")
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_user_has_login") {
+                if (json.error != "status_OK") {
                     this.setState({
-                        isAuth: true,
+                        isAuth: false,
                         username: json.username,
                     });
                 }
@@ -48,55 +51,68 @@ export default class Home extends Component {
     searchItem(e) {
         const { keyword } = this.state;
         e.preventDefault();
-
         fetch("/api/v1/main/search?keyword=" + keyword)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "OK") {
+                if (json.error == "status_OK") {
                     this.setState({
-                        retrievedSearch: true,
                         items: json.result,
+                        retrievedSearch: true,
+                    });
+                } else {
+                    this.setState({
+                        error_message: json.error_message,
+                        retrievedSearch: false,
                     });
                 }
             });
     }
+
     render() {
-        const { retrievedSearch } = this.state;
+        const { error_message } = this.state;
         const { items } = this.state;
         const { isAuth } = this.state;
+        const { retrievedSearch } = this.state;
 
-        return (
-            <div>
-                <Navbar key={isAuth} />
-                <form onSubmit={this.searchItem}>
-                    <input
-                        required
-                        type="text"
-                        name="keyword"
-                        placeholder="eg: Laptop"
-                        onChange={this.handleChange}
-                    />
-                    <button className="btn-positive">Search</button>
-                </form>
+        if (isAuth) {
+            return (
+                <div>
+                    <Navbar key={isAuth} />
+                    <form onSubmit={this.searchItem}>
+                        <input
+                            required
+                            type="text"
+                            name="keyword"
+                            placeholder="eg: Laptop"
+                            onChange={this.handleChange}
+                        />
+                        <button className="btn-positive">Search</button>
+                    </form>
 
-                {retrievedSearch &&
-                    items.map((item) => (
-                        <div key={item.id}>
-                            <ul>
-                                <li>{item.item_name}</li>
-                                <li>{item.purchasable.toString()}</li>
-                                <li>{item.platform}</li>
-                                <li>{item.deliveryFee}</li>
-                                <li>{item.rating}</li>
-                                <li>
-                                    <a href={item.url}>Link</a>
-                                </li>
-                            </ul>
-                        </div>
-                    ))}
-            </div>
-        );
+                    {retrievedSearch &&
+                        items.map((item) => (
+                            <div key={item.id}>
+                                <ul>
+                                    <li>{item.item_name}</li>
+                                    <li>{item.purchasable.toString()}</li>
+                                    <li>{item.platform}</li>
+                                    <li>{item.deliveryFee}</li>
+                                    <li>{item.rating}</li>
+                                    <li>{item.addedToWishlist.toString()}</li>
+                                    <li>
+                                        <a href={item.url}>Link</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        ))}
+
+                    {!retrievedSearch && <div>{error_message}</div>}
+                </div>
+            );
+        } else {
+            return <Navigate to={`/login`} />;
+        }
     }
 }
