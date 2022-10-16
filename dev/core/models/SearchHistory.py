@@ -17,10 +17,10 @@ class SearchHistory(models.Model):
     # adds a search history to the database
     # check if history is full first
     # delete oldest entry if full and insert the new entry
-    def addSearchHistory(self, userID):
-        user = User.retrieveInfo(userID)
+    def addSearchHistory(keyword, user):
+        searchHistory = SearchHistory(user=user, content=keyword)
         if SearchHistory.checkIfFull(user):
             SearchHistory.objects.get(user=user).delete()
-        self.save()
+        searchHistory.save()
     
 

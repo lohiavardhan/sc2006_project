@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from ..models.User import User
 from ..models.Item import Item
+from ..models.SearchHistory import SearchHistory
 from .handlers.authentication import checkUserAuthenticationStatus
 
 
@@ -31,6 +32,7 @@ class SearchItemView(APIView):
         if checkUserAuthenticationStatus(request):   
             keyword = request.query_params.get('keyword') 
             user = User.retrieveInfo(request.session['user']) 
+            SearchHistory.addSearchHistory(keyword, user)
             queryMegaList = Item.searchItem(keyword, user)
             error = "status_OK"
             error_message = "NULL"
