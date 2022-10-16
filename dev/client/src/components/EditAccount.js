@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 class EditAccount extends Component {
     constructor(props) {
@@ -86,6 +87,7 @@ class EditAccount extends Component {
             if (!redirect) {
                 return (
                     <>
+                        <Navbar key={isAuth} />
                         <div>
                             <div>{error != "OK" && <p>{error}</p>}</div>
                             <div>

@@ -11,10 +11,8 @@ class SearchItemView(APIView):
         try:
             assert request.session['user'] >= 0
             
-            keyword = request.query_params.get('keyword')
-            
+            keyword = request.query_params.get('keyword')  
             queryMegaList = Item.searchItem(keyword)
-
             payload = {"error": "OK", "result": queryMegaList}
             return Response(payload)
 

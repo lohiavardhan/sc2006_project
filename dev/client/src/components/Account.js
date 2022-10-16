@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 class Account extends Component {
     constructor(props) {
@@ -73,6 +74,7 @@ class Account extends Component {
         if (!redirect && isAuth) {
             return (
                 <>
+                    <Navbar key={isAuth} />
                     <div>
                         <ul>
                             <li>{name}</li>

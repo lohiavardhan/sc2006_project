@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 class Wishlist extends Component {
     constructor(props) {
@@ -61,27 +62,32 @@ class Wishlist extends Component {
         const { isAuth } = this.state;
         if (isAuth) {
             return (
-                <div>
-                    <h1> {username}'s wishlist </h1>
-                    <hr />
-                    {error == "OK" &&
-                        wishlist.map((item) => (
-                            <div key={item.id}>
-                                <ul>
-                                    <li>{item.id}</li>
-                                    <li>{item.added_at}</li>
-                                    <li>{item.session_key}</li>
-                                    <li>{item.item.item_name}</li>
-                                    <li>{item.item.purchasable.toString()}</li>
-                                    <li>{item.item.platform}</li>
-                                    <li>
-                                        <a href={item.item.url}>Link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-                    {error != "OK" && <div>{error}</div>}
-                </div>
+                <>
+                    <Navbar key={isAuth} />
+                    <div>
+                        <h1> {username}'s wishlist </h1>
+                        <hr />
+                        {error == "OK" &&
+                            wishlist.map((item) => (
+                                <div key={item.id}>
+                                    <ul>
+                                        <li>{item.id}</li>
+                                        <li>{item.added_at}</li>
+                                        <li>{item.session_key}</li>
+                                        <li>{item.item.item_name}</li>
+                                        <li>
+                                            {item.item.purchasable.toString()}
+                                        </li>
+                                        <li>{item.item.platform}</li>
+                                        <li>
+                                            <a href={item.item.url}>Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            ))}
+                        {error != "OK" && <div>{error}</div>}
+                    </div>
+                </>
             );
         } else {
             return <Navigate to={`/login`} />;

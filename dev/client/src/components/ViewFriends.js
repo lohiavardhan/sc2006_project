@@ -1,5 +1,6 @@
 import "../../static/css/Friends.css";
 import React, { Component } from "react";
+import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
@@ -181,111 +182,115 @@ class ViewFriends extends Component {
 
         if (isAuth) {
             return (
-                <div>
-                    <h1> {username}'s friendlist </h1>
-                    <hr />
-                    <form onSubmit={this.searchFriend}>
-                        <input
-                            required
-                            type="text"
-                            name="searchName"
-                            placeholder="Username"
-                            onChange={this.handleChange}
-                        />
-                        <button className="btn-positive">Search</button>
-                    </form>
+                <>
+                    <Navbar key={isAuth} />
+                    <div>
+                        <h1> {username}'s friendlist </h1>
+                        <hr />
+                        <form onSubmit={this.searchFriend}>
+                            <input
+                                required
+                                type="text"
+                                name="searchName"
+                                placeholder="Username"
+                                onChange={this.handleChange}
+                            />
+                            <button className="btn-positive">Search</button>
+                        </form>
 
-                    {retrievedSearch &&
-                        !retrievedIsSelf &&
-                        !retrievedIsFriend &&
-                        !requestPending && (
+                        {retrievedSearch &&
+                            !retrievedIsSelf &&
+                            !retrievedIsFriend &&
+                            !requestPending && (
+                                <div>
+                                    <li>{retrievedUser.name}</li>
+                                    <li>{retrievedUser.username}</li>
+                                    <li>{retrievedUser.birthday}</li>
+
+                                    <div>
+                                        <button
+                                            id={`${retrievedUser.username}+accept`}
+                                            className="btn-positive"
+                                            name={retrievedUser.username}
+                                            onClick={this.addFriend}
+                                        >
+                                            Add Friend
+                                        </button>
+                                        <div
+                                            id={`${retrievedUser.username}+accepted-text`}
+                                            style={{ display: "none" }}
+                                        >
+                                            Friend Request Sent
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                        {retrievedIsSelf && !retrievedIsFriend && (
+                            <div>
+                                Don't be a fool. You are already your best
+                                friend!
+                            </div>
+                        )}
+
+                        {retrievedIsFriend && !retrievedIsSelf && (
+                            <div>User is already a friend!</div>
+                        )}
+
+                        {requestPending && (
                             <div>
                                 <li>{retrievedUser.name}</li>
                                 <li>{retrievedUser.username}</li>
                                 <li>{retrievedUser.birthday}</li>
 
-                                <div>
-                                    <button
-                                        id={`${retrievedUser.username}+accept`}
-                                        className="btn-positive"
-                                        name={retrievedUser.username}
-                                        onClick={this.addFriend}
-                                    >
-                                        Add Friend
-                                    </button>
-                                    <div
-                                        id={`${retrievedUser.username}+accepted-text`}
-                                        style={{ display: "none" }}
-                                    >
-                                        Friend Request Sent
-                                    </div>
-                                </div>
+                                <div>Friend Request Sent</div>
                             </div>
                         )}
 
-                    {retrievedIsSelf && !retrievedIsFriend && (
-                        <div>
-                            Don't be a fool. You are already your best friend!
-                        </div>
-                    )}
-
-                    {retrievedIsFriend && !retrievedIsSelf && (
-                        <div>User is already a friend!</div>
-                    )}
-
-                    {requestPending && (
-                        <div>
-                            <li>{retrievedUser.name}</li>
-                            <li>{retrievedUser.username}</li>
-                            <li>{retrievedUser.birthday}</li>
-
-                            <div>Friend Request Sent</div>
-                        </div>
-                    )}
-
-                    {error == "OK" &&
-                        friendlist.map((friends) => (
-                            <div key={friends.id}>
-                                <ul>
-                                    <li>{friends.name}</li>
-                                    <li>{friends.username}</li>
-                                    <li>{friends.birthday}</li>
-                                    {!friends.accepted && (
-                                        <div>
-                                            <button
-                                                id={`${friends.username}+accept`}
-                                                className="btn-positive"
-                                                name={friends.username}
-                                                onClick={this.handleAccept}
-                                            >
-                                                Accept
-                                            </button>
-                                            <div
-                                                id={`${friends.username}+accepted-text`}
-                                                style={{ display: "none" }}
-                                            >
-                                                Accepted
+                        {error == "OK" &&
+                            friendlist.map((friends) => (
+                                <div key={friends.id}>
+                                    <ul>
+                                        <li>{friends.name}</li>
+                                        <li>{friends.username}</li>
+                                        <li>{friends.birthday}</li>
+                                        {!friends.accepted && (
+                                            <div>
+                                                <button
+                                                    id={`${friends.username}+accept`}
+                                                    className="btn-positive"
+                                                    name={friends.username}
+                                                    onClick={this.handleAccept}
+                                                >
+                                                    Accept
+                                                </button>
+                                                <div
+                                                    id={`${friends.username}+accepted-text`}
+                                                    style={{ display: "none" }}
+                                                >
+                                                    Accepted
+                                                </div>
+                                                <button
+                                                    id={`${friends.username}+reject`}
+                                                    className="btn-negative"
+                                                    name={friends.username}
+                                                    onClick={this.handleReject}
+                                                >
+                                                    Reject
+                                                </button>
+                                                <div
+                                                    id={`${friends.username}+rejected-text`}
+                                                    style={{ display: "none" }}
+                                                >
+                                                    Rejected
+                                                </div>
                                             </div>
-                                            <button
-                                                id={`${friends.username}+reject`}
-                                                className="btn-negative"
-                                                name={friends.username}
-                                                onClick={this.handleReject}
-                                            >
-                                                Reject
-                                            </button>
-                                            <div
-                                                id={`${friends.username}+rejected-text`}
-                                                style={{ display: "none" }}
-                                            >
-                                                Rejected
-                                            </div>
-                                        </div>
-                                    )}
-                                </ul>
-                            </div>
-                        ))}
-                </div>
+                                        )}
+                                    </ul>
+                                </div>
+                            ))}
+                    </div>
+                </>
             );
         } else {
             return <Navigate to={`/login`} />;

@@ -20,6 +20,7 @@ class Item(models.Model):
 
     def serializeItem(self):
         serialized = {}
+        serialized['id'] = self.id
         serialized['item_name'] = self.item_name
         serialized['description'] = self.item_description
         serialized['purchasable'] = self.purchasable

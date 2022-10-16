@@ -7,7 +7,6 @@ import Login from "./Login";
 import Account from "./Account";
 import EditAccount from "./EditAccount";
 import Wishlist from "./Wishlist";
-import Navbar from "./Navbar";
 import ForgetPass from "./ForgetPass";
 import ViewFriends from "./ViewFriends";
 import "../../static/css/styles.css";
@@ -26,7 +25,6 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <Navbar />
                 <Router>
                     <Routes>
                         <Route path="/signup" element={<Signup />} />
