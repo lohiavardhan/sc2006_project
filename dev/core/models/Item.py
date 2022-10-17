@@ -35,39 +35,12 @@ class Item(models.Model):
         return serialized
 
     def searchItem(keyword, user):
-        queryMegaList = []
-        try:
-            if " " in keyword:
-                keyword = keyword.split()
-                for i in keyword:
-                    itemList = Item.objects.filter( Q(item_name__icontains=i) | 
-                                                    Q(item_description__icontains=i))
-                    for j in itemList:
-                        queryMegaList.append(j.serializeItem(user))
-
-            else:
-                itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
-                                                Q(item_description__icontains=keyword))
-                for j in itemList:
-                    queryMegaList.append(j.serializeItem(user))
-
-            queryMegaList = [dict(t) for t in {tuple(d.items()) for d in queryMegaList}]
-
-        except:
-            if " " in keyword:
-                keyword = keyword.split()
-                for i in keyword:
-                    itemList = Item.objects.filter( Q(item_name__icontains=i) | 
-                                                    Q(item_description__icontains=i))
-                    for j in itemList:
-                        queryMegaList.append(j.serializeItem(user))
-
-            else:
-                itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
-                                                Q(item_description__icontains=keyword))
-                for j in itemList:
-                    queryMegaList.append(j.serializeItem(user))
-
+        queryMegaList = []    
+        itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
+                                        Q(item_description__icontains=keyword))
+        for j in itemList:
+            queryMegaList.append(j.serializeItem(user))
+        queryMegaList = [dict(t) for t in {tuple(d.items()) for d in queryMegaList}]
         return queryMegaList
 
 

@@ -17,6 +17,7 @@ urlpatterns = [
     path('v1/accounts/edit', EditAccountsView.as_view()),
     path('v1/accounts/logout', LogoutAccountView.as_view()),
     path('v1/accounts/wishlist', WishlistView.as_view()),
+    path('v1/accounts/wishlist/add', AddWishlistItem.as_view()),
     path('v1/friends/view', FriendView.as_view()),
     path('v1/friends/search', SearchFriendView.as_view()),
     path('v1/friends/add', AddFriendView.as_view()),
@@ -24,5 +25,4 @@ urlpatterns = [
     path('v1/friends/reject', RejectFriendView.as_view()),
     path('v1/main', MainView.as_view()),
     path('v1/main/search', SearchItemView.as_view()),
-    path('v1/accounts/wishlist/add', AddWishlistItem.as_view()),
 ]

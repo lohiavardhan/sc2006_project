@@ -152,7 +152,7 @@ export default class Login extends Component {
                 </>
             );
         } else {
-            return <Navigate to={`/accounts/${username}`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

@@ -22,6 +22,18 @@ export default class Home extends Component {
                 rating: 0.0,
                 addedToWishlist: false,
             },
+            hasRecommend: false,
+            recommendedItems: {
+                id: -1,
+                item_name: "",
+                description: "",
+                purchasable: false,
+                platform: "",
+                url: "",
+                deliveryFee: 0.0,
+                rating: 0.0,
+                addedToWishlist: false,
+            },
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -67,6 +79,13 @@ export default class Home extends Component {
                         retrievedSearch: false,
                     });
                 }
+
+                if (json.recommend.length != 0) {
+                    this.setState({
+                        recommendedItems: json.recommend,
+                        hasRecommend: true,
+                    });
+                }
             });
     }
 
@@ -75,6 +94,8 @@ export default class Home extends Component {
         const { items } = this.state;
         const { isAuth } = this.state;
         const { retrievedSearch } = this.state;
+        const { hasRecommend } = this.state;
+        const { recommendedItems } = this.state;
 
         if (isAuth) {
             return (
@@ -109,6 +130,37 @@ export default class Home extends Component {
                         ))}
 
                     {!retrievedSearch && <div>{error_message}</div>}
+                    <hr />
+                    <div>
+                        <h2>You may also like:</h2>
+                        {hasRecommend &&
+                            recommendedItems.map((item) => (
+                                <div key={item.id}>
+                                    <ul>
+                                        <li>{item.item_name}</li>
+                                        <li>{item.purchasable.toString()}</li>
+                                        <li>{item.platform}</li>
+                                        <li>{item.deliveryFee}</li>
+                                        <li>{item.rating}</li>
+                                        <li>
+                                            {item.addedToWishlist.toString()}
+                                        </li>
+                                        <li>
+                                            <a href={item.url}>Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            ))}
+                        {!hasRecommend && retrievedSearch && (
+                            <div>
+                                Your recommendation will show up once you
+                                searched at least 10 times.
+                            </div>
+                        )}
+                        {!hasRecommend && !retrievedSearch && (
+                            <div>Happy hunting!</div>
+                        )}
+                    </div>
                 </div>
             );
         } else {

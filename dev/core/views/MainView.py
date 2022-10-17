@@ -34,6 +34,7 @@ class SearchItemView(APIView):
             user = User.retrieveInfo(request.session['user']) 
             SearchHistory.addSearchHistory(keyword, user)
             queryMegaList = Item.searchItem(keyword, user)
+            recommendedItems = SearchHistory.recommendItems(user, queryMegaList)
             error = "status_OK"
             error_message = "NULL"
             if len(queryMegaList) == 0:
@@ -41,7 +42,8 @@ class SearchItemView(APIView):
                 error_message = "No results found."
             payload = { "error": error, 
                         "error_message": error_message, 
-                        "result": queryMegaList}
+                        "result": queryMegaList,
+                        "recommend": recommendedItems}
             return Response(payload)
 
         else:
@@ -50,4 +52,3 @@ class SearchItemView(APIView):
             payload = { "error": error,
                         "error_message": error_message}
             return Response(payload)
-
