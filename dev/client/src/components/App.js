@@ -25,6 +25,7 @@ export default class App extends Component {
     render() {
         return (
             <>
+                <Navbar/>
                 <Router>
                     <Routes>
                         <Route path="/signup" element={<Signup />} />
