@@ -12,6 +12,13 @@ class WishlistView(APIView):
             user = User.retrieveInfo(request.session['user'])
             param = request.query_params.get('username')
             paramUser = User.queryByUsername(param)
+            if not paramUser:
+                error = "status_invalid_access"
+                error_message = "User not found"
+                payload = { "error": error, 
+                            "error_message": error_message}
+                return Response(payload)
+
             if param == user.username or Friend.isFriend(user.id, paramUser.id):
                 wishlist = WishlistItem.retrieveWishlist(paramUser.id)
                 if wishlist:

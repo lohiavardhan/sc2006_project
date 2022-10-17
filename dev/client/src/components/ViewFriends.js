@@ -260,6 +260,15 @@ class ViewFriends extends Component {
                                                     </div>
                                                 </div>
                                             )}
+                                        {friends.accepted && (
+                                            <div>
+                                                <a
+                                                    href={`/accounts/${friends.username}/wishlist`}
+                                                >
+                                                    Wishlist
+                                                </a>
+                                            </div>
+                                        )}
                                     </ul>
                                 </div>
                             ))}

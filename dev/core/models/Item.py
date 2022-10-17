@@ -42,6 +42,17 @@ class Item(models.Model):
             queryMegaList.append(j.serializeItem(user))
         queryMegaList = [dict(t) for t in {tuple(d.items()) for d in queryMegaList}]
         return queryMegaList
+    
+    def parameterTuning(tuningKey, user, keyword): 
+        filteredList = Item.searchItem(keyword, user)
+        if tuningKey['platform'] != 'ALL': 
+            filteredList = [x for x in filteredList if tuningKey['platform'] == x.get('platform')]
+        if tuningKey['deliveryFee'] != 'ALL':
+            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] == x.get('deliveryFee')]
+        if tuningKey['rating'] != 'ALL':
+            filteredList = [x for x in filteredList if tuningKey['rating'] == x.get('rating')]
+        
+        return filteredList
 
 
 class WishlistItem(models.Model):

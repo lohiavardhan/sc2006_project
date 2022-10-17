@@ -27,7 +27,7 @@ class SearchHistory(models.Model):
             SearchHistory.objects.get(user=user).delete()
         searchHistory.save()
     
-    def recommendItems(user, queryMegaList):
+    def recommendItems(user):
         querySet = SearchHistory.objects.filter(user=user)
         contentMegaList = []
         for i in querySet.values():

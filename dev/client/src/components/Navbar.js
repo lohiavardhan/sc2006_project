@@ -82,6 +82,14 @@ class Navbar extends Component {
                                     />
                                 </a>
                             </li>
+                            <li>
+                                <a href={`/home`}>
+                                    <img
+                                        src="./assets/icons/Help.png"
+                                        alt="Search"
+                                    />
+                                </a>
+                            </li>
                         </ul>
                     )}
                 </div>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from .views.MainView import MainView, SearchItemView
+from .views.MainView import MainView, SearchItemView, FilterSearchView
 from .views.FriendView import FriendView, SearchFriendView, AddFriendView, AcceptFriendView, RejectFriendView
 from .views.WishlistView import WishlistView, AddWishlistItem
 from .views.LoginView import LoginView
@@ -25,4 +25,5 @@ urlpatterns = [
     path('v1/friends/reject', RejectFriendView.as_view()),
     path('v1/main', MainView.as_view()),
     path('v1/main/search', SearchItemView.as_view()),
+    path('v1/main/search/filter', FilterSearchView.as_view()),
 ]
