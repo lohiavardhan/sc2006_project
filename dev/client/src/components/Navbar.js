@@ -33,66 +33,46 @@ class Navbar extends Component {
         const { username } = this.state;
         return (
             <>
+                <nav class = "navbar justify-content-between">
                 <div className="navbar-container">
                     <a href="/home" className="navbar-logo">
-                        findr
+                        <span className="h1 text-uppercase text-dark bg-light px-2 logo-class-1">Find</span>
+                        <span className="h1 text-uppercase text-light px-2 ml-n1 logo-class-2">R</span>
                     </a>
 
-                    {!isAuth && (
-                        <ul className="navbar-links">
-                            <li className="navbar-links-help">
-                                <a
-                                    href="/help"
-                                    className="navbar-links-help-icon"
-                                >
-                                    <img
-                                        src="./assets/icons/Help.png"
-                                        alt="Help"
-                                    />
-                                </a>
-                            </li>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
 
-                            <li className="navbar-links-login">
-                                <a href="/login">Login</a>
-                            </li>
-                            <li className="navbar-links-signup">
-                                <a href="/signup">Sign up</a>
-                            </li>
-                        </ul>
+
+                    {!isAuth && (
+                        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className = "right">
+                            <a className="navbar-links-help nav-item nav-link" href="/help">Help</a>
+                            <a className="navbar-links-login nav-item nav-link" href="#">Login</a>
+                            <a className="navbar-links-signup nav-item nav-link" href="#">Sign Up</a>
+                        </div>
+                        </div>
                     )}
                     {isAuth && (
-                        <ul>
-                            <li>
-                                <a
-                                    href={`/accounts/${username}`}
-                                    className="navbar-links-help-icon"
-                                >
-                                    <img
-                                        src="./assets/icons/Help.png"
-                                        alt="Accounts"
-                                    />
-                                </a>
-                            </li>
+                        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
+                            <a className="nav-item nav-link active nav-bar-auth-true" href="/accounts/${username}">Account</a>
+                            <a className="nav-item nav-link nav-bar-auth-true" href="/accounts/${username}/wishlist">Wishlist</a>
+                            <a className="nav-item nav-link nav-bar-auth-true" href="/about">About</a>
+                                
+                            <form class="nav-search">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                                <button class="button-for-searching" type="submit">Search</button>
+                            </form>
+                                
+                        </div>
+                    </div>
 
-                            <li>
-                                <a href={`/accounts/${username}/wishlist`}>
-                                    <img
-                                        src="./assets/icons/Help.png"
-                                        alt="WishList"
-                                    />
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`/home`}>
-                                    <img
-                                        src="./assets/icons/Help.png"
-                                        alt="Search"
-                                    />
-                                </a>
-                            </li>
-                        </ul>
+                        
                     )}
                 </div>
+                </nav>
             </>
         );
     }
