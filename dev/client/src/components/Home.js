@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import { Navigate } from "react-router-dom";
+import "../../static/css/Home.css";
 
 export default class Home extends Component {
     constructor(props) {
@@ -34,10 +35,16 @@ export default class Home extends Component {
                 rating: 0.0,
                 addedToWishlist: false,
             },
+            price: "ALL",
+            platform: "ALL",
+            deliveryFee: "ALL",
+            rating: "ALL",
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.searchItem = this.searchItem.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
     componentDidMount() {
@@ -46,10 +53,10 @@ export default class Home extends Component {
                 return response.json();
             })
             .then((json) => {
+                console.log(json.username);
                 if (json.error != "status_OK") {
                     this.setState({
                         isAuth: false,
-                        username: json.username,
                     });
                 }
             });
@@ -89,79 +96,271 @@ export default class Home extends Component {
             });
     }
 
+    handleFilter(e) {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+        });
+    }
+
+    handleReset(e) {
+        try {
+            document.querySelector(
+                'input[name="platform"]:checked'
+            ).checked = false;
+        } catch {}
+        try {
+            document.querySelector(
+                'input[name="rating"]:checked'
+            ).checked = false;
+        } catch {}
+        document.querySelector('input[name="price"]').value = 50;
+        document.querySelector('input[name="deliveryFee"]').value = 50;
+        this.setState({
+            price: "ALL",
+            platform: "ALL",
+            rating: "ALL",
+            deliveryFee: "ALL",
+        });
+    }
+
     render() {
         const { error_message } = this.state;
+        const { username } = this.state;
         const { items } = this.state;
         const { isAuth } = this.state;
         const { retrievedSearch } = this.state;
         const { hasRecommend } = this.state;
         const { recommendedItems } = this.state;
+        const { price } = this.state;
+        const { platform } = this.state;
+        const { rating } = this.state;
+        const { deliveryFee } = this.state;
 
         if (isAuth) {
             return (
-                <div>
-                    <Navbar key={isAuth} />
-                    <form onSubmit={this.searchItem}>
-                        <input
-                            required
-                            type="text"
-                            name="keyword"
-                            placeholder="eg: Laptop"
-                            onChange={this.handleChange}
-                        />
-                        <button className="btn-positive">Search</button>
-                    </form>
-
-                    {retrievedSearch &&
-                        items.map((item) => (
-                            <div key={item.id}>
-                                <ul>
-                                    <li>{item.item_name}</li>
-                                    <li>{item.purchasable.toString()}</li>
-                                    <li>{item.platform}</li>
-                                    <li>{item.deliveryFee}</li>
-                                    <li>{item.rating}</li>
-                                    <li>{item.addedToWishlist.toString()}</li>
-                                    <li>
-                                        <a href={item.url}>Link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-
-                    {!retrievedSearch && <div>{error_message}</div>}
-                    <hr />
+                <>
+                    <Navbar />
                     <div>
-                        <h2>You may also like:</h2>
-                        {hasRecommend &&
-                            recommendedItems.map((item) => (
-                                <div key={item.id}>
-                                    <ul>
-                                        <li>{item.item_name}</li>
-                                        <li>{item.purchasable.toString()}</li>
-                                        <li>{item.platform}</li>
-                                        <li>{item.deliveryFee}</li>
-                                        <li>{item.rating}</li>
-                                        <li>
-                                            {item.addedToWishlist.toString()}
-                                        </li>
-                                        <li>
-                                            <a href={item.url}>Link</a>
-                                        </li>
-                                    </ul>
+                        <div className="home-searchbar">
+                            <p>Search for an item: </p>
+                            <form onSubmit={this.searchItem}>
+                                <input
+                                    required
+                                    type="text"
+                                    name="keyword"
+                                    placeholder="eg: Laptop"
+                                    onChange={this.handleChange}
+                                />
+                                <button>
+                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div className="search-view">
+                            <div className="filter-view">
+                                <div className="filter-parameter">
+                                    <div className="price-display">
+                                        <label> Price </label>
+                                        <div>{price}</div>
+                                    </div>
+
+                                    <div className="slidecontainer">
+                                        <input
+                                            type="range"
+                                            min="1"
+                                            max="100"
+                                            defaultValue="50"
+                                            className="slider"
+                                            name="price"
+                                            onChange={this.handleFilter}
+                                        />
+                                    </div>
                                 </div>
-                            ))}
-                        {!hasRecommend && retrievedSearch && (
-                            <div>
-                                Your recommendation will show up once you
-                                searched at least 10 times.
+                                <div className="filter-parameter">
+                                    <label> Platform </label>
+
+                                    <div className="platform-list">
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="platform"
+                                                onChange={this.handleFilter}
+                                            />{" "}
+                                            Lazada
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="platform"
+                                                onChange={this.handleFilter}
+                                            />{" "}
+                                            Amazon
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="filter-parameter">
+                                    <div className="price-display">
+                                        <label> Delivery Fee </label>
+                                        <div>{deliveryFee}</div>
+                                    </div>
+
+                                    <div className="slidecontainer">
+                                        <input
+                                            type="range"
+                                            min="1"
+                                            max="100"
+                                            defaultValue="50"
+                                            className="slider"
+                                            name="deliveryFee"
+                                            onChange={this.handleFilter}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="filter-parameter">
+                                    <label> Rating </label>
+
+                                    <div className="rating-list">
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                onChange={this.handleFilter}
+                                            />
+                                            {"  "}
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                onChange={this.handleFilter}
+                                            />
+                                            {"  "}
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                onChange={this.handleFilter}
+                                            />
+                                            {"  "}
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                onChange={this.handleFilter}
+                                            />
+                                            {"  "}
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-solid fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    className="reset-filter"
+                                    onClick={this.handleReset}
+                                >
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                                <button className="submit-filter">
+                                    Filter
+                                </button>
                             </div>
-                        )}
-                        {!hasRecommend && !retrievedSearch && (
-                            <div>Happy hunting!</div>
-                        )}
+                            <div className="item-view">
+                                {!retrievedSearch && error_message == "" && (
+                                    <div className="placeholder-during-nosearch">
+                                        <img alt="art"></img>
+                                        <p>Begin by searching for an item.</p>
+                                    </div>
+                                )}
+
+                                {!retrievedSearch && error_message != "" && (
+                                    <div className="placeholder-during-nosearch">
+                                        <img alt="art"></img>
+                                        {error_message}
+                                    </div>
+                                )}
+
+                                {retrievedSearch &&
+                                    items.map((item) => (
+                                        <div key={item.id}>
+                                            <ul>
+                                                <li>{item.item_name}</li>
+                                                <li>
+                                                    {item.purchasable.toString()}
+                                                </li>
+                                                <li>{item.platform}</li>
+                                                <li>{item.deliveryFee}</li>
+                                                <li>{item.rating}</li>
+                                                <li>
+                                                    {item.addedToWishlist.toString()}
+                                                </li>
+                                                <li>
+                                                    <a href={item.url}>Link</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    ))}
+
+                                <hr />
+                                <div className="recommended-item-section">
+                                    <h1>You may also like:</h1>
+                                    {hasRecommend &&
+                                        recommendedItems.map((item) => (
+                                            <div key={item.id}>
+                                                <ul>
+                                                    <li>{item.item_name}</li>
+                                                    <li>
+                                                        {item.purchasable.toString()}
+                                                    </li>
+                                                    <li>{item.platform}</li>
+                                                    <li>{item.deliveryFee}</li>
+                                                    <li>{item.rating}</li>
+                                                    <li>
+                                                        {item.addedToWishlist.toString()}
+                                                    </li>
+                                                    <li>
+                                                        <a href={item.url}>
+                                                            Link
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    {!hasRecommend && retrievedSearch && (
+                                        <div>
+                                            Your recommendation will show up
+                                            once you searched at least 10 times.
+                                        </div>
+                                    )}
+                                    {!hasRecommend && !retrievedSearch && (
+                                        <div>Happy hunting!</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </>
             );
         } else {
             return <Navigate to={`/login`} />;

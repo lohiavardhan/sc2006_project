@@ -13,7 +13,7 @@ class LoginView(APIView):
             error_message = "User is already logged in."
             username = User.retrieveInfo(request.session['user']).username
             payload = { "error": error, 
-                        "error_messgae": error_message, 
+                        "error_message": error_message, 
                         "username": username }
             return Response(payload)
 
@@ -21,7 +21,7 @@ class LoginView(APIView):
             error = "status_OK"
             error_message = "NULL"
             payload = { "error": error, 
-                        "error_messgae": error_message }
+                        "error_message": error_message }
             return Response(payload)
 
 
@@ -36,11 +36,11 @@ class LoginView(APIView):
                 user = User.queryByUsername(username)
                 user.login(request)
                 payload = { "error": error, 
-                            "error_messgae": error_message }
+                            "error_message": error_message }
                 return Response(payload)
 
             else:
                 payload = { "error": error, 
-                            "error_messgae": error_message }
+                            "error_message": error_message }
                 return Response(payload)
 

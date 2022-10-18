@@ -13,7 +13,7 @@
 .login-background,
 .otp-background {
   background-color: #c1c1c1;
-  padding: 3.4rem;
+  padding: 3.9rem;
   box-sizing: border-box;
   height: inherit;
 }
@@ -88,20 +88,20 @@
   align-items: center;
 }
 
-.login-content-credential-icon {
+.login-content-credential i {
   width: 3.2rem;
   height: auto;
   color: var(--color-primary);
   padding-left: 4.5rem;
   grid-column: 1;
   grid-row: 1;
-  font-size: 1.2rem;
+  font-size: 3rem;
 }
 .login-content-credential-input,
 .otp-input {
   border: none;
   background: transparent;
-  width: 42rem;
+  width: 35rem;
   border-radius: 3.25rem;
   grid-column: 1;
   grid-row: 1;

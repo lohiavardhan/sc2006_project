@@ -21,6 +21,7 @@
   flex-direction: row;
   padding: 0rem 8rem;
   align-items: center;
+  justify-content: flex-start;
   border-bottom: 1px solid #c1c1c1;
 }
 

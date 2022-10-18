@@ -126,7 +126,7 @@ class User(models.Model):
 
         if not user or not check_password(password, user.password):
             error = "status_invalid_credentials"
-            error_message = "Ivalid username and/or password."
+            error_message = "Invalid username and/or password."
         
         return (error, error_message)
 

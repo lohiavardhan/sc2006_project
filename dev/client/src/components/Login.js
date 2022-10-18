@@ -1,7 +1,7 @@
 import "../../static/css/LoginSignup.css";
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
-import Navbar from "./Navbar";
+import LoggedOutNavbar from "./LoggedOutNavbar";
 
 export default class Login extends Component {
     constructor(props) {
@@ -75,9 +75,14 @@ export default class Login extends Component {
         if (!redirect && !isAuth) {
             return (
                 <>
-                    <Navbar key={isAuth} />
+                    <LoggedOutNavbar />
                     <div className="login-container">
                         <div className="login-background">
+                            {error_message == "NULL" && (
+                                <div>
+                                    <p className="login-error">&nbsp;</p>
+                                </div>
+                            )}
                             {error_message != "NULL" && (
                                 <p className="login-error">{error_message}</p>
                             )}
@@ -88,11 +93,7 @@ export default class Login extends Component {
                                     </h3>
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="login-content-credential">
-                                            <img
-                                                src="./assets/icons/Username.png"
-                                                alt="icon"
-                                                className="login-content-credential-icon"
-                                            ></img>
+                                            <i class="fa-regular fa-user"></i>
                                             <input
                                                 className="login-content-credential-input"
                                                 required
@@ -104,11 +105,7 @@ export default class Login extends Component {
                                         </div>
 
                                         <div className="login-content-credential">
-                                            <img
-                                                src="./assets/icons/Password.png"
-                                                alt="icon"
-                                                className="login-content-credential-icon"
-                                            ></img>
+                                            <i class="fa-solid fa-lock"></i>
                                             <input
                                                 className="login-content-credential-input"
                                                 required
