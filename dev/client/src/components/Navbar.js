@@ -49,8 +49,8 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className = "right">
                             <a className="navbar-links-help nav-item nav-link" href="/help">Help</a>
-                            <a className="navbar-links-login nav-item nav-link" href="#">Login</a>
-                            <a className="navbar-links-signup nav-item nav-link" href="#">Sign Up</a>
+                            <a className="navbar-links-login nav-item nav-link" href="/login">Login</a>
+                            <a className="navbar-links-signup nav-item nav-link" href="/signup">Sign Up</a>
                         </div>
                         </div>
                     )}
@@ -59,12 +59,11 @@ class Navbar extends Component {
                         <div className="navbar-nav">
                             <a className="nav-item nav-link active nav-bar-auth-true" href="/accounts/${username}">Account</a>
                             <a className="nav-item nav-link nav-bar-auth-true" href="/accounts/${username}/wishlist">Wishlist</a>
+                            <a className="nav-item nav-link nav-bar-auth-true" href="/accounts/${username}/friends">Friends</a>
                             <a className="nav-item nav-link nav-bar-auth-true" href="/about">About</a>
+                            <a className="nav-item nav-link nav-bar-auth-true logout-right" href="/logout">Logout</a>
                                 
-                            <form class="nav-search">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                                <button class="button-for-searching" type="submit">Search</button>
-                            </form>
+                            
                                 
                         </div>
                     </div>
@@ -73,6 +72,12 @@ class Navbar extends Component {
                     )}
                 </div>
                 </nav>
+                {/*
+                <form class="nav-search">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                     <button class="button-for-searching" type="submit">Search</button>
+                </form>
+                    */}
             </>
         );
     }

@@ -11,4 +11,5 @@ urlpatterns = [
     path('accounts/<str:username>/wishlist', index),
     path('accounts/<str:username>/friends/view', index),
     path('home', index),
+    path('help', index),
 ]
