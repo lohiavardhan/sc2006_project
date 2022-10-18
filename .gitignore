@@ -133,3 +133,6 @@ dmypy.json
 
 # Django
 .env
+
+#node modules
+node_modules/
