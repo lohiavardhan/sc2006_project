@@ -9,6 +9,7 @@ import EditAccount from "./EditAccount";
 import Wishlist from "./Wishlist";
 import ForgetPass from "./ForgetPass";
 import ViewFriends from "./ViewFriends";
+import Help from "./Help"
 import "../../static/css/styles.css";
 import {
     BrowserRouter as Router,
@@ -53,6 +54,10 @@ export default class App extends Component {
                         <Route
                             path="accounts/:username/friends/view"
                             element={<ViewFriends />}
+                        />
+                        <Route
+                            path = "/help"
+                            element={<Help />}
                         />
                     </Routes>
                 </Router>

@@ -23,6 +23,10 @@
   color: black;
 }
 
+.logout-right{
+  margin-left: 93rem;
+}
+
 .navbar-links {
   display: flex;
   margin-left: auto;
@@ -38,9 +42,18 @@
 .navbar-links-login,
 .navbar-links-signup {
   margin-right: 2rem;
-  width: 13rem;
+  width: 20rem;
   height: 6rem;
   border-radius: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+}
+
+.navber-links-help:hover,
+.navbar-links-login:hover,
+.navbar-links-signup:hover {
+  color:#007EA7;
 }
 
 .nav-search{
@@ -54,6 +67,7 @@
   width: 4.8rem;
   height: auto;
   margin-right: 3.2rem;
+  color: black;
 }
 
 .button-for-searching{
@@ -84,7 +98,7 @@
 }
 
 .right{
-  margin-left: 140rem;
+  margin-left: 135rem;
 }
 
 .navbar-links a {
