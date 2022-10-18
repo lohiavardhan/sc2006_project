@@ -128,6 +128,8 @@ class Account extends Component {
                 >
                   Logout
                 </button>
+                {/* <a href={`/accounts/${username}/wishlist`}> View Wishlist </a> */}
+                {/* <a href={`/accounts/${username}/friends/view`}> View Friends </a> */}
               </div>
             </div>
           </div>
