@@ -1,71 +1,64 @@
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from ..serializers import SignupSerializer
 from ..models.User import User
 from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
+from .handlers.authentication import checkUserAuthenticationStatus
 import random
+
 
 class SignUpView(APIView):
     serializer_class = SignupSerializer
 
     def get(self, request):
-        try:
-            assert request.session['user'] >= 0
-            error = "error_user_has_login"
+        if checkUserAuthenticationStatus(request):
+            error = "status_invalid_access"
+            error_message = "User is already logged in."
             username = User.retrieveInfo(request.session['user']).username
-            payload = {"error": error, "username": username}
+            payload = { "error": error, 
+                        "error_messgae": error_message, 
+                        "username": username }
             return Response(payload)
 
-        except:
-            payload = {"error": "OK"}
+        else:
+            error = "status_OK"
+            error_message = "NULL"
+            payload = { "error": error, 
+                        "error_messgae": error_message }
             return Response(payload)
+
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-
         if serializer.is_valid():
             username = serializer.data.get('username')
             email = serializer.data.get('email')
             password = serializer.data.get('password')
-            error = SignUpView.validateUser(username, email, password)
+            error, error_message = User.validateUser(username, email, password)
 
-            if not error:
+            if error == "status_OK":
                 password = make_password(password)
                 user = User(username=username, password=password, email=email)
                 request.session['payload'] = SignupSerializer(user).data
-                request.session['payload']['auth'] = SignUpView.generateCode()
-                payload = {"error": "OK"}
-                return Response(payload)
+                request.session['payload']['auth'] = SignUpView.generateCode(email)
 
-            else:
-                payload = {"error": error}
-                return Response(payload)
+            payload = { "error": error, 
+                        "error_message": error_message }
+            return Response(payload)
 
+    
     @staticmethod
-    def validateUser(username, email, password):
-        error = None
-
-        if User.takenUsername(username):
-            error = "error_user_taken"
-        
-        elif len(username) < 5:
-            error = "error_user_invalid"
-
-        elif len(email) < 5:
-            error = "error_email_invalid"
-        
-        elif User.takenEmail(email):
-            error = "error_email_taken"
-        
-        elif not User.validatePassword(password):
-            error = "error_password_invalid"
-        
-        return error
-
-    @staticmethod
-    def generateCode():
+    def generateCode(email):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
+        send_mail(
+        'FindR OTP',
+        'Here is the OTP:'+code,
+        'noreplyfindrotp@gmail.com', 
+        [email], 
+        fail_silently=False,
+    )
         print(code)
         return code
     
@@ -74,17 +67,23 @@ class EmailAuthView(APIView):
     def get(self, request):
         try:  
             if request.query_params.get('email') == request.session['payload']['email']:
-                payload = {"error": "OK"}
+                payload = { "error": "status_OK", 
+                            "error_messgae": "NULL" }
                 return Response(payload)
             else:
-                error = "error_not_auth"
-                payload = {"error": error}
+                error = "status_invalid_access"
+                error_message = "User email does not match query parameter."
+                payload = { "error": error,
+                            "error_message": error_message}
                 return Response(payload)
 
         except:
-            error = "error_not_auth"
-            payload = {"error": error}
+            error = "status_invalid_access"
+            error_message = "User email does not match query parameter."
+            payload = { "error": error,
+                        "error_message": error_message}
             return Response(payload)
+
 
     def post(self, request):
         code = request.data.get('code')
@@ -96,16 +95,20 @@ class EmailAuthView(APIView):
             del request.session['payload']
             user = User(username=username, password=password, email=email)
             user.register()
-            request.session.create()
             user.login(request)
 
-            payload = {"error": "OK", "user": user.username}
-            return Response(payload, status=status.HTTP_200_OK)
+            payload = { "error": "status_OK", 
+                        "error_message": "NULL",
+                        "username": user.username}
         
         else:
-            error = "error_invalidOTP"
-            payload = {"error": error}
-            return Response(payload, status=status.HTTP_200_OK)
+            error = "status_invalid_credentials"
+            error_mesasge = "Invalid OTP"
+            payload = { "error": error,
+                        "error_message": error_mesasge}
+
+        return Response(payload)
+
 
     @staticmethod
     def validateCode(code, request):

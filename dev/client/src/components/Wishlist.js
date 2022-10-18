@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 class Wishlist extends Component {
     constructor(props) {
@@ -11,16 +12,20 @@ class Wishlist extends Component {
             wishlist: [
                 {
                     id: "",
-                    item_name: "",
-                    user: "",
-                    purchasable: false,
                     added_at: "",
                     session_key: "",
-                    platform: "",
-                    url: "",
+                    item: {
+                        item_name: "",
+                        purchasable: false,
+                        platform: "",
+                        url: "",
+                        description: "",
+                        deliveryFee: 0.0,
+                        rating: 0.0,
+                    },
                 },
             ],
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: true,
         };
@@ -32,18 +37,18 @@ class Wishlist extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_not_auth") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: false,
                     });
-                } else if (json.error == "error_wishlist_invalid") {
+                } else if (json.error == "status_invalid_query") {
                     this.setState({
-                        error: "No wish list item added yet !!",
+                        error_message: json.error_message,
                     });
                 } else {
                     this.setState({
+                        username: json.username,
                         wishlist: json.payload,
-                        error: "OK",
                     });
                 }
             });
@@ -53,36 +58,39 @@ class Wishlist extends Component {
         const { wishlist } = this.state;
         const { username } = this.state;
         const { redirect } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
-
         if (isAuth) {
             return (
-                <div>
-                    <h1> {username}'s wishlist </h1>
-                    <hr />
-                    {error == "OK" &&
-                        wishlist.map((item) => (
-                            <div>
-                                <ul>
-                                    <li>{item.id}</li>
-                                    <li>{item.item_name}</li>
-                                    <li>{item.user}</li>
-                                    <li>{item.purchasable.toString()}</li>
-                                    <li>{item.added_at}</li>
-                                    <li>{item.session_key}</li>
-                                    <li>{item.platform}</li>
-                                    <li>
-                                        <a href={item.url}>Link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-                    {error != "OK" && <div>{error}</div>}
-                </div>
+                <>
+                    <Navbar key={isAuth} />
+                    <div>
+                        <h1> {username}'s wishlist </h1>
+                        <hr />
+                        {error_message == "NULL" &&
+                            wishlist.map((item) => (
+                                <div key={item.id}>
+                                    <ul>
+                                        <li>{item.id}</li>
+                                        <li>{item.added_at}</li>
+                                        <li>{item.session_key}</li>
+                                        <li>{item.item.item_name}</li>
+                                        <li>
+                                            {item.item.purchasable.toString()}
+                                        </li>
+                                        <li>{item.item.platform}</li>
+                                        <li>
+                                            <a href={item.item.url}>Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            ))}
+                        {error_message != "NULL" && <div>{error_message}</div>}
+                    </div>
+                </>
             );
         } else {
-            return <Navigate to={`/login`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 class EditAccount extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class EditAccount extends Component {
             email: "",
             name: "",
             birthday: "",
-            error: null,
+            error_message: "NULL",
             redirect: false,
             isAuth: true,
         };
@@ -25,7 +26,7 @@ class EditAccount extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_not_auth") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: false,
                     });
@@ -59,18 +60,13 @@ class EditAccount extends Component {
                 return response.json();
             })
             .then((json) => {
-                this.setState({ error: json.error });
-                if (this.state.error == "OK") {
+                if (json.error == "status_OK") {
                     this.setState({
                         redirect: true,
                     });
-                } else if (this.state.error == "error_user_taken") {
+                } else {
                     this.setState({
-                        error: "Username has been taken !!",
-                    });
-                } else if (this.state.error == "error_email_taken") {
-                    this.setState({
-                        error: "Email has been taken !!",
+                        error_message: json.error_message,
                     });
                 }
             });
@@ -79,15 +75,20 @@ class EditAccount extends Component {
     render() {
         const { redirect } = this.state;
         const { username } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
 
         if (isAuth) {
             if (!redirect) {
                 return (
                     <>
+                        <Navbar key={isAuth} />
                         <div>
-                            <div>{error != "OK" && <p>{error}</p>}</div>
+                            <div>
+                                {error_message != "NULL" && (
+                                    <p>{error_message}</p>
+                                )}
+                            </div>
                             <div>
                                 <form onSubmit={this.updateUserData}>
                                     <div>
@@ -144,7 +145,7 @@ class EditAccount extends Component {
                 return <Navigate to={`/accounts/${username}`} />;
             }
         } else {
-            return <Navigate to={`/login`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

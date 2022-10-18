@@ -1,5 +1,7 @@
+import "../../static/css/LoginSignup.css";
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default class Login extends Component {
     constructor(props) {
@@ -7,8 +9,8 @@ export default class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            error: null,
             redirect: false,
+            error_message: "NULL",
             isAuth: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -21,7 +23,7 @@ export default class Login extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "error_user_has_login") {
+                if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: true,
                         username: json.username,
@@ -37,7 +39,6 @@ export default class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         const requestOptions = {
             method: "POST",
             headers: {
@@ -55,11 +56,11 @@ export default class Login extends Component {
                 return response.json();
             })
             .then((json) => {
-                if (json.error == "OK") {
+                if (json.error == "status_OK") {
                     this.setState({ redirect: true });
                 } else {
                     this.setState({
-                        error: "Invalid Username and/or Password !!",
+                        error_message: json.error_message,
                     });
                 }
             });
@@ -67,52 +68,91 @@ export default class Login extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { username } = this.state;
-        const { error } = this.state;
+        const { error_message } = this.state;
         const { isAuth } = this.state;
+        const { username } = this.state;
 
         if (!redirect && !isAuth) {
             return (
                 <>
-                    <div>
-                        <div>
-                            <hr />
+                    <Navbar key={isAuth} />
+                    <div className="login-container">
+                        <div className="login-background">
+                            {error_message != "NULL" && (
+                                <p className="login-error">{error_message}</p>
+                            )}
+                            <div className="login-panel">
+                                <div className="login-content">
+                                    <h3 className="login-content-title">
+                                        Login
+                                    </h3>
+                                    <form onSubmit={this.handleSubmit}>
+                                        <div className="login-content-credential">
+                                            <img
+                                                src="./assets/icons/Username.png"
+                                                alt="icon"
+                                                className="login-content-credential-icon"
+                                            ></img>
+                                            <input
+                                                className="login-content-credential-input"
+                                                required
+                                                type="text"
+                                                name="username"
+                                                placeholder="Username"
+                                                onChange={this.handleChange}
+                                            />
+                                        </div>
+
+                                        <div className="login-content-credential">
+                                            <img
+                                                src="./assets/icons/Password.png"
+                                                alt="icon"
+                                                className="login-content-credential-icon"
+                                            ></img>
+                                            <input
+                                                className="login-content-credential-input"
+                                                required
+                                                type="password"
+                                                name="password"
+                                                id="password"
+                                                placeholder="Password"
+                                                onChange={this.handleChange}
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            className="login-content-btn btn-positive"
+                                        >
+                                            Login
+                                        </button>
+                                    </form>
+                                    <a
+                                        href={`/forgetpassword`}
+                                        className="login-content-forgetpass"
+                                    >
+                                        Forget Password?
+                                    </a>
+                                    <div className="line"> </div>
+                                    <div className="login-content-signup">
+                                        <p className="login-content-signup-text">
+                                            Need an account?
+                                        </p>
+                                        <a
+                                            href={`/signup`}
+                                            className="login-content-signup-link"
+                                        >
+                                            Sign up
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        {error != "OK" && <p>{error}</p>}
-                        <h3>Login to account</h3>
-                        <form onSubmit={this.handleSubmit}>
-                            <div>
-                                <label>Username</label>
-                                <input
-                                    required
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-
-                            <div>
-                                <label>Password</label>
-                                <input
-                                    required
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-
-                            <hr />
-                            <button type="submit">Login</button>
-                        </form>
-
-                        <a href={`/signup`}> Don't have an account? </a>
                     </div>
                 </>
             );
         } else {
-            return <Navigate to={`/accounts/${username}`} />;
+            return <Navigate to={`/home`} />;
         }
     }
 }

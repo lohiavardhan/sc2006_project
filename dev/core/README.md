@@ -237,3 +237,56 @@ Use this API to view a user's wishlist. <br>
 |------------------------	|---------------------------------------	|
 | OK                     	| No error detected.                    	|
 | error_wishlist_invalid 	| User has no wish list item added yet. 	|
+
+
+## View Friend API
+`api/friends/view`
+
+Use this API to view a user's friend list. <br>
+
+<img src="https://img.shields.io/badge/GET-097969?style=for-the-badge" />
+
+##### Query Parameters
+| Parameters 	| Type   	| Example  	      | Description                  	|
+|------------	|--------	|---------------	|-----------------------------	|
+| username    | string 	| Neo-Zenith    	| Username of user.           	|
+
+##### Response Parameters
+| Parameters 	| Type                	| Example                                                                                                                                                                                                                  	| Description                                                                                                                           	|
+|------------	|---------------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------	|
+| error      	| string              	| error_not_auth                                                                                                                                                                                                           	| Indicate the error that occurred.<br>"OK" is returned if no error.                                                                    	|
+| username   	| string              	| Neo-Zenith                                                                                                                                                                                                               	| Username of the user. <br>This field will not be returned if error is not "OK".                                                       	|
+| friends    	| array of dictionary 	| <pre><br>{<br>  "error": "OK",<br>  "username": "Neo-Zenith",<br>  "friends": [<br>   {<br>     "username": "Gladiators",<br>     "name": "John Smith",<br>     "birthday": "2002-01-18",<br>   }<br>  ]<br>}<br></pre>  	| An array of dictionary. Each dictionary contains information about a friend.<br>This field will not be returned if error is not "OK". 	|
+
+##### Error Codes
+| Error Code     	| Description                                   	|
+|----------------	|-----------------------------------------------	|
+| OK             	| No error detected.                            	|
+| error_not_auth 	| User is not authorized to access the content. 	|
+
+
+## Search Friend API
+`api/friends/search`
+
+Use this API to search for a user. <br>
+
+<img src="https://img.shields.io/badge/GET-097969?style=for-the-badge" />
+
+##### Query Parameters
+| Parameters 	| Type   	| Example  	      | Description                  	|
+|------------	|--------	|---------------	|-----------------------------	|
+| username    | string 	| Neo-Zenith    	| Username of user to be searched.           	|
+
+##### Response Parameters
+| Parameters 	| Type                	| Example                                                                                         	| Description                                                                                   	|
+|------------	|---------------------	|-------------------------------------------------------------------------------------------------	|-----------------------------------------------------------------------------------------------	|
+| error      	| string              	| error_is_friend                                                                                 	| Indicate the error that occurred.<br>"OK" is returned if no error.                            	|
+| friends    	| array of dictionary 	| {<br>  "username": "Gladiators",<br>  "name": "John Smith",<br>  "birthday": "2002-01-18",<br>} 	| Information about the user searched.<br>This field will not be returned if error is not "OK". 	|
+
+##### Error Codes
+| Error Code         	| Description                                        	|
+|--------------------	|----------------------------------------------------	|
+| OK                 	| No error detected.                                 	|
+| error_user_invalid 	| Searched username is not found.                    	|
+| error_is_self      	| Searched username is the current user.             	|
+| error_is_friend    	| Searched user is already a friend of current user. 	|

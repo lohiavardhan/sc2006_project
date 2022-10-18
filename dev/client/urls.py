@@ -9,5 +9,6 @@ urlpatterns = [
     path('accounts/<str:username>', index),
     path('accounts/<str:username>/edit', index),
     path('accounts/<str:username>/wishlist', index),
+    path('accounts/<str:username>/friends/view', index),
     path('home', index),
 ]

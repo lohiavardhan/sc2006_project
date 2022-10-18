@@ -7,7 +7,9 @@ import Login from "./Login";
 import Account from "./Account";
 import EditAccount from "./EditAccount";
 import Wishlist from "./Wishlist";
-import Navbar from "./Navbar";
+import ForgetPass from "./ForgetPass";
+import ViewFriends from "./ViewFriends";
+import "../../static/css/styles.css";
 import {
     BrowserRouter as Router,
     Routes,
@@ -23,7 +25,6 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <Navbar />
                 <Router>
                     <Routes>
                         <Route path="/signup" element={<Signup />} />
@@ -32,6 +33,10 @@ export default class App extends Component {
                             element={<EmailAuth />}
                         />
                         <Route path="/login" element={<Login />} />
+                        <Route
+                            path="/login/forgetpassword"
+                            element={<ForgetPass />}
+                        />
                         <Route path="/home" element={<Home />} />
                         <Route
                             path="accounts/:username"
@@ -44,6 +49,10 @@ export default class App extends Component {
                         <Route
                             path="accounts/:username/wishlist"
                             element={<Wishlist />}
+                        />
+                        <Route
+                            path="accounts/:username/friends/view"
+                            element={<ViewFriends />}
                         />
                     </Routes>
                 </Router>
