@@ -1,0 +1,65 @@
+.acc-container {
+  width: 100vw;
+  display: flex;
+}
+
+.acc-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 80vw;
+  padding: 7rem 5rem;
+}
+
+.acc-content__title {
+  padding: 0rem 7rem 3rem 6rem;
+}
+
+/* Credentials */
+.acc-content__cred {
+  height: 10rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0rem 6rem;
+  align-items: center;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+.acc-content__cred__icon {
+  width: 3.2rem;
+  height: auto;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.acc-content__cred__label {
+  font-size: var(--font-size-large);
+  color: var(--color-text-light);
+  margin-left: 4rem;
+  width: 35rem;
+  min-width: 25rem;
+}
+
+.acc-content__cred__detail {
+  font-size: var(--font-size-large);
+}
+
+/* Buttons */
+.acc-content__buttons {
+  margin-top: 7rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 6rem;
+}
+
+.acc-content__buttons__editProfile {
+  height: 7.6rem;
+  width: 33.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc-content__buttons__logout {
+  height: 7.6rem;
+  width: 33.5rem;
+}
