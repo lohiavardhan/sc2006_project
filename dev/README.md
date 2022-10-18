@@ -65,3 +65,15 @@
       Starting development server at http://127.0.0.1:8000/
       Quit the server with CTRL-BREAK.
       ```
+
+
+Hey guys if you are also facing troubles with the front end not updating, this should fix it:
+
+1. Delete the entire "node_modules" folder from dev->client
+2. In console (client):
+"npm install"
+
+3. "npm run dev" (twice if you are prompted to install webpack-cli)
+4. RunServer as per normal
+
+Everytime there are front end changes you have to repeat step 3&4
