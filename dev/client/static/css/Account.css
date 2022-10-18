@@ -6,7 +6,7 @@
 .acc-content {
   display: flex;
   flex-direction: column;
-  min-width: 80vw;
+  min-width: 75vw;
   padding: 7rem 5rem;
 }
 
@@ -16,10 +16,10 @@
 
 /* Credentials */
 .acc-content__cred {
-  height: 10rem;
+  height: 8rem;
   display: flex;
   flex-direction: row;
-  padding: 0rem 6rem;
+  padding: 0rem 8rem;
   align-items: center;
   border-bottom: 1px solid #c1c1c1;
 }
@@ -32,20 +32,20 @@
 }
 
 .acc-content__cred__label {
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-default);
   color: var(--color-text-light);
   margin-left: 4rem;
-  width: 35rem;
+  width: 50rem;
   min-width: 25rem;
 }
 
 .acc-content__cred__detail {
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-default);
 }
 
 /* Buttons */
 .acc-content__buttons {
-  margin-top: 7rem;
+  margin-top: 5rem;
   display: flex;
   justify-content: space-between;
   padding: 0rem 6rem;
@@ -53,7 +53,7 @@
 
 .acc-content__buttons__editProfile {
   height: 7.6rem;
-  width: 33.5rem;
+  width: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,5 +61,5 @@
 
 .acc-content__buttons__logout {
   height: 7.6rem;
-  width: 33.5rem;
+  width: 30rem;
 }

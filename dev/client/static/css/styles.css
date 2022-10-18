@@ -33,6 +33,7 @@
   --color-text-important: var(--color-primary);
 
   --font-size-default: 2.4rem;
+  --font-size-big: 3rem;
   --font-size-large: 3.6rem;
   --font-size-title: 4.8rem;
 }
