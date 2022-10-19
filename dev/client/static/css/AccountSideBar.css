@@ -9,22 +9,19 @@
 }
 
 .circle {
-  height: 12rem;
-  width: 12rem;
-  background-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
+  width: 15rem;
+  height: 15rem;
   margin-bottom: 6rem;
-  margin-right: 1.5em;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--grey-1);
+  align-items: center;
 }
 
 .circle i {
-  font-size: 110px;
-  background-color: #c1c1c1;
-  border-radius: 50%;
-  padding: 15%;
-  border: 1px solid #c1c1c1;
-  
+  font-size: 70px;
+  color: var(--color-text-important);
 }
 
 .sidebar-container__tab {
