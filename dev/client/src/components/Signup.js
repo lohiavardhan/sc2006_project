@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import Navbar from "./Navbar";
 import { Navigate } from "react-router-dom";
 import "../../static/css/LoginSignup.css";
-import LoggedOutNavbar from "./LoggedOutNavbar";
 
 export default class Signup extends Component {
     constructor(props) {
@@ -78,14 +78,9 @@ export default class Signup extends Component {
             if (!redirect) {
                 return (
                     <>
-                        <LoggedOutNavbar />
+                        <Navbar key={isAuth} />
                         <div className="login-container">
                             <div className="login-background">
-                                {error_message == "NULL" && (
-                                    <div>
-                                        <p className="login-error">&nbsp;</p>
-                                    </div>
-                                )}
                                 {error_message != "NULL" && (
                                     <p className="signup-error">
                                         {error_message}
@@ -98,7 +93,11 @@ export default class Signup extends Component {
                                         </h3>
                                         <form onSubmit={this.handleSubmit}>
                                             <div className="login-content-credential">
-                                                <i class="fa-solid fa-envelope"></i>
+                                                <img
+                                                    src="./assets/icons/Email.png"
+                                                    alt="icon"
+                                                    className="login-content-credential-icon"
+                                                ></img>
                                                 <input
                                                     required
                                                     type="email"
@@ -110,7 +109,11 @@ export default class Signup extends Component {
                                                 />
                                             </div>
                                             <div className="login-content-credential">
-                                                <i class="fa-regular fa-user"></i>
+                                                <img
+                                                    src="./assets/icons/Username.png"
+                                                    alt="icon"
+                                                    className="login-content-credential-icon"
+                                                ></img>
                                                 <input
                                                     required
                                                     type="text"
@@ -123,7 +126,11 @@ export default class Signup extends Component {
                                             </div>
 
                                             <div className="login-content-credential">
-                                                <i class="fa-solid fa-lock"></i>
+                                                <img
+                                                    src="./assets/icons/Password.png"
+                                                    alt="icon"
+                                                    className="login-content-credential-icon"
+                                                ></img>
                                                 <input
                                                     required
                                                     type="password"
@@ -146,7 +153,7 @@ export default class Signup extends Component {
                                                 Already have an account?
                                             </p>
                                             <a
-                                                href={`/login`}
+                                                href={`/signup`}
                                                 className="login-content-signup-link"
                                             >
                                                 Login

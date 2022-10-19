@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'rest_framework',
     'client.apps.ClientConfig',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -84,15 +82,8 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'findr',
-        'USER': 'findr_admin',
-        'PASSWORD': config("DB_PASSWORD"),
-        'HOST': config("DB_NAME"),
-        'PORT': '5432',
-        'OPTIONS': {
-            "sslmode": "require"
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

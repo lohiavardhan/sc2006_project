@@ -34,7 +34,7 @@ class SearchItemView(APIView):
             user = User.retrieveInfo(request.session['user']) 
             SearchHistory.addSearchHistory(keyword, user)
             queryMegaList = Item.searchItem(keyword, user)
-            recommendedItems = ""#SearchHistory.recommendItems(user)
+            recommendedItems = SearchHistory.recommendItems(user)
             error = "status_OK"
             error_message = "NULL"
             if len(queryMegaList) == 0:
@@ -61,12 +61,10 @@ class FilterSearchView(APIView):
             deliveryFee = request.query_params.get('deliveryFee') 
             rating = request.query_params.get('rating')
             platform = request.query_params.get('platform')
-            discounted_price = request.query_params.get('discounted_price')
 
             tuningKey = {   "deliveryFee": deliveryFee,
                             "rating": rating,
-                            "platform": platform,
-                            "discounted_price": discounted_price}
+                            "platform": platform}
             
             user = User.retrieveInfo(request.session['user'])
             queryMegaList = Item.parameterTuning(tuningKey, user, keyword)

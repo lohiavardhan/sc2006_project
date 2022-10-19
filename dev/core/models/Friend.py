@@ -65,15 +65,7 @@ class Friend(models.Model):
         except:
             return False
     
-    def hasOutgoingPendingRequest(userID, friendID):
-        try:
-            Friend.objects.get(userID=friendID, friendID=userID, request=False)
-            return True
-
-        except:
-            return False
-    
-    def hasIncomingPendingRequest(userID, friendID):
+    def hasPendingRequest(userID, friendID):
         try:
             Friend.objects.get(userID=userID, friendID=friendID, request=False)
             return True

@@ -1,7 +1,7 @@
 from django.db import models
 from .User import User
 from .Item import Item
-import requests
+# import requests
 import random
 from decouple import config
 
@@ -24,7 +24,7 @@ class SearchHistory(models.Model):
     def addSearchHistory(keyword, user):
         searchHistory = SearchHistory(user=user, content=keyword)
         if SearchHistory.checkIfFull(user):
-            SearchHistory.objects.filter(user=user).order_by('id')[0].delete()
+            SearchHistory.objects.get(user=user).delete()
         searchHistory.save()
     
     def recommendItems(user):

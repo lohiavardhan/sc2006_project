@@ -42,11 +42,7 @@ class EditAccountsView(APIView):
                 error = "status_OK"
                 error_message = "NULL"
                 payload = { "error": error, 
-                            "error_message": error_message,
-                            "username": user.username, 
-                            "email": user.email, 
-                            "name": user.name, 
-                            "birthday": user.birthday}
+                            "error_message": error_message}
             else:
                 error = "status_invalid_access"
                 error_message = "User is not authorized to access this content."
