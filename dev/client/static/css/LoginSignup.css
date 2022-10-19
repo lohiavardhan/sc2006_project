@@ -92,7 +92,7 @@
   width: 3.2rem;
   height: auto;
   color: var(--color-primary);
-  padding-left: 4.5rem;
+  padding-left: 1rem;
   grid-column: 1;
   grid-row: 1;
   font-size: 3rem;
@@ -109,6 +109,8 @@
   font-size: 2.4rem;
   padding-left: 9.4rem;
   height: inherit;
+  margin: 0;
+  width: 100%;
 }
 
 .login-content-credential-input {
