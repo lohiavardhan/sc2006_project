@@ -50,3 +50,43 @@
 .title--myAcc {
   padding-top: 2rem;
 }
+
+.searched-user-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.searched-header {
+  display: grid;
+  grid-template-columns: 450px 500px 100px;
+}
+
+.searched-header li {
+  font-weight: bold;
+  grid-row-start: 1;
+}
+
+.searched-user-details {
+  display: grid;
+  grid-template-columns: 450px 543px 200px;
+}
+
+.searched-user-info {
+  display: grid;
+  grid-template-columns: 450px 543px;
+}
+
+.searched-user-info li {
+  grid-row-start: 1;
+}
+
+.action-props,
+.add-friend-props {
+  grid-row-start: 1;
+  grid-column-start: 3;
+}
+
+.add-friend-props i {
+  color: #42a598;
+  font-size: 25px;
+}
