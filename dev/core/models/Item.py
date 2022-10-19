@@ -4,12 +4,16 @@ from ..models.User import User
 
 class Item(models.Model):
     item_name = models.CharField(max_length=500)
-    item_description = models.CharField(max_length=5000)
+    item_description = models.CharField(max_length=10000)
     purchasable = models.BooleanField(null=False, default=True)
     platform = models.TextField(max_length=50, null=False)
-    url = models.TextField(max_length=2048, null=False)
+    image_url = models.TextField(max_length=2048, null=False)
+    item_url = models.TextField(max_length=2048, null=False)
     deliveryFee = models.FloatField(null=False)
     rating = models.FloatField(null=False)
+    num_of_ratings = models.IntegerField(null=False)
+    price = models.FloatField(null=False)
+    discounted_price = models.FloatField(null=False)
 
     def __str__(self):
         return self.item_name
@@ -22,12 +26,16 @@ class Item(models.Model):
         serialized = {}
         serialized['id'] = self.id
         serialized['item_name'] = self.item_name
+        serialized['item_price'] = self.price
+        serialized['item_discounted_price'] = self.discounted_price
         serialized['description'] = self.item_description
         serialized['purchasable'] = self.purchasable
         serialized['platform'] = self.platform
-        serialized['url'] = self.url
+        serialized['item_url'] = self.item_url
+        serialized['image_url'] = self.image_url
         serialized['deliveryFee'] = self.deliveryFee
         serialized['rating'] = self.rating
+        serialized['numOfRating'] = self.num_of_ratings
         if WishlistItem.addedToWishlist(self, user):
             serialized['addedToWishlist'] = True
         else:
@@ -38,8 +46,19 @@ class Item(models.Model):
         queryMegaList = []    
         itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
                                         Q(item_description__icontains=keyword))
+        pageSize = 0
+        pageCount = 0
         for j in itemList:
-            queryMegaList.append(j.serializeItem(user))
+            j = j.serializeItem(user)
+            if pageSize < 10:
+                j['page'] = pageCount
+                pageSize += 1
+            else:
+                j['page'] = pageCount + 1
+                pageSize = 0
+                pageCount += 1
+
+            queryMegaList.append(j)
         queryMegaList = [dict(t) for t in {tuple(d.items()) for d in queryMegaList}]
         return queryMegaList
     
@@ -51,7 +70,8 @@ class Item(models.Model):
             filteredList = [x for x in filteredList if tuningKey['deliveryFee'] == x.get('deliveryFee')]
         if tuningKey['rating'] != 'ALL':
             filteredList = [x for x in filteredList if tuningKey['rating'] == x.get('rating')]
-        
+        if tuningKey['discounted_price'] != 'ALL':
+            filteredList = [x for x in filteredList if tuningKey['discounted_price'] == x.get('discounted_price')]
         return filteredList
 
 
