@@ -13,7 +13,7 @@
 .friends-content-search {
   display: flex;
   flex-direction: row;
-  width: 45rem;
+  width: max-content;
   height: 7rem;
   border-radius: 3.25rem;
   justify-content: space-between;
@@ -25,12 +25,13 @@
   border: none;
   background-color: var(--color-panel-dark);
   padding-left: 3rem;
+  margin: 0;
 }
 
 .friends-content-search > button {
-  width: 14rem;
-  height: 6rem;
-  margin: 0rem 1rem;
+  width: 16rem;
+  height: 100%;
+  margin: 0rem 2rem;
   align-self: center;
 }
 
@@ -54,11 +55,13 @@
 .searched-user-container {
   display: flex;
   flex-direction: column;
+  margin-bottom: 3rem;
 }
 
 .searched-header {
   display: grid;
-  grid-template-columns: 450px 500px 100px;
+  grid-template-columns: 30rem 30rem 12rem;
+  padding: 0;
 }
 
 .searched-header li {
@@ -74,6 +77,7 @@
 .searched-user-info {
   display: grid;
   grid-template-columns: 450px 543px;
+  padding: 0;
 }
 
 .searched-user-info li {
