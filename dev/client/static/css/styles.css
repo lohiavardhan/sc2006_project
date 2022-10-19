@@ -27,9 +27,15 @@
   --color-bg-light: (var(--white));
 
   --color-text-lightest: var(--white);
+  --color-text-light: var(--grey-2);
   --color-text-darker: var(--grey-3);
   --color-text-darkest: var(--black);
   --color-text-important: var(--color-primary);
+
+  --font-size-default: 2.4rem;
+  --font-size-big: 3rem;
+  --font-size-large: 3.6rem;
+  --font-size-title: 4rem;
 }
 
 /* Set root font-size */
@@ -38,15 +44,22 @@ html {
 }
 
 /* Using rem in elements */
-body {
+body,
+p {
   background-color: var(--color-bg-light);
   font-size: 2.4rem; /* 2.4rem = 24px */
   margin: 0px;
+  padding: 0px;
 }
 a,
-li {
+li,
+ul {
   box-sizing: border-box;
   font-size: 2.4rem;
+}
+
+ul {
+  list-style-type: none;
 }
 
 button,
@@ -56,6 +69,7 @@ button,
   font-size: 2.4rem;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 3.25rem;
 }
 
 .btn-positive {
@@ -70,10 +84,18 @@ button,
   background: #dbdcdd;
 }
 
+.title {
+  font-size: var(--font-size-title);
+  font-weight: bold;
+  margin: 0;
+  padding-bottom: 5rem;
+}
+
 /* MEDIA QUERIES */
+
 @media only screen and (max-width: 1400px) {
   html {
-    font-size: 50%;
+    font-size: 45%;
   }
 }
 @media only screen and (max-width: 600px) {

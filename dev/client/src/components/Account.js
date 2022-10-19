@@ -1,14 +1,17 @@
+import "../../static/css/Account.css";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import AccountSideBar from "./AccountSideBar";
 
 class Account extends Component {
     constructor(props) {
         super(props);
         let { username } = this.props.params;
         this.state = {
-            username: username,
+            prop_username: username,
+            username: "",
             email: "",
             name: "",
             birthday: "",
@@ -20,7 +23,7 @@ class Account extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/v1/accounts?username=" + this.state.username)
+        fetch("/api/v1/accounts?username=" + this.state.prop_username)
             .then((response) => {
                 return response.json();
             })
@@ -64,34 +67,81 @@ class Account extends Component {
         const { redirect } = this.state;
         const { isAuth } = this.state;
 
-        if (!redirect && isAuth) {
-            return (
-                <>
-                    <Navbar key={isAuth} />
-                    <div>
-                        <ul>
-                            <li>{name}</li>
-                            <li> {username}</li>
-                            <li>{email}</li>
-                            <li>{birthday}</li>
-                        </ul>
-                        <div>
-                            <a href={`/accounts/${username}/edit`}> Update </a>
+        if (isAuth) {
+            if (!redirect) {
+                return (
+                    <>
+                        <Navbar />
+                        <div className="acc-container">
+                            <AccountSideBar />
+                            <div className="acc-content">
+                                <p className="title acc-content__title">
+                                    My Account
+                                </p>
+                                <div className="acc-content__cred">
+                                    <i class="fa-solid fa-signature"></i>
+                                    <p className="acc-content__cred__label">
+                                        Name
+                                    </p>
+                                    <p className="acc-content__cred__detail">
+                                        {name}
+                                    </p>
+                                </div>
+
+                                <div className="acc-content__cred">
+                                    <i class="fa-regular fa-user"></i>
+                                    <p className="acc-content__cred__label">
+                                        Username
+                                    </p>
+                                    <p className="acc-content__cred__detail">
+                                        {username}
+                                    </p>
+                                </div>
+
+                                <div className="acc-content__cred">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <p className="acc-content__cred__label">
+                                        Email
+                                    </p>
+                                    <p className="acc-content__cred__detail">
+                                        {email}
+                                    </p>
+                                </div>
+
+                                <div className="acc-content__cred">
+                                    <i class="fa-solid fa-cake-candles"></i>
+                                    <p className="acc-content__cred__label">
+                                        Birthday
+                                    </p>
+                                    <p className="acc-content__cred__detail">
+                                        {birthday}
+                                    </p>
+                                </div>
+
+                                <div className="acc-content__buttons">
+                                    <a
+                                        className="btn btn-positive acc-content__buttons__editProfile"
+                                        href={`/accounts/${username}/edit`}
+                                    >
+                                        <p>Edit Profile</p>
+                                    </a>
+                                    <button
+                                        className="btn btn-negative acc-content__buttons__logout"
+                                        type="submit"
+                                        onClick={this.logout}
+                                    >
+                                        Logout
+                                    </button>
+                                    {/* <a href={`/accounts/${username}/wishlist`}> View Wishlist </a> */}
+                                    {/* <a href={`/accounts/${username}/friends/view`}> View Friends </a> */}
+                                </div>
+                            </div>
                         </div>
-                        <a href={`/accounts/${username}/wishlist`}>
-                            {" "}
-                            View Wishlist{" "}
-                        </a>
-                        <a href={`/accounts/${username}/friends/view`}>
-                            {" "}
-                            View Friends{" "}
-                        </a>
-                        <button type="submit" onClick={this.logout}>
-                            Logout
-                        </button>
-                    </div>
-                </>
-            );
+                    </>
+                );
+            } else {
+                return <Navigate to={`/login`} />;
+            }
         } else {
             return <Navigate to={`/home`} />;
         }

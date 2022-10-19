@@ -54,7 +54,7 @@ class SearchFriendView(APIView):
 
             if friend.id == userID:
                 error = "status_invalid_query"
-                error_message = "User searched is user itself."
+                error_message = "User searched is user themselves."
                 payload = { "error": error, 
                             "error_message": error_message,
                             "friend": person}
@@ -66,12 +66,20 @@ class SearchFriendView(APIView):
                             "error_message": error_message,
                             "friend": person}
 
-            elif Friend.hasPendingRequest(userID, friend.id):
+            elif Friend.hasIncomingPendingRequest(userID, friend.id):
                 error = "status_invalid_query"
-                error_message = "User searched has a pending friend request."
+                error_message = "User searched has an incoming pending friend request."
                 payload = { "error": error, 
                             "error_message": error_message,
                             "friend": person}
+
+            elif Friend.hasOutgoingPendingRequest(userID, friend.id):
+                error = "status_invalid_query"
+                error_message = "A friend request has been sent."
+                payload = { "error": error, 
+                            "error_message": error_message,
+                            "friend": person}
+
             else:
                 error = "status_OK"
                 error_message = "NULL"

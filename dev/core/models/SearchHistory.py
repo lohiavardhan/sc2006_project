@@ -24,7 +24,7 @@ class SearchHistory(models.Model):
     def addSearchHistory(keyword, user):
         searchHistory = SearchHistory(user=user, content=keyword)
         if SearchHistory.checkIfFull(user):
-            SearchHistory.objects.get(user=user).delete()
+            SearchHistory.objects.filter(user=user).order_by('id')[0].delete()
         searchHistory.save()
     
     def recommendItems(user):
