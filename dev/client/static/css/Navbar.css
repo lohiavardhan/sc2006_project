@@ -9,6 +9,9 @@
   background-color: var(--color-bg-light);
   padding: 0rem 6rem;
   border-bottom: 1px solid var(--grey-2);
+
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 .navbar__logo {
