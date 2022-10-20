@@ -1,6 +1,8 @@
 .sidebar-container {
-  min-width: 22vw;
-  height: 88vh;
+  width: 22vw;
+  min-width: 35rem;
+  max-width: 38rem;
+  min-height: 88vh;
   background-color: var(--color-primary);
   display: flex;
   flex-direction: column;

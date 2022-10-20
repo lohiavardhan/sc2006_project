@@ -75,7 +75,7 @@ class Account extends Component {
             <div className="acc-container">
               <AccountSideBar />
               <div className="acc-content">
-                <p className="title acc-content__title">My Account</p>
+                <h1 className="title acc-content__title">My Account</h1>
                 <div className="acc-content__cred">
                   <i class="fa-solid fa-signature"></i>
                   <p className="acc-content__cred__label">Name</p>
