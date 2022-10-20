@@ -19,7 +19,7 @@
 
 .navbar__logo:hover {
   text-decoration: none !important;
-  color: black !important;
+  color: var(--color-primary) !important;
 }
 
 .navbar__icons {
@@ -28,9 +28,10 @@
   color: var(--color-primary);
 }
 
-.navbar__icons:hover,
-.navbar__icons:active {
+.navbar__icons:hover > i,
+.navbar__icons:active > i {
   color: var(--color-primary) !important;
+  font-weight: 1000;
 }
 
 /* LOGGED OUT NAV BAR */
@@ -61,7 +62,7 @@
 .navbar__links--login {
   background-color: transparent;
   border: 3px solid #42a598;
-  color: var(--color-primary);
+  color: var(--color-text-darkest);
 }
 
 .navbar__links--signup {
@@ -73,11 +74,11 @@
 .navbar__links--login:active {
   background-color: var(--color-primary);
   color: var(--color-text-lightest);
-  transition: 0.5s;
 }
 
 .navbar__links--signup:hover,
 .navbar__links--signup:active {
+  color: var(--color-text-darkest) !important;
 }
 
 .navbar__links--signup:hover,
@@ -85,5 +86,4 @@
 .navbar__links--login:hover,
 .navbar__links--login:active {
   text-decoration: none !important;
-  color: var(--color-text-lightest) !important;
 }
