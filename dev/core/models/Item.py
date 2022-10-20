@@ -100,7 +100,7 @@ class WishlistItem(models.Model):
         for i in querySet.values():
             item = Item.getItem(i['item_id'])
             del i['item_id']
-            i['item'] = item.serializeItem()
+            i['item'] = item.serializeItem(user)
             del i['user_id']
             modifiedQuerySet.append(i)
 
