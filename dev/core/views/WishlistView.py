@@ -43,8 +43,46 @@ class WishlistView(APIView):
 
         return Response(payload)
             
-class AddWishlistItem(APIView):
+class AddWishlistItemView(APIView):
     def post(self, request):
-        item_id = request.data.get('item_id')
-        item = Item.getItem(item_id)
+        if (checkUserAuthenticationStatus(request)):
+            item_id = request.data.get('item_id')
+            item = Item.getItem(item_id)
+            user = User.retrieveInfo(request.session['user'])
+            if (WishlistItem.addedToWishlist(item, user)):
+                error = "status_invalid_request"
+                error_message = "Item is already in user's wishlist."
+                payload = { "error": error,
+                            "error_message": error_message}
+                return Response(payload)
+
+            else:
+                WishlistItem.addWishlistItem(item, user)
+                error = "status_OK"
+                error_message = "NULL"
+                payload = { "error": error,
+                            "error_message": error_message}
+                return Response(payload)
+
+class RemoveWishlistItemView(APIView):
+    def post(self, request):
+        if (checkUserAuthenticationStatus(request)):
+            item_id = request.data.get('item_id')
+            item = Item.getItem(item_id)
+            user = User.retrieveInfo(request.session['user'])
+            if (WishlistItem.addedToWishlist(item, user)):
+                WishlistItem.removeWishlistItem(item, user)
+                error = "status_OK"
+                error_message = "NULL"
+                payload = { "error": error,
+                            "error_message": error_message}
+                return Response(payload)
+
+            else:
+                error = "status_invalid_request"
+                error_message = "Item is not yet in user's wishlist."
+                payload = { "error": error,
+                            "error_message": error_message}
+                return Response(payload)
+        
 

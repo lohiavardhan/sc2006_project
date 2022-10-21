@@ -67,11 +67,11 @@ class Item(models.Model):
         if tuningKey['platform'] != 'ALL': 
             filteredList = [x for x in filteredList if tuningKey['platform'] == x.get('platform')]
         if tuningKey['deliveryFee'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] == x.get('deliveryFee')]
+            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] >= x.get('deliveryFee')]
         if tuningKey['rating'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['rating'] == x.get('rating')]
+            filteredList = [x for x in filteredList if tuningKey['rating'] <= x.get('rating')]
         if tuningKey['discounted_price'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['discounted_price'] == x.get('discounted_price')]
+            filteredList = [x for x in filteredList if tuningKey['discounted_price'] >= x.get('discounted_price')]
         return filteredList
 
 
@@ -105,3 +105,11 @@ class WishlistItem(models.Model):
             modifiedQuerySet.append(i)
 
         return modifiedQuerySet
+    
+    def addWishlistItem(item, user):
+        newWishlistItem = WishlistItem(user=user, item=item, session_key=user.last_session)
+        newWishlistItem.save()
+
+    def removeWishlistItem(item, user):
+        WishlistItem.objects.get(item=item, user=user).delete()
+        
