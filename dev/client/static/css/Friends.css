@@ -7,61 +7,83 @@
   display: flex;
   flex-direction: column;
   min-width: 75vw;
-  padding: 7rem 12rem;
+  padding: 7rem 8rem;
 }
 
 .friends-content-search {
-  display: flex;
-  flex-direction: row;
-  width: max-content;
-  height: 7rem;
+  display: grid;
+  height: 6rem;
   border-radius: 3.25rem;
   justify-content: space-between;
   margin-bottom: 4rem;
 }
 
 .friends-content-search > input {
-  border-radius: 3.25rem;
+  border-radius: 3rem;
   border: none;
   background-color: var(--color-panel-dark);
   padding-left: 3rem;
   margin: 0;
+  grid-row: 1 / 1;
+  grid-column: 1/1;
+  width: 45rem;
+}
+
+.friends-content-search > input:focus {
+  outline: 2px solid var(--color-primary);
 }
 
 .friends-content-search > button {
-  width: 16rem;
-  height: 100%;
-  margin: 0rem 2rem;
+  width: 10rem;
+  height: 80%;
+  grid-row: 1 / 1;
+  grid-column: 1/1;
+  justify-self: flex-end;
   align-self: center;
+  margin-right: 1rem;
+}
+
+.friends-content-search > button > i {
+  color: var(--color-text-lightest);
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
 }
 
 .btn-accept,
 .btn-reject {
-  /* width: 16rem;
-    height: 7rem; */
   width: 14rem;
-  height: 6rem;
+  height: 5.5rem;
+  border-radius: 2rem;
+}
+
+.btn-accept {
   margin: 0rem 1rem;
 }
 
-.title--friendReq {
-  padding-top: 4rem;
+.btn-wishlist {
+  width: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5.5rem;
+  border-radius: 2rem !important;
+  margin: 0 !important;
 }
 
-.title--myAcc {
-  padding-top: 2rem;
+.title--friendReq {
+  padding-top: 3rem;
 }
 
 .searched-user-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
 }
 
 .searched-header {
   display: grid;
-  grid-template-columns: 30rem 30rem 12rem;
-  padding: 0;
+  grid-template-columns: 30rem 25rem minmax(max-content, 1fr);
+  padding: 1rem 0rem 1rem 3rem;
 }
 
 .searched-header li {
@@ -71,18 +93,30 @@
 
 .searched-user-details {
   display: grid;
-  grid-template-columns: 450px 543px 200px;
+  grid-template-columns: 30rem 25rem minmax(max-content, 1fr);
+  margin: 0rem 0rem 2rem 0rem;
+  padding: 1.5rem 3rem 1.5rem 3rem;
+  background-color: var(--color-panel-dark);
+  border-radius: 2rem;
+  align-items: center;
+  min-width: max-content;
+  min-height: 8rem;
+}
+.searched-user-details__buttons {
+  justify-self: end;
 }
 
-.searched-user-info {
+/* .searched-user-info {
   display: grid;
-  grid-template-columns: 450px 543px;
+  grid-template-columns: 30rem 30rem 12rem;
   padding: 0;
+  height: 100%;
+  align-items: center;
 }
 
 .searched-user-info li {
   grid-row-start: 1;
-}
+} */
 
 .action-props,
 .add-friend-props {
@@ -90,7 +124,29 @@
   grid-column-start: 3;
 }
 
-.add-friend-props i {
-  color: #42a598;
-  font-size: 25px;
+.add-friend-props button {
+  width: 12rem;
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-friend-props button > i {
+  color: var(--color-text-lightest);
+  font-size: 3rem;
+}
+
+.text-rejected {
+  color: var(--color-btn-negative);
+  font-weight: bold;
+}
+
+.text-accepted {
+  color: var(--color-btn-positive);
+  font-weight: bold;
+}
+
+.friends__line {
+  margin-top: 3rem;
 }
