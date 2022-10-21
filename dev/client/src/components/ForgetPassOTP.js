@@ -4,13 +4,12 @@ import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import LoggedOutNavbar from "./LoggedOutNavbar";
 
-class EmailAuth extends Component {
+class ForgetPassOTP extends Component {
     constructor(props) {
         super(props);
         let { email } = this.props.params;
         this.state = {
             email: email,
-            username: "",
             OTP: "",
             error_message: "NULL",
             redirect: false,
@@ -22,7 +21,7 @@ class EmailAuth extends Component {
 
     componentDidMount() {
         const { email } = this.state;
-        fetch("/api/v1/accounts/signup/authenticate?email=" + email)
+        fetch("/api/v1/accounts/forgot/authenticate?email=" + email)
             .then((response) => {
                 return response.json();
             })
@@ -53,13 +52,13 @@ class EmailAuth extends Component {
             }),
         };
 
-        fetch("/api/v1/accounts/signup/authenticate", requestOptions)
+        fetch("/api/v1/accounts/forgot/authenticate", requestOptions)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
                 if (json.error == "status_OK") {
-                    this.setState({ redirect: true, username: json.username });
+                    this.setState({ redirect: true });
                 } else {
                     this.setState({ error_message: json.error_message });
                 }
@@ -70,6 +69,7 @@ class EmailAuth extends Component {
         const { redirect } = this.state;
         const { error_message } = this.state;
         const { isAuth } = this.state;
+        const { email } = this.state;
 
         if (isAuth) {
             if (!redirect) {
@@ -119,7 +119,9 @@ class EmailAuth extends Component {
                     </>
                 );
             } else {
-                return <Navigate to={`/home`} />;
+                return (
+                    <Navigate to={`/login/forgetpassword/update/${email}`} />
+                );
             }
         } else {
             return <Navigate to={`/login`} />;
@@ -149,4 +151,4 @@ function getCookie(name) {
     return cookieValue;
 }
 
-export default withParams(EmailAuth);
+export default withParams(ForgetPassOTP);

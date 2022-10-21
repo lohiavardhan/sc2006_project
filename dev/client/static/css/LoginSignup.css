@@ -16,6 +16,8 @@
   padding: 3.9rem;
   box-sizing: border-box;
   height: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
 .otp-background {

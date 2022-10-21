@@ -5,6 +5,7 @@ from ..models.User import User
 from ..serializers import EditAccountDetailsSerializer, ForgotPasswordSerializer, LoginSerializer
 from .handlers.authentication import checkUserAuthenticationStatus
 from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
 
 class AccountsView(APIView):
     def get(self, request):
@@ -118,6 +119,7 @@ class ForgotPasswordView(APIView):
             email = serializer.data.get('email')
             user = User.queryByEmail(email)
             if user:
+                request.session['payload'] = {}
                 request.session['payload']['email'] = email
                 request.session['payload']['auth'] = ForgotPasswordView.generateCode(email)
 
@@ -195,9 +197,12 @@ class UpdateCredentialsView(APIView):
     serializer_class = LoginSerializer
     def get(self, request):
         try:
-            assert request.session['email']
-            payload = { "error": "status_OK", 
-                        "error_message": "NULL"}
+            if request.session['payload']['email'] == request.query_params.get('email'):
+                payload = { "error": "status_OK", 
+                            "error_message": "NULL"}
+            else:
+                payload = { "error": "status_invalid_access", 
+                        "error_message": "User is not authorized to access this content."}
         except:
             payload = { "error": "status_invalid_access", 
                         "error_message": "User is not authorized to access this content."}
@@ -214,10 +219,11 @@ class UpdateCredentialsView(APIView):
             email = request.session['payload']['email']
 
             user = User.queryByEmail(email)
-            
-            if (not User.takenUsername(username) and not User.takenEmail(email)):
-                user.updateCredentials(username, password)
-                payload = { 'error': "status_OK",
+            old_username = user.username
+            error = "status_OK"
+
+            if (not User.takenUsername(username) or old_username == username):      
+                payload = { 'error': error,
                             "error_message": "NULL"}
 
             elif User.takenUsername(username):
@@ -225,9 +231,13 @@ class UpdateCredentialsView(APIView):
                 payload = { 'error': error,
                             "error_message": "Username has been taken."}
 
-            elif User.validatePassword(password):
+            if not User.validatePassword(password):
                 error = "status_invalid_request"
                 payload = { 'error': error,
                             "error_message": "Password does not meet minimum requirements."}
+
+            if error == "status_OK":
+                password = make_password(password)
+                user.updateCredentials(username, password)
 
             return Response(payload)

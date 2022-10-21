@@ -1,35 +1,19 @@
 import "../../static/css/LoginSignup.css";
 import React, { Component } from "react";
+import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import LoggedOutNavbar from "./LoggedOutNavbar";
 
-export default class Login extends Component {
+class ForgetPassEmail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            password: "",
-            redirect: false,
+            email: "",
             error_message: "NULL",
-            isAuth: false,
+            redirect: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        fetch("/api/v1/accounts/login")
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                if (json.error == "status_invalid_access") {
-                    this.setState({
-                        isAuth: true,
-                        username: json.username,
-                    });
-                }
-            });
     }
 
     handleChange(e) {
@@ -46,12 +30,11 @@ export default class Login extends Component {
                 "X-CSRFToken": getCookie("csrftoken"),
             },
             body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
+                email: this.state.email,
             }),
         };
 
-        fetch("/api/v1/accounts/login", requestOptions)
+        fetch("/api/v1/accounts/forgot", requestOptions)
             .then((response) => {
                 return response.json();
             })
@@ -59,9 +42,7 @@ export default class Login extends Component {
                 if (json.error == "status_OK") {
                     this.setState({ redirect: true });
                 } else {
-                    this.setState({
-                        error_message: json.error_message,
-                    });
+                    this.setState({ error_message: json.error_message });
                 }
             });
     }
@@ -69,68 +50,47 @@ export default class Login extends Component {
     render() {
         const { redirect } = this.state;
         const { error_message } = this.state;
-        const { isAuth } = this.state;
-        const { username } = this.state;
+        const { email } = this.state;
 
-        if (!redirect && !isAuth) {
+        if (!redirect) {
             return (
                 <>
                     <LoggedOutNavbar />
-                    <div className="login-container">
-                        <div className="login-background">
-                            {error_message == "NULL" && (
-                                <div>
-                                    <p className="login-error">&nbsp;</p>
-                                </div>
-                            )}
+                    <div className="otp-container">
+                        <div className="otp-background">
                             {error_message != "NULL" && (
-                                <p className="login-error">{error_message}</p>
+                                <p className="otp-error">{error_message}</p>
                             )}
-                            <div className="login-panel">
-                                <div className="login-content">
-                                    <h3 className="login-content-title">
-                                        Login
+                            {error_message == "NULL" && (
+                                <p className="otp-error">&nbsp;</p>
+                            )}
+                            <div className="otp-panel">
+                                <div className="otp-content">
+                                    <h3 className="otp-content-title">
+                                        Recovery Email
                                     </h3>
+                                    <p className="otp-content-instruction">
+                                        Enter your registered email address
+                                    </p>
                                     <form onSubmit={this.handleSubmit}>
-                                        <div className="login-content-credential">
-                                            <i class="fa-regular fa-user"></i>
+                                        <div className="otp-content-credential">
                                             <input
-                                                className="login-content-credential-input"
                                                 required
-                                                type="text"
-                                                name="username"
-                                                placeholder="Username"
+                                                type="email"
+                                                name="email"
+                                                id="email"
+                                                placeholder="you@example.com"
+                                                className="otp-input"
                                                 onChange={this.handleChange}
                                             />
                                         </div>
-
-                                        <div className="login-content-credential">
-                                            <i class="fa-solid fa-lock"></i>
-                                            <input
-                                                className="login-content-credential-input"
-                                                required
-                                                type="password"
-                                                name="password"
-                                                id="password"
-                                                placeholder="Password"
-                                                onChange={this.handleChange}
-                                            />
-                                        </div>
-
                                         <button
                                             type="submit"
-                                            className="login-content-btn btn-positive"
+                                            className="otp-content-btn btn-positive"
                                         >
-                                            Login
+                                            Submit
                                         </button>
                                     </form>
-                                    <a
-                                        href={`/login/forgetpassword`}
-                                        className="login-content-forgetpass"
-                                    >
-                                        Forget Password?
-                                    </a>
-                                    <div className="line"> </div>
                                     <div className="login-content-signup">
                                         <p className="login-content-signup-text">
                                             Need an account?
@@ -149,9 +109,15 @@ export default class Login extends Component {
                 </>
             );
         } else {
-            return <Navigate to={`/home`} />;
+            return (
+                <Navigate to={`/login/forgetpassword/authenticate/${email}`} />
+            );
         }
     }
+}
+
+function withParams(Component) {
+    return (props) => <Component {...props} params={useParams()} />;
 }
 
 function getCookie(name) {
@@ -171,3 +137,5 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+export default withParams(ForgetPassEmail);
