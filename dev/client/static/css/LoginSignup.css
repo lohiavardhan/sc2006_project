@@ -94,7 +94,7 @@
   width: 3.2rem;
   height: auto;
   color: var(--color-primary);
-  padding-left: 1rem;
+  padding-left: 4rem;
   grid-column: 1;
   grid-row: 1;
   font-size: 3rem;
@@ -140,6 +140,7 @@
 
 .login-content-signup-link {
   color: var(--color-text-important);
+  text-decoration: underline;
 }
 
 .login-content-forgetpass {
@@ -148,6 +149,7 @@
   margin-top: 3rem;
   margin-bottom: 3rem;
   color: var(--color-text-important);
+  text-decoration: underline;
 }
 
 .line {
