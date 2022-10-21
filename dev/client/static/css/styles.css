@@ -33,6 +33,8 @@
   --color-text-darkest: var(--black);
   --color-text-important: var(--color-primary);
 
+  --color-line: #dbdcdd;
+
   --font-size-default: 2.4rem;
   --font-size-big: 3rem;
   --font-size-large: 3.6rem;
@@ -99,7 +101,7 @@ button,
     font-size: 45%;
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 750px) {
   html {
     font-size: 30%;
   }
