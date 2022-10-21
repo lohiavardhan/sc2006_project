@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import check_password
+from django.core.mail import send_mail
 
 class User(models.Model):
     username = models.CharField(max_length=50)
@@ -160,3 +161,18 @@ class User(models.Model):
             error_message = "Password does not meet requirements."
         
         return (error, error_message)
+
+    def sendBirthdayNotifications(self):
+        from ..models.Friend import Friend
+        friendlist = Friend.retrieveFriendList(self.id)
+
+        for i in friendlist:
+            if i['accepted']:
+                email = User.queryByUsername(i['username']).email
+                send_mail(
+                'FindR Notifications',
+                "Your friend %s's birthday is happening soon!" %self.username,
+                'noreplyfindrotp@gmail.com', 
+                [email], 
+                fail_silently=False,
+            )
