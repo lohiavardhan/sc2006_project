@@ -54,8 +54,21 @@
 .btn-reject {
   width: 14rem;
   height: 5.5rem;
+  border-radius: 2rem;
+}
+
+.btn-accept {
   margin: 0rem 1rem;
-  border-radius: 1.5rem;
+}
+
+.btn-wishlist {
+  width: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5.5rem;
+  border-radius: 2rem !important;
+  margin: 0 !important;
 }
 
 .title--friendReq {
@@ -82,7 +95,7 @@
   display: grid;
   grid-template-columns: 30rem 25rem minmax(max-content, 1fr);
   margin: 0rem 0rem 2rem 0rem;
-  padding: 2rem 3rem 2rem 3rem;
+  padding: 1.5rem 3rem 1.5rem 3rem;
   background-color: var(--color-panel-dark);
   border-radius: 2rem;
   align-items: center;

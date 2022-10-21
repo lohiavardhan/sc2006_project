@@ -192,7 +192,7 @@ class ViewFriends extends Component {
                   required
                   type="text"
                   name="searchName"
-                  placeholder="Username"
+                  placeholder="Search Username"
                   onChange={this.handleChange}
                 />
                 <button className="btn-positive">
@@ -246,8 +246,10 @@ class ViewFriends extends Component {
                           <div>
                             <a
                               href={`/accounts/${retrievedUser.username}/wishlist/view`}
-                            />
-                            Wishlist
+                              className="btn btn-positive btn-wishlist"
+                            >
+                              <p>Wishlist</p>
+                            </a>
                           </div>
                         )}
                         {error_message == "A friend request has been sent." && (
@@ -326,8 +328,11 @@ class ViewFriends extends Component {
                           )}
                         {friends.accepted && (
                           <div className="action-props">
-                            <a href={`/accounts/${friends.username}/wishlist`}>
-                              Wishlist
+                            <a
+                              href={`/accounts/${friends.username}/wishlist/view`}
+                              className="btn btn-positive btn-wishlist"
+                            >
+                              <p>Wishlist</p>
                             </a>
                           </div>
                         )}
