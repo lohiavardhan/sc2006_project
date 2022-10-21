@@ -1,4 +1,8 @@
 # FindR
+> A cross-platform price comparison app that transforms your e-shopping experience.
+
+
+![Blue Modern Minimalist Delivery Express Logo Banner](https://user-images.githubusercontent.com/77436548/197239208-9991be04-783a-4707-8c72-86ef7744bc38.gif)
 
 ## ⭐ Getting Started
 
