@@ -7,40 +7,41 @@
   display: flex;
   flex-direction: column;
   min-width: 75vw;
-  padding: 7rem 5rem;
+  padding: 7rem 8rem;
 }
 
 .acc-content__title {
-  padding: 2rem 7rem 3rem 6rem;
 }
 
 /* Credentials */
 .acc-content__cred {
   height: 8.5rem;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 5rem 50rem max-content;
   padding: 0rem 8rem;
-  align-items: center;
   border-bottom: 1px solid #c1c1c1;
+  justify-content: start;
+  align-items: center;
 }
 
-.acc-content__cred__icon {
-  width: 3.2rem;
-  height: auto;
+.acc-content__cred > i {
   color: var(--color-primary);
-  font-size: 1.2rem;
+  font-size: 3rem;
 }
 
 .acc-content__cred__label {
   font-size: var(--font-size-default);
   color: var(--color-text-light);
   margin-left: 4rem;
-  width: 50rem;
   min-width: 25rem;
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
 }
 
 .acc-content__cred__detail {
   font-size: var(--font-size-default);
+  grid-row: 1 / 1;
+  grid-column: 3 / 3;
 }
 
 /* Buttons */
@@ -61,6 +62,10 @@
 
 .acc-content__buttons__editProfile > p {
   color: var(--color-text-lightest);
+}
+
+.acc-content__buttons__editProfile:hover > p {
+  color: #333;
 }
 
 .acc-content__buttons__logout,

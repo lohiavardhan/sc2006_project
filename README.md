@@ -53,3 +53,10 @@ git checkout dev
     <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
     <img src="https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white" />
 </p>
+
+## 📄 FindR API Documentations
+
+* [Accounts Endpoints](https://documenter.getpostman.com/view/24005937/2s84DmwjBR)
+* [Friends Endpoints](https://documenter.getpostman.com/view/24005937/2s84Dmx3yZ)
+* [Main Endpoints](https://documenter.getpostman.com/view/24005937/2s84Dmx3yb)
+

@@ -46,8 +46,8 @@ class Item(models.Model):
         queryMegaList = []    
         itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
                                         Q(item_description__icontains=keyword))
-        pageSize = 0
-        pageCount = 0
+        pageSize = 1
+        pageCount = 1
         for j in itemList:
             j = j.serializeItem(user)
             if pageSize < 10:
@@ -55,7 +55,7 @@ class Item(models.Model):
                 pageSize += 1
             else:
                 j['page'] = pageCount + 1
-                pageSize = 0
+                pageSize = 1
                 pageCount += 1
 
             queryMegaList.append(j)
@@ -67,11 +67,11 @@ class Item(models.Model):
         if tuningKey['platform'] != 'ALL': 
             filteredList = [x for x in filteredList if tuningKey['platform'] == x.get('platform')]
         if tuningKey['deliveryFee'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] == x.get('deliveryFee')]
+            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] >= x.get('deliveryFee')]
         if tuningKey['rating'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['rating'] == x.get('rating')]
+            filteredList = [x for x in filteredList if tuningKey['rating'] <= x.get('rating')]
         if tuningKey['discounted_price'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['discounted_price'] == x.get('discounted_price')]
+            filteredList = [x for x in filteredList if tuningKey['discounted_price'] >= x.get('discounted_price')]
         return filteredList
 
 
@@ -100,8 +100,16 @@ class WishlistItem(models.Model):
         for i in querySet.values():
             item = Item.getItem(i['item_id'])
             del i['item_id']
-            i['item'] = item.serializeItem()
+            i['item'] = item.serializeItem(user)
             del i['user_id']
             modifiedQuerySet.append(i)
 
         return modifiedQuerySet
+    
+    def addWishlistItem(item, user):
+        newWishlistItem = WishlistItem(user=user, item=item, session_key=user.last_session)
+        newWishlistItem.save()
+
+    def removeWishlistItem(item, user):
+        WishlistItem.objects.get(item=item, user=user).delete()
+        

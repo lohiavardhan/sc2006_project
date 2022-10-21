@@ -9,7 +9,7 @@
 :root {
   /* Vairables */
   --white: #fff;
-  --grey-1: #f8f8f8;
+  --grey-1: #f1f1f1;
   --grey-2: #c1c1c1;
   --grey-3: #989898;
   --black: #2a2a2a;
@@ -17,6 +17,7 @@
   --color-primary: rgb(66, 165, 152);
 
   --color-btn-primary: rgb(66, 165, 152);
+  --color-btn-primary--onclick: rgb(82, 196, 180);
   --color-btn-negative: #a5424b;
 
   --color-panel-light: var(--white);
@@ -32,6 +33,8 @@
   --color-text-darkest: var(--black);
   --color-text-important: var(--color-primary);
 
+  --color-line: #dbdcdd;
+
   --font-size-default: 2.4rem;
   --font-size-big: 3rem;
   --font-size-large: 3.6rem;
@@ -40,7 +43,7 @@
 
 /* Set root font-size */
 html {
-  font-size: 62.5%; /* Default browser font-size is 16px, hence 62.5% is 10px */
+  font-size: 58%;
 }
 
 /* Using rem in elements */
@@ -98,7 +101,7 @@ button,
     font-size: 45%;
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 750px) {
   html {
     font-size: 30%;
   }

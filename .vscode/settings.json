@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/be233251-7c35-487a-816d-b98967b129cc/AppServices/subscriptions/be233251-7c35-487a-816d-b98967b129cc/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/FindR",
+    "appService.deploySubpath": "dev"
+}

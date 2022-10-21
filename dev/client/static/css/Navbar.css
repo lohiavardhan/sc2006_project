@@ -1,171 +1,92 @@
 .navbar-container {
   display: flex;
   flex-direction: row;
-  height: 12vh;
   align-items: center;
+  justify-content: space-between;
+  height: 12vh;
   min-height: 10rem;
-  width: 100%;
-  background-color: #CCDBDC;
+  width: 100vw;
+  background-color: var(--color-bg-light);
+  padding: 0rem 6rem;
+  border-bottom: 1px solid var(--grey-2);
+
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
-.logo-class-1{
-  color: #42a598;
-  font-size: 0.8em;
-}
-
-.logo-class-2{
-  color: #003249;
-  font-size: 0.5em;
-}
-
-.navbar-logo {
-  font-size: 6rem;
+.navbar__logo {
+  font-size: 5rem;
   font-weight: bold;
-  margin-left: 5.4rem;
   color: black;
 }
 
-
-.navbar-links {
-  display: flex;
-  margin-left: auto;
-  margin-right: 5.4rem;
+.navbar__logo:hover {
+  text-decoration: none !important;
+  color: var(--color-primary) !important;
 }
 
-.navbar-links li {
+.navbar__icons {
+  padding: 2rem;
+  font-size: 4rem;
+  color: var(--color-primary);
+}
+
+.navbar__icons:hover > i,
+.navbar__icons:active > i {
+  color: var(--color-primary) !important;
+  font-weight: 1000;
+}
+
+/* LOGGED OUT NAV BAR */
+
+.navbar__logged-out {
+  align-items: center;
+  display: flex;
+}
+
+.navbar__icons--logged-out {
+  margin-right: 1rem;
+}
+
+/* Login / Signup Buttons */
+
+.navbar__links--login,
+.navbar__links--signup {
+  border-radius: 3.25rem;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.navbar-links-help {
-  width: 4.8rem;
-  height: auto;
-  margin-right: 3.2rem;
-  color: black;
-}
-
-.logout-right{
-  margin-left: 3em;
-}
-
-.nav-bar-auth-true{
-  color: black;
-  padding: 2rem;
-  margin-top: 20rem;
-  font-size: 28px;
-  color: #2d6e66;
-}
-
-.right-logged-in{
-  margin-left: 130rem;
-}
-
-.right{
-  margin-left: 40em;
-  width: 25em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-
-.navbar-links-help {
-  background-color: transparent;
-  color: black;
-  padding: 1% 2%;
-  text-decoration: none;
-  font-weight: bold;
-  margin-right: 2em;
-}
-
-.navbar-links-help:hover {
-  color: #2d6e66;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-links-login {
-  background-color: transparent;
-  color: black;
-  border-radius: 45px;
-  width: 5em;
+  margin-right: 2rem;
+  width: 13rem;
   height: 6rem;
-  padding: 2% 4%;
-  margin-right: 2em;
-  border: 3px solid #42a598;
-  text-decoration: none;
-  font-weight: bold;
 }
 
-.navbar-links-login:hover {
-  background-color: #42a598;
-  color: white;
-  border-radius: 45px;
-  width: 5em;
-  height: 6rem;
-  padding: 2% 4%;
-  margin-right: 2em;
-  border: 3px solid #42a598;
-  transition: 0.5s;
-  text-decoration: none;
-}
-
-.navbar-links-signup {
-  background-color: #42a598;
-  color: white;
-  border-radius: 45px;
-  width: 7em;
-  height: 6rem;
-  padding: 2% 5.5%;
-  margin-right: 2em;
-  border: 3px solid #42a598;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-links-signup:hover {
+.navbar__links--login {
   background-color: transparent;
-  color: black;
-  border-radius: 45px;
-  width: 7em;
-  height: 6rem;
-  padding: 2% 5.5%;
-  margin-right: 2em;
   border: 3px solid #42a598;
-  text-decoration: none;
-  transition: 0.3s;
-  text-decoration: none;
+  color: var(--color-text-darkest);
 }
 
-.nav-bar-item{
-  padding-right: 20px;
-  color: black;
+.navbar__links--signup {
+  background-color: var(--color-primary);
+  color: var(--color-text-lightest);
 }
 
-/*
-.navbar-content {
-  width: 50vw;
-  margin-right: auto;
+.navbar__links--login:hover,
+.navbar__links--login:active {
+  background-color: var(--color-primary);
+  color: var(--color-text-lightest);
 }
 
- .navbar-content-links li {
-  padding: 0% 5% 0% 5%;
-  margin: auto;
-  width: 35.2rem;
+.navbar__links--signup:hover,
+.navbar__links--signup:active {
+  color: var(--color-text-darkest) !important;
 }
 
-.navbar-content-links a {
-  text-decoration: none;
-  font-size: 23px;
-  margin-right: 3em;
-  background-color: transparent;
-  color: black;
+.navbar__links--signup:hover,
+.navbar__links--signup:active,
+.navbar__links--login:hover,
+.navbar__links--login:active {
+  text-decoration: none !important;
 }
-
-.navbar-content-links a:hover {
-  border-bottom: 4px solid #42a598;
-  color: #42a598;
-  transition: all 0.2s ease-out;
-} */

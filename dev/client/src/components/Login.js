@@ -125,7 +125,7 @@ export default class Login extends Component {
                                         </button>
                                     </form>
                                     <a
-                                        href={`/forgetpassword`}
+                                        href={`/login/forgetpassword`}
                                         className="login-content-forgetpass"
                                     >
                                         Forget Password?

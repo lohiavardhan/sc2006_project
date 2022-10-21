@@ -21,3 +21,8 @@ class AddFriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username']
+
+class ForgotPasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email']

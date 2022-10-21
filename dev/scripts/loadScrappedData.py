@@ -4,7 +4,7 @@ sys.path.append("..")
 from core.models.Item import Item
 
 def run():
-    with open('core/scrappedData.csv', 'r', encoding="utf8") as file:
+    with open('core/items_data/Shopee/air+fryer_shopee.csv', 'r', encoding="utf8") as file:
         reader = csv.reader(file)
         next(reader)
 
@@ -25,12 +25,16 @@ def run():
             item_data = []
             for j in i:
                 j = remove_non_ascii(j)
-                if count != 4 and count != 5 and count != 10 and count != 8:
+                if count != 4 and count != 5 and count != 10 and count != 8 and count != 2 and count != 3:
                     item_data.append(clean_item_description(j))
                 elif count == 4 or count == 5:
                     item_data.append(clean_price(j))
                 elif count == 8:
                     item_data.append(clean_availability(j))
+                elif count == 2:
+                    item_data.append(clean_rating(j))
+                elif count == 3:
+                    item_data.append(clean_num_of_ratings(j))
                 else:
                     item_data.append(clean_delivery_fee(j))
                 count += 1
@@ -52,6 +56,9 @@ def run():
                     discounted_price=i[5])
         item_mega_list.append(item)
     
+    # for i in item_mega_list:
+    #     print(i.deliveryFee)
+
     for i in item_mega_list:
         i.save()
     
@@ -124,3 +131,24 @@ def clean_item_description(string):
     else:
         return string
 
+def clean_num_of_ratings(string):
+    if "," in string:
+        string = string.replace(',', '')
+
+    if "ratings" in string:
+        return int(string.replace('ratings', ''))
+    elif "rating" in string:
+        return int(string.replace('rating', ''))
+
+    if "k" in string:
+        string = float(string.replace('k', ''))
+        return int(string * 1000)
+    
+    return int(string)
+
+def clean_rating(string):
+    if "out of 5 stars" in string:
+        return float(string.replace("out of 5 stars", ''))
+    
+    else:
+        return float(string)

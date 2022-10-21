@@ -81,6 +81,9 @@ class EmailAuth extends Component {
                                 {error_message != "NULL" && (
                                     <p className="otp-error">{error_message}</p>
                                 )}
+                                {error_message == "NULL" && (
+                                    <p className="otp-error">&nbsp;</p>
+                                )}
                                 <div className="otp-panel">
                                     <div className="otp-content">
                                         <h3 className="otp-content-title">
