@@ -46,8 +46,8 @@ class Item(models.Model):
         queryMegaList = []    
         itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
                                         Q(item_description__icontains=keyword))
-        pageSize = 0
-        pageCount = 0
+        pageSize = 1
+        pageCount = 1
         for j in itemList:
             j = j.serializeItem(user)
             if pageSize < 10:
@@ -55,7 +55,7 @@ class Item(models.Model):
                 pageSize += 1
             else:
                 j['page'] = pageCount + 1
-                pageSize = 0
+                pageSize = 1
                 pageCount += 1
 
             queryMegaList.append(j)
