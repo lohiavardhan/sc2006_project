@@ -6,7 +6,7 @@ from .views.FriendView import FriendView, SearchFriendView, AddFriendView, Accep
 from .views.WishlistView import WishlistView, AddWishlistItemView, RemoveWishlistItemView
 from .views.LoginView import LoginView
 from .views.SignupView import SignUpView, EmailAuthView
-from .views.AccountsView import AccountsView, EditAccountsView, LogoutAccountView
+from .views.AccountsView import AccountsView, EditAccountsView, LogoutAccountView, ForgotPasswordView, EmailAuthForgotPassView, UpdateCredentialsView
 
 urlpatterns = [
     ## Every views will appear here
@@ -14,6 +14,9 @@ urlpatterns = [
     path('v1/accounts/signup', SignUpView.as_view()),
     path('v1/accounts/signup/authenticate', EmailAuthView.as_view()),
     path('v1/accounts/login', LoginView.as_view()),
+    path('v1/accounts/forgot', ForgotPasswordView.as_view()),
+    path('v1/accounts/forgot/authenticate', EmailAuthForgotPassView.as_view()),
+    path('v1/accounts/forgot/update', UpdateCredentialsView.as_view()),
     path('v1/accounts/edit', EditAccountsView.as_view()),
     path('v1/accounts/logout', LogoutAccountView.as_view()),
     path('v1/accounts/wishlist', WishlistView.as_view()),

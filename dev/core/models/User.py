@@ -38,6 +38,10 @@ class User(models.Model):
         self.email = email
         self.save()
 
+    def updateCredentials(self, username, password):
+        self.username = username
+        self.password = password
+        self.save()
     
     def userAuthenticated(self, session_key):
         if self.last_session == session_key:
