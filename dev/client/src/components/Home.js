@@ -49,6 +49,7 @@ export default class Home extends Component {
       platform: "ALL",
       deliveryFee: "ALL",
       rating: "ALL",
+      searchedItem: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,7 +57,7 @@ export default class Home extends Component {
     this.handleFilter = this.handleFilter.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.nextPage = this.nextPage.bind(this);
-    this.previousPage = this.previousPage(this);
+    this.previousPage = this.previousPage.bind(this);
     this.setCurrentPage = this.setCurrentPage.bind(this);
   }
 
@@ -66,7 +67,6 @@ export default class Home extends Component {
         return response.json();
       })
       .then((json) => {
-        console.log(json.username);
         if (json.error != "status_OK") {
           this.setState({
             isAuth: false,
@@ -92,6 +92,7 @@ export default class Home extends Component {
           this.setState({
             items: json.result,
             retrievedSearch: true,
+            searchedItem: keyword,
           });
         } else {
           this.setState({
@@ -135,15 +136,14 @@ export default class Home extends Component {
 
   nextPage(e) {
     this.setState({
-      currentPageNum: this.state.currentPageNum + 1,
+      currentPageNum: +this.state.currentPageNum + 1,
     });
   }
 
   previousPage(e) {
     this.setState({
-      currentPageNum: this.state.currentPageNum - 1,
+      currentPageNum: +this.state.currentPageNum - 1,
     });
-    console.log(this.state.currentPageNum);
   }
 
   setCurrentPage(data) {
@@ -167,6 +167,7 @@ export default class Home extends Component {
     const { rating } = this.state;
     const { deliveryFee } = this.state;
     const { currentPageNum } = this.state;
+    const { searchedItem } = this.state;
 
     if (isAuth) {
       return (
@@ -361,7 +362,12 @@ export default class Home extends Component {
                     />
                   </div>
                 )}
-
+                {retrievedSearch && (
+                  <div className="search__items-found">
+                    <h2 className="search__heading">{searchedItem}</h2>
+                    <p>{items.length + " items found"}</p>
+                  </div>
+                )}
                 {retrievedSearch && (
                   <div className="all-items">
                     {items.map(
@@ -481,7 +487,7 @@ export default class Home extends Component {
                             </div>
                           </div>
                         )
-                    )}{" "}
+                    )}
                   </div>
                 )}
 
@@ -491,22 +497,131 @@ export default class Home extends Component {
                       <hr className="line search__line" />
                       <h2 className="search__heading">You may also like:</h2>
 
-                      {hasRecommend &&
-                        recommendedItems.map((item) => (
-                          <div key={item.id}>
-                            <ul>
-                              <li>{item.item_name}</li>
-                              <li>{item.purchasable.toString()}</li>
-                              <li>{item.platform}</li>
-                              <li>{item.deliveryFee}</li>
-                              <li>{item.rating}</li>
-                              <li>{item.addedToWishlist.toString()}</li>
-                              <li>
-                                <a href={item.url}>Link</a>
-                              </li>
-                            </ul>
-                          </div>
-                        ))}
+                      {hasRecommend && (
+                        <div className="all-items">
+                          {recommendedItems.map((item) => (
+                            <div key={item.id}>
+                              <div className="item-container">
+                                <div className="item-props" key={item.id}>
+                                  <div className="item-picture">
+                                    <img
+                                      className="item-picture__image"
+                                      src={item.image_url}
+                                    ></img>
+                                    <div className="item-picture__brand-logo">
+                                      {item.platform == "Shopee" && (
+                                        <div className="item-picture__brand-logo__circle">
+                                          <img
+                                            width="45px"
+                                            height="45px"
+                                            src="https://img.icons8.com/color/344/shopee.png"
+                                          ></img>
+                                        </div>
+                                      )}
+                                      {item.platform == "Amazon" && (
+                                        <div className="item-picture__brand-logo__circle">
+                                          <img
+                                            width="45px"
+                                            height="45px"
+                                            src="https://img.icons8.com/color/344/amazon.png"
+                                          ></img>
+                                        </div>
+                                      )}
+                                      {item.platform == "Lazada" && (
+                                        <div className="item-picture__brand-logo__circle">
+                                          <img
+                                            width="45px"
+                                            height="45px"
+                                            src="https://img.icons8.com/plasticine/344/lazada.png"
+                                          ></img>
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="item-picture__wishlist">
+                                      <div className="wishlist-data">
+                                        {item.addedToWishlist && (
+                                          <button className="added-to-wishlist">
+                                            <i class="fa-solid fa-heart"></i>
+                                          </button>
+                                        )}
+                                        {!item.addedToWishlist && (
+                                          <button className="removed-from-wishlist">
+                                            <i class="fa-regular fa-heart"></i>
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <ul className="item-data">
+                                    <li className="item-name">
+                                      <p>{item.item_name}</p>
+                                    </li>
+
+                                    <li className="price">
+                                      {item.item_price == -1 && (
+                                        <div className="price-text">
+                                          <div className="discounted-price">
+                                            S${" "}
+                                            {item.item_discounted_price.toFixed(
+                                              2
+                                            )}
+                                          </div>
+                                        </div>
+                                      )}
+                                      {item.item_price != -1 && (
+                                        <div className="price-text">
+                                          <div className="default-price">
+                                            S$ {item.item_price.toFixed(2)}
+                                          </div>
+                                          <div className="discounted-price">
+                                            S${" "}
+                                            {item.item_discounted_price.toFixed(
+                                              2
+                                            )}
+                                          </div>
+                                        </div>
+                                      )}
+                                    </li>
+                                    <li className="deliveryfee">
+                                      <i class="fa-solid fa-truck"></i>{" "}
+                                      {item.deliveryFee == 0.0 && (
+                                        <div className="deliveryfee-text">
+                                          Free
+                                          <p>(Subject to platform T&C)</p>
+                                        </div>
+                                      )}
+                                      {item.deliveryFee != 0.0 && (
+                                        <div className="deliveryfee-text">
+                                          S$
+                                          {"    "}
+                                          {item.deliveryFee.toFixed(2)}
+                                        </div>
+                                      )}
+                                    </li>
+                                    <li className="rating">
+                                      <div className="rating-prop">
+                                        <i className="fa-solid fa-star"></i>
+                                        <div className="rating-text">
+                                          {item.rating.toFixed(2)} (
+                                          {item.numOfRating} reviews)
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li className="item-url">
+                                      <button className="btn btn-positive visit-link-button">
+                                        <a href={item.item_url}>
+                                          <p>Buy</p>
+                                        </a>
+                                      </button>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
                       {!hasRecommend && retrievedSearch && (
                         <div>
@@ -538,7 +653,9 @@ export default class Home extends Component {
                       )}
 
                       {[...new Set(items.map((item) => item.page))]
-                        .sort()
+                        .sort(function (a, b) {
+                          return a - b;
+                        })
                         .map((pg) => (
                           <div>
                             {currentPageNum == pg && (

@@ -55,7 +55,7 @@ class Item(models.Model):
                 pageSize += 1
             else:
                 j['page'] = pageCount + 1
-                pageSize = 1
+                pageSize = 2
                 pageCount += 1
 
             queryMegaList.append(j)
