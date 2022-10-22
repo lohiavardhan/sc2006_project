@@ -415,6 +415,7 @@
 
 .item-view__page-nav {
   width: 100%;
+  margin-top: 3rem;
   display: flex;
   justify-content: flex-end;
 }

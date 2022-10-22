@@ -33,8 +33,8 @@ class SearchItemView(APIView):
             keyword = request.query_params.get('keyword') 
             user = User.retrieveInfo(request.session['user']) 
             SearchHistory.addSearchHistory(keyword, user)
-            queryMegaList = Item.searchItem(keyword, user)
-            recommendedItems = ""#SearchHistory.recommendItems(user)
+            queryMegaList, maxPrice = Item.searchItem(keyword, user)
+            recommendedItems = SearchHistory.recommendItems(user)
             error = "status_OK"
             error_message = "NULL"
             if len(queryMegaList) == 0:
@@ -43,6 +43,7 @@ class SearchItemView(APIView):
             payload = { "error": error, 
                         "error_message": error_message, 
                         "result": queryMegaList,
+                        "max_price": maxPrice,
                         "recommend": recommendedItems}
             return Response(payload)
 
@@ -58,10 +59,10 @@ class FilterSearchView(APIView):
     def get(self, request):
         if checkUserAuthenticationStatus(request):   
             keyword = request.query_params.get('keyword') 
-            deliveryFee = request.query_params.get('deliveryFee') 
+            deliveryFee = request.query_params.get('deliveryFee')
             rating = request.query_params.get('rating')
             platform = request.query_params.get('platform')
-            discounted_price = request.query_params.get('discounted_price')
+            discounted_price = request.query_params.get('price')
 
             tuningKey = {   "deliveryFee": deliveryFee,
                             "rating": rating,
@@ -69,7 +70,7 @@ class FilterSearchView(APIView):
                             "discounted_price": discounted_price}
             
             user = User.retrieveInfo(request.session['user'])
-            queryMegaList = Item.parameterTuning(tuningKey, user, keyword)
+            queryMegaList, maxPrice = Item.parameterTuning(tuningKey, user, keyword)
             
             error = "status_OK"
             error_message = "NULL"
@@ -78,7 +79,8 @@ class FilterSearchView(APIView):
                 error_message = "No results found."
             payload = { "error": error, 
                         "error_message": error_message, 
-                        "result": queryMegaList }
+                        "result": queryMegaList,
+                        "max_price": maxPrice }
             return Response(payload)
 
         else:
