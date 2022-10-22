@@ -21,3 +21,9 @@ def checkBirthdayNotifications():
             continue
     
     print("Birthday scheduler task completed")
+
+def keepServerAwake():
+    print("Forcing server awake")
+    import os
+    os.system("curl \"https://findr.azurewebsites.net\"")
+    print("Server forced awake successfully.")
