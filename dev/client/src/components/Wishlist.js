@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../../static/css/Home.css";
 import "../../static/css/Wishlist.css";
-import "../../static/css/Item.css";
 
 class Wishlist extends Component {
   constructor(props) {
