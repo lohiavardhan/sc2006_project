@@ -69,22 +69,36 @@
 }
 
 .acc-content__buttons__logout,
-.acc-content__editAcc__update > button {
+.acc-content__editAcc__update > button,
+.acc-content__editAcc__back {
   height: 7.6rem;
   width: 30rem;
 }
 
+.acc-content__editAcc__back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Edit Account Form */
 
-/* .acc-content__editAcc {
+.acc-content__editAcc {
   display: flex;
   flex-direction: column;
   margin-bottom: 3rem;
   padding-left: 7rem;
 }
 
+.acc-content__editAcc__buttons {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
 .acc-content__editAcc__update {
-  margin-top: 3rem;
 }
 
 .acc-content__editAcc__editCred {
@@ -95,7 +109,7 @@
 
 .acc-content__editAcc__editCred > label {
   align-self: center;
-  min-width: 16rem;
+  min-width: 18rem;
 }
 
 .acc-content__editAcc__editCred > input {
@@ -108,4 +122,4 @@
 
 .acc-content__editAcc__editCred__birthday {
   padding-right: 15rem;
-} */
+}
