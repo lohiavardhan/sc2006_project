@@ -228,6 +228,10 @@ class Wishlist extends Component {
               {error_message != "NULL" && (
                 <div className="wishlist-error">
                   <p>{error_message}</p>
+                  <img
+                    alt="No items icon"
+                    src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/100/000000/external-no-customer-feedback-flaticons-lineal-color-flat-icons.png"
+                  />
                 </div>
               )}
             </div>
