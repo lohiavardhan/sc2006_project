@@ -38,12 +38,10 @@ class SearchHistory(models.Model):
             keywords = SearchHistory.extractKeywords(contentMegaList)
             print(keywords)
             querySet = []
-            querySet += Item.searchItem(keywords[0]['text'], user)
-            querySet += Item.searchItem(keywords[1]['text'], user)
-            querySet += Item.searchItem(keywords[2]['text'], user)
-            print(querySet)
+            for i in range(len(keywords)):
+                querySet += Item.searchItem(keywords[i]['text'], user)[0]
+
             querySet = [dict(t) for t in {tuple(d.items()) for d in querySet}]
-            print(querySet, len(querySet))
             try:
                 r = random.sample(range(0, len(querySet)), 3)
                 for i in range(3):
@@ -52,20 +50,35 @@ class SearchHistory(models.Model):
                 for i in range(len(querySet)):
                     recommendMegaList.append(querySet[i])
             
+            print(recommendMegaList)
             return recommendMegaList
 
         else:
             return []
 
     def extractKeywords(content):
-        url = "https://api.apilayer.com/keyword"
-        body = ", ".join(content)
-        payload = "%s" %(body).encode("utf-8")
-        headers= {
-            "apikey": config("KEYWORD_EXTRACTION_API_KEY")
-        }
-        response = requests.request("POST", url, headers=headers, data = payload)
-        keywords = response.json()['result']
-        keywords = sorted(keywords, key=lambda d: d['score'], reverse=True) 
-        print(keywords)
-        return keywords[0: 3]
+        try:
+            url = "https://api.apilayer.com/keyword"
+            body = ", ".join(content)
+            payload = "%s" %(body).encode("utf-8")
+            headers= {
+                "apikey": config("KEYWORD_EXTRACTION_API_KEY")
+            }
+            response = requests.request("POST", url, headers=headers, data = payload)
+            keywords = response.json()['result']
+            keywords = sorted(keywords, key=lambda d: d['score'], reverse=True) 
+            return keywords[0: 3]
+        
+        except:
+            uniqueKeywords = set(content)
+            keywords = []
+            for i in uniqueKeywords:
+                keywords.append({
+                    "text": i,
+                    "score": content.count(i),
+                })
+            
+            keywords = sorted(keywords, key=lambda d: d['score'], reverse=True) 
+            if len(keywords) < 3:
+                return keywords
+            return keywords[0: 3]

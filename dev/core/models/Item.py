@@ -44,8 +44,7 @@ class Item(models.Model):
 
     def searchItem(keyword, user):
         queryMegaList = []    
-        itemList = Item.objects.filter( Q(item_name__icontains=keyword) | 
-                                        Q(item_description__icontains=keyword))
+        itemList = Item.objects.filter( Q(item_name__icontains=keyword))
         pageSize = 1
         pageCount = 1
         for j in itemList:
@@ -60,19 +59,29 @@ class Item(models.Model):
 
             queryMegaList.append(j)
         queryMegaList = [dict(t) for t in {tuple(d.items()) for d in queryMegaList}]
-        return queryMegaList
+        if len(queryMegaList) != 0:
+            maxPrice = max(queryMegaList, key=lambda x:x['item_discounted_price'])['item_discounted_price']
+        else:
+            maxPrice = -1
+        return (queryMegaList, maxPrice)
     
     def parameterTuning(tuningKey, user, keyword): 
-        filteredList = Item.searchItem(keyword, user)
+        filteredList, maxPrice = Item.searchItem(keyword, user)
         if tuningKey['platform'] != 'ALL': 
             filteredList = [x for x in filteredList if tuningKey['platform'] == x.get('platform')]
         if tuningKey['deliveryFee'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['deliveryFee'] >= x.get('deliveryFee')]
+            filteredList = [x for x in filteredList if float(tuningKey['deliveryFee']) >= x.get('deliveryFee')]
         if tuningKey['rating'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['rating'] <= x.get('rating')]
+            filteredList = [x for x in filteredList if float(tuningKey['rating']) <= x.get('rating')]
         if tuningKey['discounted_price'] != 'ALL':
-            filteredList = [x for x in filteredList if tuningKey['discounted_price'] >= x.get('discounted_price')]
-        return filteredList
+            filteredList = [x for x in filteredList if float(tuningKey['discounted_price']) >= x.get('item_discounted_price')]
+        
+        if len(filteredList) != 0:
+            maxPrice = max(filteredList, key=lambda x:x['item_discounted_price'])['item_discounted_price']
+        else:
+            maxPrice = -1
+
+        return filteredList, maxPrice
 
 
 class WishlistItem(models.Model):
