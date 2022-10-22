@@ -35,6 +35,7 @@
 .navbar__icons:active > i {
   color: var(--color-primary) !important;
   font-weight: 1000;
+  transition: all 0.5s ease-out;
 }
 
 /* LOGGED OUT NAV BAR */
@@ -52,36 +53,40 @@
 
 .navbar__links--login,
 .navbar__links--signup {
-  border-radius: 3.25rem;
+  border-radius: 2.55rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 2rem;
-  width: 13rem;
+  width: 16rem;
   height: 6rem;
 }
 
 .navbar__links--login {
   background-color: transparent;
-  border: 3px solid #42a598;
-  color: var(--color-text-darkest);
+  border: 2px solid #42a598;
+  color: var(--color-primary);
 }
 
 .navbar__links--signup {
   background-color: var(--color-primary);
   color: var(--color-text-lightest);
+  margin: 0;
+  border: 2px solid var(--color-primary);
 }
 
-.navbar__links--login:hover,
-.navbar__links--login:active {
+.navbar__links--login:hover {
   background-color: var(--color-primary);
-  color: var(--color-text-lightest);
+  color: white;
+  transition: all 0.5s ease-out;
 }
 
-.navbar__links--signup:hover,
-.navbar__links--signup:active {
-  color: var(--color-text-darkest) !important;
+.navbar__links--signup:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  transition: all 0.5s ease-out;
 }
 
 .navbar__links--signup:hover,

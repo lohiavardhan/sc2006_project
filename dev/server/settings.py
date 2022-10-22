@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'client.apps.ClientConfig',
     'django_extensions',
+	"django_apscheduler",
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

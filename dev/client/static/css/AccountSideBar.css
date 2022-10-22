@@ -46,7 +46,11 @@
   font-size: var(--font-size-default);
 }
 
+.tab--active {
+  background-color: var(--color-tab--active);
+}
 .sidebar-container__tab:hover p,
-.sidebar-container__tab:active p {
+.sidebar-container__tab:active p,
+.tab--active p {
   color: var(--color-text-lightest);
 }

@@ -12,6 +12,7 @@ import ForgetPassOTP from "./ForgetPassOTP";
 import ViewFriends from "./ViewFriends";
 import Help from "./Help";
 import UpdateCredentials from "./UpdateCredentials";
+import Landing from "./Landing";
 import "../../static/css/styles.css";
 import {
     BrowserRouter as Router,
@@ -30,6 +31,7 @@ export default class App extends Component {
             <>
                 <Router>
                     <Routes>
+                        <Route path="/" element={<Landing />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route
                             path="signup/authenticate/:email"

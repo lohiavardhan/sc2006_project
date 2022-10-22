@@ -17,8 +17,10 @@
   --color-primary: rgb(66, 165, 152);
 
   --color-btn-primary: rgb(66, 165, 152);
-  --color-btn-primary--onclick: rgb(82, 196, 180);
+  --color-btn-primary--onclick: #5cbeb1;
   --color-btn-negative: #a5424b;
+  --color-btn-negative--onclick: #be5c65;
+  --color-tab--active: #1f7b6f;
 
   --color-panel-light: var(--white);
   --color-panel-dark: var(--grey-1);
