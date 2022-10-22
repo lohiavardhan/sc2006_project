@@ -74,7 +74,7 @@
 }
 
 .search__line {
-  margin: 4rem 0rem 2rem 0rem;
+  margin: 8rem 0rem 2rem 0rem;
 }
 
 .search__items-found {
@@ -200,7 +200,7 @@
 
 .all-items {
   display: grid;
-  grid-template-columns: max-content max-content max-content;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 5rem;
   grid-row-gap: 5rem;
   width: max-content;
@@ -293,10 +293,14 @@
   border-radius: 50%;
 }
 
-.added-to-wishlist i,
 .removed-from-wishlist i {
   font-size: 3.6rem;
   color: var(--grey-3);
+}
+
+.added-to-wishlist i {
+  color: var(--color-btn-negative);
+  font-size: 3.6rem;
 }
 
 .removed-from-wishlist:hover i {
@@ -415,7 +419,7 @@
 
 .item-view__page-nav {
   width: 100%;
-  margin-top: 3rem;
+  margin-top: 6rem;
   display: flex;
   justify-content: flex-end;
 }
