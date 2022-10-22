@@ -1,0 +1,14 @@
+.wishlist-view {
+  padding: 3rem;
+  width: 100vw;
+  min-height: 86vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wishlist-title {
+  grid-row: 1 / 1;
+  grid-column: 1 / 4;
+  padding: 0;
+}
