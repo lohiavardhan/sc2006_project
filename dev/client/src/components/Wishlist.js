@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../../static/css/Item.css";
 import "../../static/css/Wishlist.css";
+import { PropagateLoader } from "react-spinners";
 
 class Wishlist extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class Wishlist extends Component {
       error_message: "NULL",
       redirect: false,
       isAuth: true,
+      isLoading: false,
     };
 
     this.fetchWishListData = this.fetchWishListData.bind(this);
@@ -43,6 +45,9 @@ class Wishlist extends Component {
   }
 
   fetchWishListData() {
+    this.setState({
+      isLoading: true,
+    });
     fetch("/api/v1/accounts/wishlist?username=" + this.state.prop_username)
       .then((response) => {
         return response.json();
@@ -55,11 +60,13 @@ class Wishlist extends Component {
         } else if (json.error == "status_invalid_query") {
           this.setState({
             error_message: json.error_message,
+            isLoading: false,
           });
         } else {
           this.setState({
             username: this.state.prop_username,
             wishlist: json.payload,
+            isLoading: false,
           });
         }
       });
@@ -98,15 +105,27 @@ class Wishlist extends Component {
     const { redirect } = this.state;
     const { error_message } = this.state;
     const { isAuth } = this.state;
+    const { isLoading } = this.state;
+
     if (isAuth) {
       return (
         <>
           <Navbar key={isAuth} />
+
           <div className="wishlist-page">
             <div className="wishlist-view">
               <h1 className="title wishlist-title">{username}'s Wishlist </h1>
 
-              {error_message == "NULL" && (
+              {isLoading && (
+                <div className="wishlist__loader">
+                  <p>Fetching the wishlist...</p>
+                  <div>
+                    <PropagateLoader color={"#42a598"} />
+                  </div>
+                </div>
+              )}
+
+              {!isLoading && error_message == "NULL" && (
                 <div className="all-items">
                   {wishlist.map((item) => (
                     <div className="item-container">
@@ -225,7 +244,7 @@ class Wishlist extends Component {
                   ))}
                 </div>
               )}
-              {error_message != "NULL" && (
+              {!isLoading && error_message != "NULL" && (
                 <div className="wishlist-error">
                   <p>{error_message}</p>
                   <img
