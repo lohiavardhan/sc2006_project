@@ -44,6 +44,9 @@ class Item(models.Model):
         return serialized
 
     def searchItem(keyword, user):
+        if keyword == "":
+            return ([], -1)
+            
         queryMegaList = []    
         itemList = Item.objects.filter(Q(item_name__icontains=keyword))
         pageSize = 1
