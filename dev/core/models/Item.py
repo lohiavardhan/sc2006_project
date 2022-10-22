@@ -1,3 +1,4 @@
+from platform import platform
 from django.db import models
 from django.db.models import Q
 from ..models.User import User
@@ -44,7 +45,7 @@ class Item(models.Model):
 
     def searchItem(keyword, user):
         queryMegaList = []    
-        itemList = Item.objects.filter( Q(item_name__icontains=keyword))
+        itemList = Item.objects.filter(Q(item_name__icontains=keyword))
         pageSize = 1
         pageCount = 1
         for j in itemList:
@@ -66,16 +67,33 @@ class Item(models.Model):
         return (queryMegaList, maxPrice)
     
     def parameterTuning(tuningKey, user, keyword): 
-        filteredList, maxPrice = Item.searchItem(keyword, user)
+        itemList = Item.objects.filter(Q(item_name__icontains=keyword))
         if tuningKey['platform'] != 'ALL': 
-            filteredList = [x for x in filteredList if tuningKey['platform'] == x.get('platform')]
+            itemList = itemList.filter(platform=tuningKey['platform'])
         if tuningKey['deliveryFee'] != 'ALL':
-            filteredList = [x for x in filteredList if float(tuningKey['deliveryFee']) >= x.get('deliveryFee')]
+            itemList = itemList.filter(deliveryFee__lte=float(tuningKey['deliveryFee']))
         if tuningKey['rating'] != 'ALL':
-            filteredList = [x for x in filteredList if float(tuningKey['rating']) <= x.get('rating')]
+            itemList = itemList.filter(rating__lte=float(tuningKey['rating']))
         if tuningKey['discounted_price'] != 'ALL':
-            filteredList = [x for x in filteredList if float(tuningKey['discounted_price']) >= x.get('item_discounted_price')]
+            itemList = itemList.filter(discounted_price__lte=float(tuningKey['discounted_price']))
         
+        pageSize = 1
+        pageCount = 1
+        filteredList = []
+        for j in itemList:
+            j = j.serializeItem(user)
+            if pageSize < 10:
+                j['page'] = pageCount
+                pageSize += 1
+            else:
+                j['page'] = pageCount + 1
+                pageSize = 2
+                pageCount += 1
+
+            filteredList.append(j)
+
+        filteredList = [dict(t) for t in {tuple(d.items()) for d in filteredList}]
+
         if len(filteredList) != 0:
             maxPrice = max(filteredList, key=lambda x:x['item_discounted_price'])['item_discounted_price']
         else:
