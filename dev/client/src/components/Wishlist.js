@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import "../../static/css/Home.css";
+import "../../static/css/Item.css";
 import "../../static/css/Wishlist.css";
 
 class Wishlist extends Component {
