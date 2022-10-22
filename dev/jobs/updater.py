@@ -3,5 +3,5 @@ from .jobs import checkBirthdayNotifications
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(checkBirthdayNotifications, 'interval', hours=24)
+    scheduler.add_job(checkBirthdayNotifications, 'interval', minutes=1)
     scheduler.start()
