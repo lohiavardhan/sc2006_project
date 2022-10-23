@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import AccountSideBar from "./AccountSideBar";
-import { PropagateLoader } from "react-spinners";
 
 class ViewFriends extends Component {
   constructor(props) {
@@ -127,14 +126,14 @@ class ViewFriends extends Component {
             <div className="friends-content">
               <h1 className="title">Friend List</h1>
 
-              {isLoading && (
+              {/* {isLoading && (
                 <div className="friends-loader">
                   <p>Fetching your friend list...</p>
                   <div>
                     <PropagateLoader color={"#42a598"} />
                   </div>
                 </div>
-              )}
+              )} */}
 
               {retrievedFriendlist &&
                 !isLoading &&
