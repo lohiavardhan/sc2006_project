@@ -189,6 +189,7 @@
   font-size: var(--font-size-default);
   text-decoration: line-through;
   color: rgb(124, 124, 124);
+  padding-right: 1rem;
 }
 
 .discounted-price {
