@@ -1,7 +1,7 @@
 import "../../static/css/AccountSideBar.css";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import LoaderFullPage from "./LoaderFullPage";
 
 class AccountSideBar extends Component {
   constructor(props) {
@@ -11,10 +11,14 @@ class AccountSideBar extends Component {
       isAuth: true,
       redirect: false,
       activeTab: this.props.tab,
+      isLoadingUsername: false,
     };
   }
 
   componentDidMount() {
+    this.setState({
+      isLoadingUsername: true,
+    });
     fetch("/api/v1/accounts/login")
       .then((response) => {
         return response.json();
@@ -23,6 +27,7 @@ class AccountSideBar extends Component {
         if (json.error == "status_invalid_access") {
           this.setState({
             username: json.username,
+            isLoadingUsername: false,
           });
         }
       });
@@ -33,10 +38,12 @@ class AccountSideBar extends Component {
     const { redirect } = this.state;
     const { isAuth } = this.state;
     const { activeTab } = this.state;
+    const { isLoadingUsername } = this.state;
 
     {
       return (
         <>
+          {isLoadingUsername && <LoaderFullPage />}
           <div className="sidebar-container">
             <div className="circle">
               <i className="fa-solid fa-user"></i>

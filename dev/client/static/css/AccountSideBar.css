@@ -8,6 +8,8 @@
   flex-direction: column;
   align-items: center;
   padding-top: 6rem;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 
 .circle {

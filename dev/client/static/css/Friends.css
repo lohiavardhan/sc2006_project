@@ -5,7 +5,7 @@
 
 .friends-container {
   width: 100vw;
-  display: flex;
+  display: grid;
 }
 
 .friends-content {
@@ -13,6 +13,8 @@
   flex-direction: column;
   min-width: 75vw;
   padding: 7rem 8rem;
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
 }
 
 .friends-loader {
