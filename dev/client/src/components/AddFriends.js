@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import AccountSideBar from "./AccountSideBar";
+import { PropagateLoader } from "react-spinners";
 
 class AddFriends extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class AddFriends extends Component {
       },
 
       isAuth: true,
+      isLoading: false,
     };
 
     this.handleAccept = this.handleAccept.bind(this);
@@ -115,7 +117,9 @@ class AddFriends extends Component {
   searchFriend(e) {
     const { searchName } = this.state;
     e.preventDefault();
-
+    this.setState({
+      isLoading: true,
+    });
     fetch("/api/v1/friends/search?username=" + searchName)
       .then((response) => {
         return response.json();
@@ -126,17 +130,20 @@ class AddFriends extends Component {
             retrievedSearch: true,
             error_message: json.error_message,
             retrievedUser: json.friend,
+            isLoading: false,
           });
         } else if (json.error_message == "User searched is not found.") {
           this.setState({
             retrievedSearch: false,
             error_message: json.error_message,
+            isLoading: false,
           });
         } else {
           this.setState({
             retrievedSearch: true,
             error_message: json.error_message,
             retrievedUser: json.friend,
+            isLoading: false,
           });
         }
       });
@@ -175,6 +182,7 @@ class AddFriends extends Component {
     const { retrievedSearch } = this.state;
     const { retrievedUser } = this.state;
     const { retrievedFriendlist } = this.state;
+    const { isLoading } = this.state;
 
     if (isAuth) {
       return (
@@ -200,11 +208,20 @@ class AddFriends extends Component {
                 </button>
               </form>
 
-              {error_message == "User searched is not found." && (
+              {isLoading && (
+                <div className="friends-loader">
+                  <p>Searching for friend...</p>
+                  <div>
+                    <PropagateLoader color={"#42a598"} />
+                  </div>
+                </div>
+              )}
+
+              {!isLoading && error_message == "User searched is not found." && (
                 <div>{error_message}</div>
               )}
 
-              {retrievedSearch && (
+              {!isLoading && retrievedSearch && (
                 <div className="searched-user-container">
                   {/* <ul className="searched-header">
                     <li>Name</li>

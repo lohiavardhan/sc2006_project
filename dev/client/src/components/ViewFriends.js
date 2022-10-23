@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import AccountSideBar from "./AccountSideBar";
+import { PropagateLoader } from "react-spinners";
 
 class ViewFriends extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class ViewFriends extends Component {
       },
 
       isAuth: true,
+      isLoading: false,
     };
 
     this.handleAccept = this.handleAccept.bind(this);
@@ -40,6 +42,9 @@ class ViewFriends extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      isLoading: true,
+    });
     fetch("/api/v1/friends/view?username=" + this.state.username)
       .then((response) => {
         return response.json();
@@ -54,11 +59,11 @@ class ViewFriends extends Component {
             friendlist: json.friends,
             retrievedFriendlist: true,
             username: json.username,
+            isLoading: false,
           });
         }
       });
   }
-
 
   handleAccept(e) {
     const { name } = e.target;
@@ -105,44 +110,13 @@ class ViewFriends extends Component {
     document.getElementById(`${name}+rejected-text`).style.display = "flex";
   }
 
-  searchFriend(e) {
-    const { searchName } = this.state;
-    e.preventDefault();
-
-    fetch("/api/v1/friends/search?username=" + searchName)
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        if (json.error == "status_OK") {
-          this.setState({
-            retrievedSearch: true,
-            error_message: json.error_message,
-            retrievedUser: json.friend,
-          });
-        } else if (json.error_message == "User searched is not found.") {
-          this.setState({
-            retrievedSearch: false,
-            error_message: json.error_message,
-          });
-        } else {
-          this.setState({
-            retrievedSearch: true,
-            error_message: json.error_message,
-            retrievedUser: json.friend,
-          });
-        }
-      });
-  }
-
   render() {
     const { friendlist } = this.state;
     const { username } = this.state;
     const { error_message } = this.state;
     const { isAuth } = this.state;
-    const { retrievedSearch } = this.state;
-    const { retrievedUser } = this.state;
     const { retrievedFriendlist } = this.state;
+    const { isLoading } = this.state;
 
     if (isAuth) {
       return (
@@ -153,7 +127,17 @@ class ViewFriends extends Component {
             <div className="friends-content">
               <h1 className="title">Friend List</h1>
 
+              {isLoading && (
+                <div className="friends-loader">
+                  <p>Fetching your friend list...</p>
+                  <div>
+                    <PropagateLoader color={"#42a598"} />
+                  </div>
+                </div>
+              )}
+
               {retrievedFriendlist &&
+                !isLoading &&
                 friendlist.map((friends) => (
                   <div key={friends.id}>
                     <ul className="searched-user-details">
