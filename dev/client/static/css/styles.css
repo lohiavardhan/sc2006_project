@@ -80,7 +80,7 @@ button,
 .btn:hover,
 .btn:focus {
   color: var(--color-text-lightest) !important;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); */
   outline: none !important;
 }
 .btn:hover > p {
