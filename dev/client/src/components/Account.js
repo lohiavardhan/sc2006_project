@@ -73,7 +73,7 @@ class Account extends Component {
           <>
             <Navbar />
             <div className="acc-container">
-              <AccountSideBar />
+              <AccountSideBar key={username} tab={"Account"} />
               <div className="acc-content">
                 <h1 className="title acc-content__title">My Account</h1>
                 <div className="acc-content__cred">

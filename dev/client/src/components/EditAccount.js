@@ -97,7 +97,7 @@ class EditAccount extends Component {
           <>
             <Navbar />
             <div className="acc-container">
-              <AccountSideBar />
+              <AccountSideBar tab={"Account"} />
 
               <div className="acc-content">
                 <h1 className="title acc-content__title">Update Particulars</h1>

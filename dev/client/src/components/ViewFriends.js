@@ -181,7 +181,7 @@ class ViewFriends extends Component {
         <>
           <Navbar />
           <div className="friends-container">
-            <AccountSideBar key={username} />
+            <AccountSideBar key={username} tab={"ViewFriends"} />
             <div className="friends-content">
               <h1 className="title">Add Friend</h1>
               <form

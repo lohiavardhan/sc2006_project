@@ -10,6 +10,7 @@ class AccountSideBar extends Component {
       username: "",
       isAuth: true,
       redirect: false,
+      activeTab: this.props.tab,
     };
   }
 
@@ -31,6 +32,7 @@ class AccountSideBar extends Component {
     const { username } = this.state;
     const { redirect } = this.state;
     const { isAuth } = this.state;
+    const { activeTab } = this.state;
 
     {
       return (
@@ -39,46 +41,27 @@ class AccountSideBar extends Component {
             <div className="circle">
               <i className="fa-solid fa-user"></i>
             </div>
+            <a
+              className={
+                activeTab == "Account"
+                  ? "sidebar-container__tab sidebar-container__tab--top tab--active"
+                  : "sidebar-container__tab sidebar-container__tab--top"
+              }
+              href={`/accounts/${username}`}
+            >
+              <p>Account Overview</p>
+            </a>
 
-            {(window.location.pathname == `/accounts/${username}` ||
-              window.location.pathname == `/accounts/${username}/edit`) && (
-              <a
-                className="sidebar-container__tab sidebar-container__tab--top tab--active"
-                href={`/accounts/${username}`}
-              >
-                <p>Account Overview</p>
-              </a>
-            )}
-
-            {window.location.pathname != `/accounts/${username}` &&
-              window.location.pathname != `/accounts/${username}/edit` && (
-                <a
-                  className="sidebar-container__tab sidebar-container__tab--top"
-                  href={`/accounts/${username}`}
-                >
-                  <p>Account Overview</p>
-                </a>
-              )}
-
-            {window.location.pathname ==
-              `/accounts/${username}/friends/view` && (
-              <a
-                className="sidebar-container__tab tab--active"
-                href={`/accounts/${username}/friends/view`}
-              >
-                <p>Friends</p>
-              </a>
-            )}
-
-            {window.location.pathname !=
-              `/accounts/${username}/friends/view` && (
-              <a
-                className="sidebar-container__tab"
-                href={`/accounts/${username}/friends/view`}
-              >
-                <p>Friends</p>
-              </a>
-            )}
+            <a
+              className={
+                activeTab == "ViewFriends"
+                  ? "sidebar-container__tab tab--active"
+                  : "sidebar-container__tab"
+              }
+              href={`/accounts/${username}/friends/view`}
+            >
+              <p>Friends</p>
+            </a>
 
             {/* <a
                             className="sidebar-container__tab"
