@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.hashers import check_password
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 class User(models.Model):
     username = models.CharField(max_length=50)
@@ -169,10 +171,17 @@ class User(models.Model):
         for i in friendlist:
             if i['accepted']:
                 email = User.queryByUsername(i['username']).email
-                send_mail(
-                'FindR Notifications',
-                "Your friend %s's birthday is happening soon!" %self.username,
-                'noreplyfindrotp@gmail.com', 
-                [email], 
-                fail_silently=False,
-            )
+                subject = "Your Friend's Birthday is around the corner! - FindR"
+                from_email = 'noreplyfindrotp@gmail.com'
+                html_content = render_to_string("birthday_notification.html",{
+                            'username': self.username,
+                            })
+                text_content = strip_tags(html_content)
+                email = EmailMultiAlternatives(
+                        subject,
+                        text_content,
+                        from_email,
+                        [email]
+                        )
+                email.attach_alternative(html_content,"text/html")
+                email.send()
