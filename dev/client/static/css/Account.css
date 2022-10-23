@@ -1,6 +1,6 @@
 .acc-container {
   width: 100vw;
-  display: flex;
+  display: grid;
 }
 
 .acc-content {
@@ -8,6 +8,8 @@
   flex-direction: column;
   min-width: 75vw;
   padding: 7rem 8rem;
+  grid-row: 1 / 1;
+  grid-column: 2 / 2;
 }
 
 .acc-content__title {
@@ -64,10 +66,6 @@
   color: var(--color-text-lightest);
 }
 
-.acc-content__buttons__editProfile:hover > p {
-  color: #333;
-}
-
 .acc-content__buttons__logout,
 .acc-content__editAcc__update > button,
 .acc-content__editAcc__back {
@@ -118,6 +116,12 @@
   width: 80%;
   padding-left: 3rem;
   border: 1px solid var(--color-panel-darkest);
+}
+
+.acc-content__editAcc__editCred > input:hover,
+.acc-content__editAcc__editCred > input:focus,
+.acc-content__editAcc__editCred > input:focus-visible {
+  outline: 2px solid var(--color-primary);
 }
 
 .acc-content__editAcc__editCred__birthday {

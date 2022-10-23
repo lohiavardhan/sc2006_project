@@ -77,13 +77,32 @@ button,
   border-radius: 3.25rem;
 }
 
+.btn:hover,
+.btn:focus {
+  color: var(--color-text-lightest) !important;
+  /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); */
+  outline: none !important;
+}
+.btn:hover > p {
+  color: var(--color-text-lightest) !important;
+}
+
 .btn-positive {
   background-color: var(--color-btn-primary);
+}
+
+.btn-positive:hover {
+  background-color: var(--color-btn-primary--onclick);
 }
 
 .btn-negative {
   background-color: var(--color-btn-negative);
 }
+
+.btn-negative:hover {
+  background-color: var(--color-btn-negative--onclick);
+}
+
 .line {
   height: 0.2rem;
   background: #dbdcdd;

@@ -1,7 +1,7 @@
 import "../../static/css/AccountSideBar.css";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import LoaderFullPage from "./LoaderFullPage";
 
 class AccountSideBar extends Component {
   constructor(props) {
@@ -10,10 +10,15 @@ class AccountSideBar extends Component {
       username: "",
       isAuth: true,
       redirect: false,
+      activeTab: this.props.tab,
+      isLoadingUsername: false,
     };
   }
 
   componentDidMount() {
+    this.setState({
+      isLoadingUsername: true,
+    });
     fetch("/api/v1/accounts/login")
       .then((response) => {
         return response.json();
@@ -22,6 +27,7 @@ class AccountSideBar extends Component {
         if (json.error == "status_invalid_access") {
           this.setState({
             username: json.username,
+            isLoadingUsername: false,
           });
         }
       });
@@ -31,61 +37,49 @@ class AccountSideBar extends Component {
     const { username } = this.state;
     const { redirect } = this.state;
     const { isAuth } = this.state;
+    const { activeTab } = this.state;
+    const { isLoadingUsername } = this.state;
 
     {
       return (
         <>
+          {isLoadingUsername && <LoaderFullPage />}
           <div className="sidebar-container">
             <div className="circle">
               <i className="fa-solid fa-user"></i>
             </div>
+            <a
+              className={
+                activeTab == "Account"
+                  ? "sidebar-container__tab sidebar-container__tab--top tab--active"
+                  : "sidebar-container__tab sidebar-container__tab--top"
+              }
+              href={`/accounts/${username}`}
+            >
+              <p>Account Overview</p>
+            </a>
 
-            {(window.location.pathname == `/accounts/${username}` ||
-              window.location.pathname == `/accounts/${username}/edit`) && (
-              <a
-                className="sidebar-container__tab sidebar-container__tab--top tab--active"
-                href={`/accounts/${username}`}
-              >
-                <p>Account Overview</p>
-              </a>
-            )}
+            <a
+              className={
+                activeTab == "ViewFriends"
+                  ? "sidebar-container__tab tab--active"
+                  : "sidebar-container__tab"
+              }
+              href={`/accounts/${username}/friends/view`}
+            >
+              <p>Friends</p>
+            </a>
 
-            {window.location.pathname != `/accounts/${username}` &&
-              window.location.pathname != `/accounts/${username}/edit` && (
-                <a
-                  className="sidebar-container__tab sidebar-container__tab--top"
-                  href={`/accounts/${username}`}
-                >
-                  <p>Account Overview</p>
-                </a>
-              )}
-
-            {window.location.pathname ==
-              `/accounts/${username}/friends/view` && (
-              <a
-                className="sidebar-container__tab tab--active"
-                href={`/accounts/${username}/friends/view`}
-              >
-                <p>Friends</p>
-              </a>
-            )}
-
-            {window.location.pathname !=
-              `/accounts/${username}/friends/view` && (
-              <a
-                className="sidebar-container__tab"
-                href={`/accounts/${username}/friends/view`}
-              >
-                <p>Friends</p>
-              </a>
-            )}
-
-            {/* <a
-                            className="sidebar-container__tab"
-                            href={`/accounts/${username}/friends/view`}
-                        >
-                            <p>Friend Requests</p>
-                        </a> */}
+            <a
+              className={
+                activeTab == "AddFriends"
+                  ? "sidebar-container__tab tab--active"
+                  : "sidebar-container__tab"
+              }
+              href={`/accounts/${username}/friends/add`}
+            >
+              <p>Add Friends</p>
+            </a>
           </div>
         </>
       );

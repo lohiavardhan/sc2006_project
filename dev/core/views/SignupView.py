@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from ..serializers import SignupSerializer
 from ..models.User import User
 from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 from .handlers.authentication import checkUserAuthenticationStatus
 import random
 
@@ -42,7 +45,7 @@ class SignUpView(APIView):
                 password = make_password(password)
                 user = User(username=username, password=password, email=email)
                 request.session['payload'] = SignupSerializer(user).data
-                request.session['payload']['auth'] = SignUpView.generateCode(email)
+                request.session['payload']['auth'] = SignUpView.generateCode(email,username)
 
             payload = { "error": error, 
                         "error_message": error_message }
@@ -50,15 +53,23 @@ class SignUpView(APIView):
 
     
     @staticmethod
-    def generateCode(email):
+    def generateCode(email,username):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
-        send_mail(
-        'FindR OTP',
-        'Here is the OTP:'+code,
-        'noreplyfindrotp@gmail.com', 
-        [email], 
-        fail_silently=False,
-    )
+        subject = 'Welcome to FindR!'
+        from_email = 'noreplyfindrotp@gmail.com'
+        html_content = render_to_string("email_template.html",{
+                    'otp':code,
+                    'username':username,
+                    })
+        text_content = strip_tags(html_content)
+        email = EmailMultiAlternatives(
+                subject,
+                text_content,
+                from_email,
+                [email]
+                )
+        email.attach_alternative(html_content,"text/html")
+        email.send()
         print(code)
         return code
     

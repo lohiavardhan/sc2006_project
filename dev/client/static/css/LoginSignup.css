@@ -152,6 +152,14 @@
   text-decoration: underline;
 }
 
+.login-content-signup-link:hover,
+.login-content-signup-link:focus,
+.login-content-forgetpass:hover,
+.login-content-forgetpass:focus {
+  text-decoration: underline !important;
+  color: var(--color-btn-primary--onclick);
+}
+
 .line {
   width: 100%;
 }
