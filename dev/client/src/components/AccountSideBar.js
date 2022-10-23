@@ -63,12 +63,16 @@ class AccountSideBar extends Component {
               <p>Friends</p>
             </a>
 
-            {/* <a
-                            className="sidebar-container__tab"
-                            href={`/accounts/${username}/friends/view`}
-                        >
-                            <p>Friend Requests</p>
-                        </a> */}
+            <a
+              className={
+                activeTab == "AddFriends"
+                  ? "sidebar-container__tab tab--active"
+                  : "sidebar-container__tab"
+              }
+              href={`/accounts/${username}/friends/add`}
+            >
+              <p>Add Friends</p>
+            </a>
           </div>
         </>
       );

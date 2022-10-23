@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import AccountSideBar from "./AccountSideBar";
 
-class ViewFriends extends Component {
+class AddFriends extends Component {
   constructor(props) {
     super(props);
     let { username } = this.props.params;
@@ -37,6 +37,9 @@ class ViewFriends extends Component {
 
     this.handleAccept = this.handleAccept.bind(this);
     this.handleReject = this.handleReject.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+    this.searchFriend = this.searchFriend.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +62,10 @@ class ViewFriends extends Component {
       });
   }
 
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
   handleAccept(e) {
     const { name } = e.target;
@@ -135,6 +142,31 @@ class ViewFriends extends Component {
       });
   }
 
+  addFriend(e) {
+    const { retrievedUser } = this.state;
+    console.log(retrievedUser.username);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({
+        username: retrievedUser.username,
+      }),
+    };
+
+    fetch("/api/v1/friends/add", requestOptions).then((response) => {
+      return response.json();
+    });
+
+    document.getElementById(`${retrievedUser.username}+accept`).style.display =
+      "none";
+    document.getElementById(
+      `${retrievedUser.username}+accepted-text`
+    ).style.display = "flex";
+  }
+
   render() {
     const { friendlist } = this.state;
     const { username } = this.state;
@@ -149,75 +181,85 @@ class ViewFriends extends Component {
         <>
           <Navbar />
           <div className="friends-container">
-            <AccountSideBar key={username} tab={"ViewFriends"} />
+            <AccountSideBar key={username} tab={"AddFriends"} />
             <div className="friends-content">
-              <h1 className="title">Friend List</h1>
+              <h1 className="title">Add Friend</h1>
+              <form
+                onSubmit={this.searchFriend}
+                className="friends-content-search"
+              >
+                <input
+                  required
+                  type="text"
+                  name="searchName"
+                  placeholder="Search Username"
+                  onChange={this.handleChange}
+                />
+                <button className="btn-positive">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </form>
 
-              {retrievedFriendlist &&
-                friendlist.map((friends) => (
-                  <div key={friends.id}>
+              {error_message == "User searched is not found." && (
+                <div>{error_message}</div>
+              )}
+
+              {retrievedSearch && (
+                <div className="searched-user-container">
+                  {/* <ul className="searched-header">
+                    <li>Name</li>
+                    <li>Username</li>
+                    <li></li>
+                  </ul> */}
+                  <div>
                     <ul className="searched-user-details">
-                      <li>{friends.name}</li>
-                      <li>{"#" + friends.username}</li>
+                      <li>{retrievedUser.name}</li>
+                      <li>{"#" + retrievedUser.username}</li>
                       <li className="searched-user-details__buttons">
-                        {friends.requested && (
-                          <div className="action-props text-accepted">
-                            <div>Request sent!</div>
+                        {error_message == "NULL" && (
+                          <div>
+                            <button
+                              className="btn btn-positive btn-accept"
+                              id={`${retrievedUser.username}+accept`}
+                              onClick={this.addFriend}
+                              name={retrievedUser.username}
+                            >
+                              <i class="fa-solid fa-user-plus"></i>
+                            </button>
+                            <div
+                              className="text-accepted"
+                              id={`${retrievedUser.username}+accepted-text`}
+                              style={{
+                                display: "none",
+                              }}
+                            >
+                              Friend Request Sent!
+                            </div>
                           </div>
                         )}
-                        {retrievedFriendlist &&
-                          !friends.accepted &&
-                          !friends.requested && (
-                            <div className="action-props">
-                              <button
-                                id={`${friends.username}+accept`}
-                                className="btn-positive btn-accept"
-                                name={friends.username}
-                                onClick={this.handleAccept}
-                              >
-                                Accept
-                              </button>
-                              <div
-                                id={`${friends.username}+accepted-text`}
-                                style={{
-                                  display: "none",
-                                }}
-                              >
-                                Accepted!
-                              </div>
-                              <button
-                                id={`${friends.username}+reject`}
-                                className="btn-negative btn-reject"
-                                name={friends.username}
-                                onClick={this.handleReject}
-                              >
-                                Reject
-                              </button>
-                              <div
-                                className="text-rejected"
-                                id={`${friends.username}+rejected-text`}
-                                style={{
-                                  display: "none",
-                                }}
-                              >
-                                Rejected!
-                              </div>
-                            </div>
-                          )}
-                        {friends.accepted && (
-                          <div className="action-props">
+                        {error_message ==
+                          "User searched is user themselves." && (
+                          <div className="text-rejected">Myself</div>
+                        )}
+                        {error_message ==
+                          "User searched is already a friend." && (
+                          <div>
                             <a
-                              href={`/accounts/${friends.username}/wishlist`}
+                              href={`/accounts/${retrievedUser.username}/wishlist/view`}
                               className="btn btn-positive btn-wishlist"
                             >
                               <p>Wishlist</p>
                             </a>
                           </div>
                         )}
+                        {error_message == "A friend request has been sent." && (
+                          <div className="text-accepted">Request sent!</div>
+                        )}
                       </li>
                     </ul>
                   </div>
-                ))}
+                </div>
+              )}
             </div>
           </div>
         </>
@@ -248,4 +290,4 @@ function getCookie(name) {
   return cookieValue;
 }
 
-export default withParams(ViewFriends);
+export default withParams(AddFriends);
