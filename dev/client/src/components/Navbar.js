@@ -35,7 +35,7 @@ class Navbar extends Component {
           </a>
 
           <div className="navbar__logged-in">
-            <a className="navbar__icons" href="/about">
+            <a className="navbar__icons" href="/help">
               <i className="fa-regular fa-circle-question"></i>
             </a>
             <a
