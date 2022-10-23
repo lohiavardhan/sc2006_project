@@ -329,7 +329,7 @@ class ViewFriends extends Component {
                         {friends.accepted && (
                           <div className="action-props">
                             <a
-                              href={`/accounts/${friends.username}/wishlist/view`}
+                              href={`/accounts/${friends.username}/wishlist`}
                               className="btn btn-positive btn-wishlist"
                             >
                               <p>Wishlist</p>
