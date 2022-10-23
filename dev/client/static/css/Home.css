@@ -173,7 +173,7 @@
 .reset-filter {
   width: 5rem;
   height: 5rem;
-  border-radius: 2rem;
+  border-radius: 2rem !important;
   margin-top: 2rem;
   background-color: var(--color-btn-negative);
 }
@@ -184,8 +184,9 @@
   margin-right: 6%;
   width: 70%;
   height: 5rem;
-  border-radius: 2rem;
+  border-radius: 2rem !important;
   color: #ffffff;
+  margin-top: 2rem;
 }
 
 /* No search */
@@ -257,4 +258,11 @@
 a:focus,
 a:hover {
   text-decoration: none !important;
+}
+
+.item-view__page-nav__content__next:hover,
+.item-view__page-nav__content__previous:hover,
+.item-view__page-nav__content__number:hover {
+  color: var(--color-primary);
+  font-weight: bold;
 }

@@ -462,11 +462,14 @@ export default class Home extends Component {
 
                     <button
                       onClick={this.handleFilterSearch}
-                      className="submit-filter"
+                      className="btn btn-positive submit-filter"
                     >
                       Filter
                     </button>
-                    <button className="reset-filter" onClick={this.handleReset}>
+                    <button
+                      className="btn btn-negative reset-filter"
+                      onClick={this.handleReset}
+                    >
                       <i class="fa-solid fa-rotate-left"></i>
                     </button>
                   </div>
