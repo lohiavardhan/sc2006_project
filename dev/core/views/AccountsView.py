@@ -143,6 +143,7 @@ class ForgotPasswordView(APIView):
         from_email = 'noreplyfindrotp@gmail.com'
         html_content = render_to_string("forgot_password.html",{
                     'otp':code,
+                    'email':email,
                     })
         text_content = strip_tags(html_content)
         email = EmailMultiAlternatives(

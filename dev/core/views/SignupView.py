@@ -45,7 +45,7 @@ class SignUpView(APIView):
                 password = make_password(password)
                 user = User(username=username, password=password, email=email)
                 request.session['payload'] = SignupSerializer(user).data
-                request.session['payload']['auth'] = SignUpView.generateCode(email,username)
+                request.session['payload']['auth'] = SignUpView.generateCode(email)
 
             payload = { "error": error, 
                         "error_message": error_message }
@@ -53,12 +53,13 @@ class SignUpView(APIView):
 
     
     @staticmethod
-    def generateCode(email,username):
+    def generateCode(email):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
         subject = '[FindR] Welcome to FindR!'
         from_email = 'noreplyfindrotp@gmail.com'
         html_content = render_to_string("email_template.html",{
                     'otp':code,
+                    'email':email,
                     })
         text_content = strip_tags(html_content)
         email = EmailMultiAlternatives(
