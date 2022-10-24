@@ -1,0 +1,47 @@
+.title{
+    color: rgb(66,165, 152);
+    font-style: bold; 
+    font-family: "Segoe Script",Helvetica,Arial,sans-serif; 
+    font-size: 3 rem;
+}
+
+.subtitle{
+    color: rgb(66,165, 152); 
+    font-style: bold;
+    text-decoration:underline; 
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; 
+    font-size: 2.7rem;
+}
+
+summary{
+    background-color: rgb(66,165, 152); 
+    margin-top: 4.3rem; 
+    font-style: bold;
+    width: 25rem; 
+    border-radius: 25px;
+    border-style: solid;
+    border-color: rgb(66,165, 152); 
+    padding-left:20px;
+    text-transform: uppercase; 
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; 
+    color: #fff; 
+    cursor: pointer
+}
+
+
+summary:hover {
+    color: rgb(66,165, 152);
+    background-color: #fff;  
+}
+
+ol{
+    border-style: solid; 
+    border-color: rgb(66,165, 152);
+    margin-top: 4.3rem; 
+    width: 35rem; 
+    border-radius: 25px 
+}
+
+.span{
+    font-family: 'Helvetica Neue';
+}

@@ -2,7 +2,7 @@ import "../../static/css/LoginSignup.css";
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import Navbar from "./Navbar";
+import LoggedOutNavbar from "./LoggedOutNavbar";
 
 class EmailAuth extends Component {
     constructor(props) {
@@ -75,7 +75,7 @@ class EmailAuth extends Component {
             if (!redirect) {
                 return (
                     <>
-                        <Navbar key={isAuth} />
+                        <LoggedOutNavbar />
                         <div className="otp-container">
                             <div className="otp-background">
                                 {error_message != "NULL" && (
@@ -94,6 +94,7 @@ class EmailAuth extends Component {
                                             <div className="otp-content-credential">
                                                 <input
                                                     required
+                                                    type="password"
                                                     name="OTP"
                                                     id="OTP"
                                                     placeholder="OTP"

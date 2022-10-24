@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import "../../static/css/EditAccount.css";
 
 class EditAccount extends Component {
     constructor(props) {
         super(props);
         let { username } = this.props.params;
         this.state = {
-            username: username,
+            props_username: username,
+            username: "",
             email: "",
             name: "",
             birthday: "",
@@ -21,7 +23,7 @@ class EditAccount extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/v1/accounts/edit?username=" + this.state.username)
+        fetch("/api/v1/accounts/edit?username=" + this.state.props_username)
             .then((response) => {
                 return response.json();
             })
@@ -29,6 +31,13 @@ class EditAccount extends Component {
                 if (json.error == "status_invalid_access") {
                     this.setState({
                         isAuth: false,
+                    });
+                } else {
+                    this.setState({
+                        username: json.username,
+                        name: json.name,
+                        email: json.email,
+                        birthday: json.birthday,
                     });
                 }
             });
@@ -75,6 +84,9 @@ class EditAccount extends Component {
     render() {
         const { redirect } = this.state;
         const { username } = this.state;
+        const { name } = this.state;
+        const { email } = this.state;
+        const { birthday } = this.state;
         const { error_message } = this.state;
         const { isAuth } = this.state;
 
@@ -82,19 +94,29 @@ class EditAccount extends Component {
             if (!redirect) {
                 return (
                     <>
-                        <Navbar key={isAuth} />
-                        <div>
+                        <Navbar />
+                        <div className="update-particulars-container">
                             <div>
+                                {error_message == "NULL" && <p>&nbsp;</p>}
                                 {error_message != "NULL" && (
                                     <p>{error_message}</p>
                                 )}
                             </div>
-                            <div>
+
+                            <div className="update-form-container">
+                                <div className="header">
+                                    {" "}
+                                    Update Particulars{" "}
+                                </div>
                                 <form onSubmit={this.updateUserData}>
-                                    <div>
-                                        <label>Username</label>
+                                    <div className="update-entry">
+                                        <label className="entry-name">
+                                            Username
+                                        </label>
                                         <input
-                                            required
+                                            className="entry-details"
+                                            required={username == null}
+                                            placeholder={username}
                                             type="text"
                                             name="username"
                                             id="username"
@@ -102,10 +124,14 @@ class EditAccount extends Component {
                                         />
                                     </div>
 
-                                    <div>
-                                        <label>Email</label>
+                                    <div className="update-entry">
+                                        <label className="entry-name">
+                                            Email
+                                        </label>
                                         <input
-                                            required
+                                            className="entry-details"
+                                            required={email == null}
+                                            placeholder={email}
                                             type="email"
                                             name="email"
                                             id="email"
@@ -113,10 +139,14 @@ class EditAccount extends Component {
                                         />
                                     </div>
 
-                                    <div>
-                                        <label>Name</label>
+                                    <div className="update-entry">
+                                        <label className="entry-name">
+                                            Name
+                                        </label>
                                         <input
-                                            required
+                                            className="entry-details"
+                                            required={name == null}
+                                            placeholder={name}
                                             type="text"
                                             name="name"
                                             id="name"
@@ -124,18 +154,35 @@ class EditAccount extends Component {
                                         />
                                     </div>
 
-                                    <div>
-                                        <label>Birthday</label>
+                                    <div className="update-entry">
+                                        <label className="entry-name">
+                                            Birthday
+                                        </label>
                                         <input
-                                            required
+                                            className="entry-details"
+                                            required={birthday == null}
+                                            placeholder={birthday}
                                             type="date"
                                             name="birthday"
                                             id="birthday"
                                             onChange={this.handleChange}
                                         />
                                     </div>
+                                    <div className="button-list">
+                                        <a
+                                            className="form-revert-button"
+                                            href={`/accounts/${username}`}
+                                        >
+                                            Go back
+                                        </a>
 
-                                    <button type="submit">Update</button>
+                                        <button
+                                            className="form-submit-button"
+                                            type="submit"
+                                        >
+                                            Update
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
