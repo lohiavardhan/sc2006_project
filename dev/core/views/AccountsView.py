@@ -4,7 +4,9 @@ from rest_framework.response import Response
 from ..models.User import User
 from ..serializers import EditAccountDetailsSerializer, ForgotPasswordSerializer, LoginSerializer
 from .handlers.authentication import checkUserAuthenticationStatus
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.contrib.auth.hashers import make_password
 
 class AccountsView(APIView):
@@ -137,13 +139,20 @@ class ForgotPasswordView(APIView):
     @staticmethod
     def generateCode(email):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
-        send_mail(
-        'FindR OTP',
-        'Here is the OTP:'+code,
-        'noreplyfindrotp@gmail.com', 
-        [email], 
-        fail_silently=False,
-    )
+        subject = '[FindR] Password Change Request'
+        from_email = 'noreplyfindrotp@gmail.com'
+        html_content = render_to_string("forgot_password.html",{
+                    'otp':code,
+                    })
+        text_content = strip_tags(html_content)
+        email = EmailMultiAlternatives(
+                subject,
+                text_content,
+                from_email,
+                [email]
+                )
+        email.attach_alternative(html_content,"text/html")
+        email.send()
         print(code)
         return code
 

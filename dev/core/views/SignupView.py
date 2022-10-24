@@ -59,7 +59,6 @@ class SignUpView(APIView):
         from_email = 'noreplyfindrotp@gmail.com'
         html_content = render_to_string("email_template.html",{
                     'otp':code,
-                    'username':username,
                     })
         text_content = strip_tags(html_content)
         email = EmailMultiAlternatives(
