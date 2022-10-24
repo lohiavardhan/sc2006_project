@@ -171,7 +171,7 @@ class User(models.Model):
         for i in friendlist:
             if i['accepted']:
                 email = User.queryByUsername(i['username']).email
-                subject = "Your Friend's Birthday is around the corner! - FindR"
+                subject = "[FindR] Your Friend's Birthday is around the corner!"
                 from_email = 'noreplyfindrotp@gmail.com'
                 html_content = render_to_string("birthday_notification.html",{
                             'username': self.username,

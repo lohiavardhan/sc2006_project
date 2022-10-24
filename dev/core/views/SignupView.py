@@ -55,7 +55,7 @@ class SignUpView(APIView):
     @staticmethod
     def generateCode(email,username):
         code = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, 8)])
-        subject = 'Welcome to FindR!'
+        subject = '[FindR] Welcome to FindR!'
         from_email = 'noreplyfindrotp@gmail.com'
         html_content = render_to_string("email_template.html",{
                     'otp':code,
