@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "../../static/css/Help.css";
-import Navbar from "./Navbar";
+import LoggedOutNavbar from "./LoggedOutNavbar";
 
-export default class Help extends Component {
+export default class About extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,21 +23,18 @@ export default class Help extends Component {
         if (section != "features") {
             document.getElementById(`features`).style.display = "none";
         }
-        if (section != "accounts") {
-            document.getElementById(`accounts`).style.display = "none";
-        }
     }
 
     render() {
         return (
             <>
-                <Navbar />
+                <LoggedOutNavbar />
                 <div className="faq-banner">
                     <div className="title-card-section">
                         <h1 className="title">FindR FAQ</h1>
                         <p>
-                            Not sure about something? &nbsp;&nbsp;&nbsp; Have
-                            unanswered questions?
+                            New to FindR? &nbsp;&nbsp;&nbsp; Have unanswered
+                            questions?
                         </p>
                         <p>We got you covered in this FAQ page.</p>
                     </div>
@@ -64,12 +61,6 @@ export default class Help extends Component {
                             className="nav-list-button"
                         >
                             <li>Terms of services</li>
-                        </button>
-                        <button
-                            onClick={() => this.handleClick("accounts")}
-                            className="nav-list-button"
-                        >
-                            <li>Accounts</li>
                         </button>
                     </div>
 
@@ -309,100 +300,6 @@ export default class Help extends Component {
                                         platforms. Users are strongly advised to
                                         contact the respective platforms for
                                         such matters.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            style={{
-                                display: "none",
-                            }}
-                            id="accounts"
-                            className="info"
-                        >
-                            <h>FindR Accounts</h>
-                            <div className="info-cards">
-                                <div className="info-card">
-                                    <h1>How do I edit my account details?</h1>
-                                    <p>
-                                        1. Click on the{" "}
-                                        <i
-                                            style={{
-                                                color: "rgb(66,165, 152)",
-                                            }}
-                                            className="fa-regular fa-user"
-                                        ></i>{" "}
-                                        icon in the navbar.
-                                    </p>
-                                    <p>
-                                        2. Click on <i>Edit Profile</i>
-                                    </p>
-                                    <p>
-                                        3. Enter your updated details and click{" "}
-                                        <i>Update</i>.
-                                    </p>
-                                </div>
-                                <div className="info-card">
-                                    <h1>How do I view my wishlist items?</h1>
-                                    <p>
-                                        1. Click on the{" "}
-                                        <i
-                                            style={{
-                                                color: "rgb(66,165, 152)",
-                                            }}
-                                            className="fa-regular fa-heart"
-                                        ></i>{" "}
-                                        icon in the navbar.
-                                    </p>
-                                    <p>
-                                        2. You will be redirected to your
-                                        wishlist.
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="info-cards">
-                                <div className="info-card">
-                                    <h1>How do I view my friend list?</h1>
-                                    <p>
-                                        1. Click on the{" "}
-                                        <i
-                                            style={{
-                                                color: "rgb(66,165, 152)",
-                                            }}
-                                            className="fa-regular fa-user"
-                                        ></i>{" "}
-                                        icon in the navbar.
-                                    </p>
-                                    <p>
-                                        2. Click on <i>View Friends</i>
-                                    </p>
-                                    <p>
-                                        3. You will be redirected to your friend
-                                        list..
-                                    </p>
-                                </div>
-                                <div className="info-card">
-                                    <h1>
-                                        How do I view my pending friend
-                                        requests?
-                                    </h1>
-                                    <p>
-                                        1. Click on the{" "}
-                                        <i
-                                            style={{
-                                                color: "rgb(66,165, 152)",
-                                            }}
-                                            className="fa-regular fa-heart"
-                                        ></i>{" "}
-                                        icon in the navbar.
-                                    </p>
-                                    <p>
-                                        2. Click on <i>Add Friends</i>
-                                    </p>
-                                    <p>
-                                        3. You will be able to see all the
-                                        pending incoming and outgoing friend
-                                        requests.
                                     </p>
                                 </div>
                             </div>
