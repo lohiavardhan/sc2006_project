@@ -117,6 +117,8 @@ button,
 
 .title {
   font-size: var(--font-size-title);
+  font-family: 'Reem Kufi Fun';
+  word-spacing: 0.5rem;
   font-weight: bold;
   margin: 0;
   padding-bottom: 5rem;
