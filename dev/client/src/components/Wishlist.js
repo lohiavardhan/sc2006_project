@@ -216,11 +216,13 @@ class Wishlist extends Component {
                                                             <div className="price-text">
                                                                 <div className="discounted-price">
                                                                     S${" "}
-                                                                    {
+                                                                    {parseFloat(
                                                                         item
                                                                             .item
                                                                             .item_discounted_price
-                                                                    }
+                                                                    ).toFixed(
+                                                                        2
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         )}
@@ -237,11 +239,13 @@ class Wishlist extends Component {
                                                                 </div>
                                                                 <div className="discounted-price">
                                                                     S${" "}
-                                                                    {
+                                                                    {parseFloat(
                                                                         item
                                                                             .item
                                                                             .item_discounted_price
-                                                                    }
+                                                                    ).toFixed(
+                                                                        2
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         )}
@@ -266,10 +270,10 @@ class Wishlist extends Component {
                                                             <div className="deliveryfee-text">
                                                                 S$
                                                                 {"    "}
-                                                                {
+                                                                {parseFloat(
                                                                     item.item
                                                                         .deliveryFee
-                                                                }
+                                                                ).toFixed(2)}
                                                             </div>
                                                         )}
                                                     </li>
