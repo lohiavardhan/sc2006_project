@@ -1,9 +1,13 @@
 .faq-banner {
   display: flex;
-  flex-direction: column;
-  padding: 10rem 0rem 10rem 10rem;
-  height: 80vh;
-  justify-content: center;
+  flex-direction: row;
+  padding: 10rem 20rem 10rem 10rem;
+  min-height: 80vh;
+  justify-content: space-between;
+}
+
+.faq-banner-image {
+  width: 70rem;
 }
 
 .title-card-section {
@@ -33,7 +37,7 @@
   grid-column-start: 1;
   margin-left: 10rem;
   display: flex;
-  width: 35rem;
+  width: 40rem;
   flex-direction: column;
   list-style: none;
 }

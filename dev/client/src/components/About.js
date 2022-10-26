@@ -35,6 +35,10 @@ export default class About extends Component {
             <p>New to FindR? &nbsp;&nbsp;&nbsp; Have unanswered questions?</p>
             <p>We got you covered in this FAQ page.</p>
           </div>
+          <img className="faq-banner-image"
+            src="https://i.postimg.cc/hGwbGfhm/People-Talking-Illustration.jpg"
+            alt="People-Talking"
+          />
         </div>
 
         <div className="faq-content">
