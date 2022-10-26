@@ -1,0 +1,99 @@
+.faq-banner {
+  display: flex;
+  flex-direction: row;
+  padding: 10rem 20rem 10rem 10rem;
+  min-height: 80vh;
+  justify-content: space-between;
+}
+
+.faq-banner-image {
+  width: 70rem;
+}
+
+.title-card-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rem;
+  height: 100%;
+}
+
+.faq-banner-title {
+  color: rgb(66, 165, 152);
+  font-size: 8rem !important;
+  margin-bottom: 4rem !important;
+  padding-bottom: 0 !important;
+}
+
+.title-card-section p {
+  margin-top: 0;
+  font-size: 3rem;
+}
+
+.faq-content {
+  display: flex;
+  height: max-content;
+  padding: 0rem 10rem 10rem 10rem;
+}
+
+.nav-list {
+  grid-column-start: 1;
+  display: flex;
+  min-width: 35rem;
+  flex-direction: column;
+  list-style: none;
+}
+
+.nav-list-button {
+  color: black;
+  border-radius: 0%;
+  font-weight: normal;
+  text-align: start;
+}
+
+.nav-list-button:hover {
+  color: var(--color-primary);
+  font-weight: bold;
+  border-left: 2px solid var(--color-primary);
+}
+
+.nav-list li {
+  padding: 2rem 0rem 2rem 2rem;
+}
+
+.faq-info {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5rem;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  max-width: 150rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+}
+
+.info h {
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5rem;
+  margin-bottom: 5rem;
+}
+
+.info-card {
+}
+
+.info-cards .info-card h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.info-cards .info-card p {
+  margin: 1.5rem 0;
+}

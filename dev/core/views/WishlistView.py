@@ -19,17 +19,32 @@ class WishlistView(APIView):
                             "error_message": error_message}
                 return Response(payload)
 
-            if param == user.username or Friend.isFriend(user.id, paramUser.id):
+            if param == user.username:
                 wishlist = WishlistItem.retrieveWishlist(paramUser.id)
                 if wishlist:
                     payload = { "error": "status_OK", 
                                 "error_message": "NULL",
+                                "isSelf": True,
                                 "payload": wishlist}
                 else:
                     error = "status_invalid_query"
                     error_message = "User has no wish list items"
                     payload = { "error": error, 
                                 "error_message": error_message}
+
+            elif Friend.isFriend(user.id, paramUser.id):
+                wishlist = WishlistItem.retrieveWishlist(paramUser.id)
+                if wishlist:
+                    payload = { "error": "status_OK", 
+                                "error_message": "NULL",
+                                "isSelf": False,
+                                "payload": wishlist}
+                else:
+                    error = "status_invalid_query"
+                    error_message = "User has no wish list items"
+                    payload = { "error": error, 
+                                "error_message": error_message}
+            
             else:
                 error = "status_invalid_access"
                 error_message = "User is not authorized to access this content."

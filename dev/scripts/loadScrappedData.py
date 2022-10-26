@@ -4,7 +4,7 @@ sys.path.append("..")
 from core.models.Item import Item
 
 def run():
-    with open('core/items_data/Shopee/air+fryer_shopee.csv', 'r', encoding="utf8") as file:
+    with open('core/items_data/Lazada/Zelda_lazada.csv', 'r', encoding="utf8") as file:
         reader = csv.reader(file)
         next(reader)
 
@@ -57,7 +57,7 @@ def run():
         item_mega_list.append(item)
     
     # for i in item_mega_list:
-    #     print(i.deliveryFee)
+    #     print(i.num_of_ratings)
 
     for i in item_mega_list:
         i.save()
@@ -137,6 +137,10 @@ def clean_num_of_ratings(string):
 
     if "ratings" in string:
         return int(string.replace('ratings', ''))
+    elif "Ratings" in string:
+        return int(string.replace('Ratings', ''))
+    elif "Rating" in string:
+        return int(string.replace('Rating', ''))
     elif "rating" in string:
         return int(string.replace('rating', ''))
 

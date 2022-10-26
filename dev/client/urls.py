@@ -16,4 +16,5 @@ urlpatterns = [
     path('accounts/<str:username>/friends/add', index),
     path('home', index),
     path('help', index),
+    path('about', index),
 ]
