@@ -137,3 +137,7 @@ dmypy.json
 
 #node modules
 node_modules/
+
+#main.js
+main.js
+main.js.LICENSE.txt
