@@ -13,6 +13,8 @@
 .title-card-section {
   display: flex;
   flex-direction: column;
+  margin-top: 10rem;
+  height: 100%;
 }
 
 .faq-banner-title {
