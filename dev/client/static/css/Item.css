@@ -131,6 +131,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 0;
+  font-family: 'Roboto';
 }
 
 .deliveryFee-ratings {
@@ -164,6 +165,7 @@
   font-size: 1.8rem;
   margin-left: 1rem;
   align-self: center;
+  font-family: 'Roboto';
 }
 
 .rating-prop {
@@ -206,6 +208,7 @@
   width: 70%;
   border-radius: 1.6rem;
   height: 6rem;
+  font-family: 'Remm Kufi Fun';
 }
 
 .item-url button:hover {

@@ -5,6 +5,13 @@
 4) ForgetPass
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&display=swap');
+
+
+
 .login-container,
 .otp-container {
   height: 88vh;
@@ -63,6 +70,7 @@
   color: var(--color-text-important);
   margin: 0 0 2rem 0;
   font-size: 3.6rem;
+  font-family: 'Aref Ruqaa Ink';
   font-weight: bold;
 }
 
@@ -79,6 +87,7 @@
 .otp-content-btn {
   margin-top: 4.3rem;
   text-transform: uppercase;
+  font-family: 'Remm Kufi Fun';
 }
 .login-content-credential,
 .otp-content-credential {
@@ -109,6 +118,7 @@
   grid-row: 1;
   box-sizing: border-box;
   font-size: 2.4rem;
+  font-family: 'Roboto';
   padding-left: 9.4rem;
   height: inherit;
   margin: 0;
@@ -136,11 +146,13 @@
 .login-content-signup-text {
   margin-block: 0;
   color: black;
+  font-family: 'Roboto';
 }
 
 .login-content-signup-link {
   color: var(--color-text-important);
   text-decoration: underline;
+  font-family: 'Reem Kufi Fun';
 }
 
 .login-content-forgetpass {
@@ -149,6 +161,7 @@
   margin-top: 3rem;
   margin-bottom: 3rem;
   color: var(--color-text-important);
+  font-family: 'Reem Kufi Fun';
   text-decoration: underline;
 }
 
@@ -168,6 +181,8 @@
 .signup-error,
 .otp-error {
   text-align: center;
+  font-family: 'Roboto';
+  letter-spacing: 0.1rem;
   font-weight: bold;
   animation: 3s shake infinite ease-in;
 }
