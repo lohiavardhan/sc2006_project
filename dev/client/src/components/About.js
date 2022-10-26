@@ -32,10 +32,12 @@ export default class About extends Component {
         <div className="faq-banner">
           <div className="title-card-section">
             <h1 className="title faq-banner-title">FindR FAQ</h1>
-            <p>New to FindR? &nbsp;&nbsp;&nbsp; Have unanswered questions?</p>
+            <p>New to FindR? </p>
+            <p>Have unanswered questions?</p>
             <p>We got you covered in this FAQ page.</p>
           </div>
-          <img className="faq-banner-image"
+          <img
+            className="faq-banner-image"
             src="https://i.postimg.cc/hGwbGfhm/People-Talking-Illustration.jpg"
             alt="People-Talking"
           />
@@ -71,7 +73,7 @@ export default class About extends Component {
               id="getting-started"
               className="info"
             >
-              <h>Getting started with FindR</h>
+              <h className="title">Getting started with FindR</h>
               <div className="info-cards">
                 <div className="info-card">
                   <h1>What is FindR?</h1>
@@ -107,7 +109,7 @@ export default class About extends Component {
               id="features"
               className="info"
             >
-              <h>FindR features</h>
+              <h className="title">FindR features</h>
               <div className="info-cards">
                 <div className="info-card">
                   <h1>What are the features available?</h1>
@@ -167,7 +169,7 @@ export default class About extends Component {
               id="terms-of-services"
               className="info"
             >
-              <h>Terms of services</h>
+              <h className="title">Terms of services</h>
               <div className="info-cards">
                 <div className="info-card">
                   <h1>What is the FindR Project licensed under?</h1>

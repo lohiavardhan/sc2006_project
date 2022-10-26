@@ -17,9 +17,9 @@
 
 .faq-banner-title {
   color: rgb(66, 165, 152);
-  font-size: 8rem;
-  margin-bottom: 4rem;
-  padding-bottom: 0;
+  font-size: 8rem !important;
+  margin-bottom: 4rem !important;
+  padding-bottom: 0 !important;
 }
 
 .title-card-section p {
@@ -35,9 +35,8 @@
 
 .nav-list {
   grid-column-start: 1;
-  margin-left: 10rem;
   display: flex;
-  width: 40rem;
+  min-width: 35rem;
   flex-direction: column;
   list-style: none;
 }
@@ -66,6 +65,7 @@
   flex-direction: column;
   margin-left: 5rem;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  max-width: 150rem;
 }
 
 .info {
