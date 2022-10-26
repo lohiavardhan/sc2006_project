@@ -76,7 +76,7 @@ class Item(models.Model):
         if tuningKey['deliveryFee'] != 'ALL':
             itemList = itemList.filter(deliveryFee__lte=float(tuningKey['deliveryFee']))
         if tuningKey['rating'] != 'ALL':
-            itemList = itemList.filter(rating__lte=float(tuningKey['rating']))
+            itemList = itemList.filter(rating__gte=float(tuningKey['rating']))
         if tuningKey['discounted_price'] != 'ALL':
             itemList = itemList.filter(discounted_price__lte=float(tuningKey['discounted_price']))
         
