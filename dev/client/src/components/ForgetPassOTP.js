@@ -116,7 +116,7 @@ class ForgetPassOTP extends Component {
                         {isLoading ? (
                           <ClipLoader color={"#ffffff"} />
                         ) : (
-                          <p>Sign up</p>
+                          <p>Submit</p>
                         )}
                       </button>
                     </form>
