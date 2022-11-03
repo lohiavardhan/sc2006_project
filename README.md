@@ -13,12 +13,12 @@ cd <PATH>/<WORK_DiR>
 
 #### Clone the GitHub repository:
 ```
-git clone https://github.com/lohiavardhan/sc2006_project.git
+git clone https://github.com/Neo-Zenith/FindR-E-Commerce-Price-Comparison-App.git
 ```
 
 #### Navigate to the local repo directory:
 ```
-cd sc2006_project
+cd FindR-E-Commerce-Price-Comparison-App
 ```
 
 #### Checkout on different branches:
@@ -38,12 +38,15 @@ git checkout dev
 ## 📁 File Structure
 ```
 ~
+├── .vscode                         # Azure settings
 ├── deliverables                    # Lab deliverables
 ├── dev
 │    ├── client                     # React app
 │    ├── core                       # Server API
+|    ├── jobs                       # Django scheduler
+|    ├── scripts                    # Web scrapping tool
+|    ├── server                     # Django server
 │    ├── requirements.txt           # Project dependencies
-│    ├── server                     # Django server
 │    ├── README.md
 │    └── manage.py
 ├── .gitignore
